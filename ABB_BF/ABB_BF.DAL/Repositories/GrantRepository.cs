@@ -3,20 +3,22 @@ using ABB_BF.DAL.Repositories.Interfaces;
 
 namespace ABB_BF.DAL.Repositories
 {
-    public class ProbationRepository : IProbationRepository
+    public class GrantRepository : IGrantRepository
     {
+
         private readonly Context _context;
 
-        public ProbationRepository(Context context)
+        public GrantRepository(Context context)
         {
             _context = context;
         }
 
-        public async Task<int> AddProbation(Probation probation)
+        public async Task<int> AddGrant(Grant grant)
         {
-            await _context.Probations.AddAsync(probation);
+            await _context.Grants.AddAsync(grant);
             await _context.SaveChangesAsync();
-            return probation.Id;
+
+            return grant.Id;
         }
     }
 }
