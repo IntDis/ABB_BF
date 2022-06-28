@@ -20,7 +20,7 @@ namespace ABB_BF.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> Post([FromBody] AddProbationRequest requestModel)
+        public async Task<ActionResult<int>> AddProbation([FromBody] AddProbationRequest requestModel)
         {
             int id = await _probationService.AddProbation(_mapper.Map<ProbationModel>(requestModel));
             return Ok(id);
