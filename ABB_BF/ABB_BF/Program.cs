@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(typeof(ApiMapper), typeof(BllMapper));
+
 builder.Services.RegisterRepositories();
 builder.Services.RegisterServices();
 

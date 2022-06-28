@@ -9,6 +9,7 @@ namespace ABB_BF.Config
         public ApiMapper()
         {
             CreateMap<AddProbationRequest, ProbationModel>();
+            CreateMap<AddGrantRequest, GrantModel>();
         }
     }
 }
