@@ -34,6 +34,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors(builder =>
+        builder.WithOrigins("https://azarov.ucoz.net", "https://2552-85-26-234-148.eu.ngrok.io")
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+
 app.UseAuthorization();
 
 app.MapControllers();
