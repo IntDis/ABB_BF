@@ -1,6 +1,6 @@
 ﻿namespace ABB_BF.DAL.Entities
 {
-    public class Probation : CommonData
+    public class Probation : AbstractCommonData
     {
         public DateTime  StartDate { get; set; }
     }

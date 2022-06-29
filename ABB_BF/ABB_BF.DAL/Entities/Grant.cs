@@ -1,6 +1,6 @@
 ﻿namespace ABB_BF.DAL.Entities
 {
-    public class Grant : CommonData
+    public class Grant : AbstractCommonData
     {
         public DateTime BirthDate { get; set; }
 

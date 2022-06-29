@@ -1,6 +1,6 @@
 ﻿namespace ABB_BF.DAL.Entities
 {
-    public abstract class CommonData
+    public abstract class AbstractCommonData
     {
         public int Id { get; set; }
         public string Secondname { get; set; }

@@ -11,6 +11,8 @@ namespace ABB_BF.BLL.Config
             CreateMap<Probation, ProbationModel>().ReverseMap();
 
             CreateMap<Grant, GrantModel>().ReverseMap();
+
+            CreateMap<Practice, PracticeModel>().ReverseMap();
         }
     }
 }

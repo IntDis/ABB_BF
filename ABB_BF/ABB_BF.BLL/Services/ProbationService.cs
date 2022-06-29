@@ -17,9 +17,9 @@ namespace ABB_BF.BLL.Services
             _probationRepository = probationRepository;
         }
 
-        public async Task<int> AddProbation(ProbationModel model)
+        public async Task<int> AddProbation(ProbationModel probationModel)
         {
-            return await _probationRepository.AddProbation(_mapper.Map<Probation>(model));
+            return await _probationRepository.AddProbation(_mapper.Map<Probation>(probationModel));
         }
     }
 }
