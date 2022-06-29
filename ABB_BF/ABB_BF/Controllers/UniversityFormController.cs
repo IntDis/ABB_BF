@@ -13,10 +13,14 @@ namespace ABB_BF.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IUniversityFormService _universityFormService;
-        public UniversityFormController(IMapper mapper, IUniversityFormService universityFormService)
+        private readonly IWebHostEnvironment _appEnvironment;
+        public UniversityFormController(IMapper mapper,
+            IUniversityFormService universityFormService,
+            IWebHostEnvironment appEnvironment)
         {
             _mapper = mapper;
             _universityFormService = universityFormService;
+            _appEnvironment = appEnvironment;
         }
 
         [HttpPost]
@@ -34,11 +38,15 @@ namespace ABB_BF.Controllers
                 .Map<List<UniversityFormResponse>> (await _universityFormService.GetAll()));
         }
 
-        [HttpGet("create-csv")]
-        public async Task<ActionResult> GetScv()
+        [HttpGet("csv")]
+        public async Task<ActionResult> DownloadCsv()
         {
-            await _universityFormService.CreateCsv();
-            return Ok();
+            string fileName = await _universityFormService.CreateCsv();
+
+            string fileType = "application/csv";
+            string filePath = Path.Combine(_appEnvironment.ContentRootPath, fileName);
+
+            return PhysicalFile(filePath, fileType, fileName);
         }
     }
 }

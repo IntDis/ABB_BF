@@ -10,13 +10,16 @@ namespace ABB_BF.BLL.Services
     public class UniversityFormService : IUniversityFormService
     {
         private readonly IMapper _mapper;
+        private readonly ICsvHelper _csvHelper;
         private readonly IUniversityFormRepository _universityFormRepository;
 
         public UniversityFormService(IMapper mapper,
-            IUniversityFormRepository universityFormRepository)
+            IUniversityFormRepository universityFormRepository,
+            ICsvHelper csvHelper)
         {
             _mapper = mapper;
             _universityFormRepository = universityFormRepository;
+            _csvHelper = csvHelper;
         }
 
         public async Task<int> AddUniversityForm(UniversityFormModel universityFormModel)
@@ -30,22 +33,9 @@ namespace ABB_BF.BLL.Services
             return _mapper.Map<List<UniversityFormModel>>(await _universityFormRepository.GetAll());
         }
 
-        public async Task CreateCsv()
+        public async Task<string> CreateCsv()
         {
-            GetScv(await _universityFormRepository.GetAll());
-        }
-
-        private string GetScv(List<UniversityForm> forms)
-        {
-            var engine = new FileHelperEngine<UniversityForm>();
-
-            engine.Encoding = System.Text.Encoding.UTF32;
-            engine.HeaderText = engine.GetFileHeader();
-
-            var actualTime = DateTime.Now.ToShortTimeString();
-
-            engine.WriteFile($"University.csv", forms);
-            return actualTime;
+            return await _csvHelper.GetScv(await _universityFormRepository.GetAll());
         }
     }
 }

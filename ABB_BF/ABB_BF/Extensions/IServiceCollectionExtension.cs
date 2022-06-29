@@ -21,6 +21,8 @@ namespace ABB_BF.Extensions
             services.AddScoped<IGrantService, GrantService>();
             services.AddScoped<IUniversityFormService, UniversityFormService>();
             services.AddScoped<IPracticeService, PracticeService>();
+
+            services.AddScoped<ICsvHelper, BLL.Services.CsvHelper>();
         }
     }
 }
