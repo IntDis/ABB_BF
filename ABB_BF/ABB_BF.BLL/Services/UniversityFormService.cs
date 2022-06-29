@@ -3,6 +3,7 @@ using ABB_BF.BLL.Services.Interfaces;
 using ABB_BF.DAL.Entities;
 using ABB_BF.DAL.Repositories.Interfaces;
 using AutoMapper;
+using FileHelpers;
 
 namespace ABB_BF.BLL.Services
 {
@@ -27,6 +28,24 @@ namespace ABB_BF.BLL.Services
         public async Task<List<UniversityFormModel>> GetAll()
         {
             return _mapper.Map<List<UniversityFormModel>>(await _universityFormRepository.GetAll());
+        }
+
+        public async Task CreateCsv()
+        {
+            GetScv(await _universityFormRepository.GetAll());
+        }
+
+        private string GetScv(List<UniversityForm> forms)
+        {
+            var engine = new FileHelperEngine<UniversityForm>();
+
+            engine.Encoding = System.Text.Encoding.UTF32;
+            engine.HeaderText = engine.GetFileHeader();
+
+            var actualTime = DateTime.Now.ToShortTimeString();
+
+            engine.WriteFile($"University.csv", forms);
+            return actualTime;
         }
     }
 }

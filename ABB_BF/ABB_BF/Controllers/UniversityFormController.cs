@@ -33,5 +33,12 @@ namespace ABB_BF.Controllers
             return Ok(_mapper
                 .Map<List<UniversityFormResponse>> (await _universityFormService.GetAll()));
         }
+
+        [HttpGet("create-csv")]
+        public async Task<ActionResult> GetScv()
+        {
+            await _universityFormService.CreateCsv();
+            return Ok();
+        }
     }
 }
