@@ -11,12 +11,14 @@ namespace ABB_BF.Extensions
         {
             services.AddScoped<IProbationRepository, ProbationRepository>();
             services.AddScoped<IGrantRepository, GrantRepository>();
+            services.AddScoped<IUniversityFormRepository, UniversityFormRepository>();
         }
 
         public static void RegisterServices(this IServiceCollection services)
         {
             services.AddScoped<IProbationService, ProbationService>();
             services.AddScoped<IGrantService, GrantService>();
+            services.AddScoped<IUniversityFormService, UniversityFormService>();
         }
     }
 }

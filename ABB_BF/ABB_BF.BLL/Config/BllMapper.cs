@@ -9,8 +9,8 @@ namespace ABB_BF.BLL.Config
         public BllMapper()
         {
             CreateMap<Probation, ProbationModel>().ReverseMap();
-
             CreateMap<Grant, GrantModel>().ReverseMap();
+            CreateMap<UniversityForm, UniversityFormModel>().ReverseMap();
         }
     }
 }
