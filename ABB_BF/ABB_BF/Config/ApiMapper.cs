@@ -11,6 +11,7 @@ namespace ABB_BF.Config
             CreateMap<AddProbationRequest, ProbationModel>();
             CreateMap<AddGrantRequest, GrantModel>();
             CreateMap<AddUniversityFormRequest, UniversityFormModel>();
+            CreateMap<AddPracticeRequest, PracticeModel>();
         }
     }
 }

@@ -12,6 +12,7 @@ namespace ABB_BF.Extensions
             services.AddScoped<IProbationRepository, ProbationRepository>();
             services.AddScoped<IGrantRepository, GrantRepository>();
             services.AddScoped<IUniversityFormRepository, UniversityFormRepository>();
+            services.AddScoped<IPracticeRepository, PracticeRepository>();
         }
 
         public static void RegisterServices(this IServiceCollection services)
@@ -19,6 +20,7 @@ namespace ABB_BF.Extensions
             services.AddScoped<IProbationService, ProbationService>();
             services.AddScoped<IGrantService, GrantService>();
             services.AddScoped<IUniversityFormService, UniversityFormService>();
+            services.AddScoped<IPracticeService, PracticeService>();
         }
     }
 }

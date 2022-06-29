@@ -3,21 +3,21 @@ using ABB_BF.DAL.Repositories.Interfaces;
 
 namespace ABB_BF.DAL.Repositories
 {
-    public class GrantRepository : IGrantRepository
+    public class PracticeRepository : IPracticeRepository
     {
         private readonly Context _context;
 
-        public GrantRepository(Context context)
+        public PracticeRepository(Context context)
         {
             _context = context;
         }
 
-        public async Task<int> AddGrant(Grant grant)
+        public async Task<int> AddPractice(Practice practice)
         {
-            await _context.Grants.AddAsync(grant);
+            await _context.Practices.AddAsync(practice);
             await _context.SaveChangesAsync();
 
-            return grant.Id;
+            return practice.Id;
         }
     }
 }

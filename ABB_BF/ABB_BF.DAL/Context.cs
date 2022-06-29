@@ -12,5 +12,6 @@ namespace ABB_BF.DAL
         public DbSet<Probation> Probations { get; set; }
         public DbSet<Grant> Grants { get; set; }
         public DbSet<UniversityForm> UniversityForms { get; set; }
+        public DbSet<Practice> Practices { get; set; }
     }
 }
