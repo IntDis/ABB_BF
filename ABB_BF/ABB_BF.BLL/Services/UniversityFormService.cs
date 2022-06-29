@@ -23,5 +23,10 @@ namespace ABB_BF.BLL.Services
             return await _universityFormRepository
                 .AddUniversityForm(_mapper.Map<UniversityForm>(universityFormModel));
         }
+
+        public async Task<List<UniversityFormModel>> GetAll()
+        {
+            return _mapper.Map<List<UniversityFormModel>>(await _universityFormRepository.GetAll());
+        }
     }
 }

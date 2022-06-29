@@ -1,6 +1,7 @@
 ﻿using ABB_BF.BLL.Models;
 using ABB_BF.BLL.Services.Interfaces;
 using ABB_BF.Models.Requests;
+using ABB_BF.Models.Responses;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,6 +25,13 @@ namespace ABB_BF.Controllers
             int id = await _universityFormService
                 .AddUniversityForm(_mapper.Map<UniversityFormModel>(form));
             return Ok(id);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<UniversityFormResponse>>> GetAll()
+        {
+            return Ok(_mapper
+                .Map<List<UniversityFormResponse>> (await _universityFormService.GetAll()));
         }
     }
 }

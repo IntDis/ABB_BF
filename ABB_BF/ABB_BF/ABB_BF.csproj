@@ -26,8 +26,4 @@
     <ProjectReference Include="..\ABB_BF.BLL\ABB_BF.BLL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\Responses\" />
-  </ItemGroup>
-
 </Project>
