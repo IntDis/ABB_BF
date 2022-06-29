@@ -1,8 +1,7 @@
-﻿namespace ABB_BF.DAL.Entities
+﻿namespace ABB_BF.Models.Requests
 {
-    public abstract class CommonData
+    public class AddUniversityFormRequest
     {
-        public int Id { get; set; }
         public string Secondname { get; set; }
         public string Firstname { get; set; }
         public string Patronymic { get; set; }
