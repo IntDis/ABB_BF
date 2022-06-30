@@ -1,5 +1,8 @@
-﻿namespace ABB_BF.DAL.Entities
+﻿using FileHelpers;
+
+namespace ABB_BF.DAL.Entities
 {
+    [DelimitedRecord(",")]
     public class Practice : AbstractCommonData
     {
         public int Course { get; set; }
