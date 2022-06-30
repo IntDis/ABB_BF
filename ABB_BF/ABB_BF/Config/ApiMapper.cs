@@ -1,4 +1,5 @@
-﻿using ABB_BF.BLL.Models;
+﻿using ABB_BF.API.Models.Responses;
+using ABB_BF.BLL.Models;
 using ABB_BF.Models.Requests;
 using ABB_BF.Models.Responses;
 using AutoMapper;
@@ -17,6 +18,7 @@ namespace ABB_BF.Config
             CreateMap<UniversityFormModel, UniversityFormResponse>();
             CreateMap<GrantModel, GrantFormResponse>();
             CreateMap<PracticeModel, PracticeResponse>();
+            CreateMap<ProbationModel, ProbationResponse>();
         }
     }
 }
