@@ -1,5 +1,7 @@
 ﻿using ABB_BF.DAL.Entities;
 using ABB_BF.DAL.Repositories.Interfaces;
+using FileHelpers;
+using Microsoft.EntityFrameworkCore;
 
 namespace ABB_BF.DAL.Repositories
 {
@@ -17,6 +19,11 @@ namespace ABB_BF.DAL.Repositories
             await _context.UniversityForms.AddAsync(university);
             await _context.SaveChangesAsync();
             return university.Id;
+        }
+
+        public async Task<List<UniversityForm>> GetAll()
+        {
+            return await _context.UniversityForms.ToListAsync();
         }
     }
 }
