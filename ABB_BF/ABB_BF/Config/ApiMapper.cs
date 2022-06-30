@@ -15,6 +15,7 @@ namespace ABB_BF.Config
             CreateMap<AddPracticeRequest, PracticeModel>();
 
             CreateMap<UniversityFormModel, UniversityFormResponse>();
+            CreateMap<GrantModel, GrantFormResponse>();
         }
     }
 }
