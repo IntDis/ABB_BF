@@ -9,12 +9,14 @@ namespace ABB_BF.BLL.Services
     public class PracticeService : IPracticeService
     {
         private readonly IMapper _mapper;
+        private readonly ICsvHelper _csvHelper;
         private readonly IPracticeRepository _practiceRepository;
 
-        public PracticeService(IMapper mapper, IPracticeRepository practiceRepository)
+        public PracticeService(IMapper mapper, IPracticeRepository practiceRepository, ICsvHelper csvHelper)
         {
             _mapper = mapper;
             _practiceRepository = practiceRepository;
+            _csvHelper = csvHelper;
         }
 
         public async Task<int> AddPractice(PracticeModel practiceModel)
@@ -22,6 +24,16 @@ namespace ABB_BF.BLL.Services
             Practice practice = _mapper.Map<Practice>(practiceModel);
 
             return await _practiceRepository.AddPractice(practice);
+        }
+
+        public async Task<string> CreateCsv()
+        {
+            return await _csvHelper.GetScv(await _practiceRepository.GetAll());
+        }
+
+        public async Task<List<PracticeModel>> GetAll()
+        {
+            return _mapper.Map<List<PracticeModel>>(await _practiceRepository.GetAll());
         }
     }
 }
