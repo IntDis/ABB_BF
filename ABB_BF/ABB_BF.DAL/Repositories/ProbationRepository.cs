@@ -1,5 +1,6 @@
 ﻿using ABB_BF.DAL.Entities;
 using ABB_BF.DAL.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace ABB_BF.DAL.Repositories
 {
@@ -17,6 +18,11 @@ namespace ABB_BF.DAL.Repositories
             await _context.Probations.AddAsync(probation);
             await _context.SaveChangesAsync();
             return probation.Id;
+        }
+
+        public async Task<List<Probation>> GetAll()
+        {
+            return await _context.Probations.ToListAsync();
         }
     }
 }
