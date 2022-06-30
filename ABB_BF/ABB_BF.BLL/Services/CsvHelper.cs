@@ -12,7 +12,7 @@ namespace ABB_BF.BLL.Services
             engine.Encoding = System.Text.Encoding.UTF32;
             engine.HeaderText = engine.GetFileHeader();
 
-            var fileName = $"University_{DateTime.Now.ToShortDateString()}.csv";
+            var fileName = $"{typeof(T)}_{DateTime.Now.ToShortDateString()}.csv";
 
             engine.WriteFile(fileName, forms);
             return fileName;
