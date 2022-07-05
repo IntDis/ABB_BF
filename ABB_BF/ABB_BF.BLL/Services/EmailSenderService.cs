@@ -1,22 +1,30 @@
-﻿using System.Net;
+﻿using ABB_BF.BLL.Services.Interfaces;
+using System.Net;
 using System.Net.Mail;
 
 namespace ABB_BF.BLL.Services
 {
-    public class EmailSenderService
+    public class EmailSenderService : IEmailSenderService
     {
-        private string _emailFrom = "azarovrom9215@yandex.ru";
+        private string _emailFrom;
+        private readonly string _smtpHost;
+        private readonly int _smtpPort;
+
+        public EmailSenderService(string emailFrom, string smtpHost, int smtpPort)
+        {
+            _emailFrom = emailFrom;
+            _smtpHost = smtpHost;
+            _smtpPort = smtpPort;
+        }
 
         public void SendMessage(string consumer,
             string subject,
-            string text,
             Attachment attachment = null)
         {
             MailMessage mail = new MailMessage();
             mail.From = new MailAddress(_emailFrom);
             mail.To.Add(new MailAddress(consumer));
             mail.Subject = subject;
-            mail.Body = text;
 
             if (attachment is not null)
             {
@@ -24,10 +32,13 @@ namespace ABB_BF.BLL.Services
             }
 
             SmtpClient client = new SmtpClient();
-            client.Host = "smtp.yandex.ru";
-            client.Port = 587;
+            client.Host = _smtpHost; // "smtp.yandex.ru";
+            client.Port = _smtpPort; //587;
             client.EnableSsl = true;
-            client.Credentials = new NetworkCredential("#", "#"); //Sender's login and password
+
+            //Sender's login and password
+            client.Credentials = new NetworkCredential(_emailFrom, "#");
+
             client.Send(mail);
         }
     }
