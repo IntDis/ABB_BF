@@ -10,11 +10,11 @@ namespace ABB_BF.BLL.Services
         private readonly string _smtpHost;
         private readonly int _smtpPort;
 
-        public EmailSenderService(string emailFrom, string smtpHost, int smtpPort)
+        public EmailSenderService()
         {
-            _emailFrom = emailFrom;
-            _smtpHost = smtpHost;
-            _smtpPort = smtpPort;
+            _emailFrom = "azarovrom9215@yandex.ru";
+            _smtpHost = "smtp.yandex.ru";
+            _smtpPort = 587;
         }
 
         public void SendMessage(string consumer,
@@ -32,8 +32,8 @@ namespace ABB_BF.BLL.Services
             }
 
             SmtpClient client = new SmtpClient();
-            client.Host = _smtpHost; // "smtp.yandex.ru";
-            client.Port = _smtpPort; //587;
+            client.Host = _smtpHost;
+            client.Port = _smtpPort;
             client.EnableSsl = true;
 
             //Sender's login and password
