@@ -23,6 +23,7 @@ namespace ABB_BF.Extensions
             services.AddScoped<IPracticeService, PracticeService>();
 
             services.AddScoped<ICsvHelper, BLL.Services.CsvHelper>();
+            services.AddScoped<IEmailSenderService, EmailSenderService>();
         }
     }
 }
