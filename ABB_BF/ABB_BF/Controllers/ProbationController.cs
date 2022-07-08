@@ -4,6 +4,7 @@ using ABB_BF.BLL.Services.Interfaces;
 using ABB_BF.Models.Requests;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace ABB_BF.Controllers
 {
@@ -53,6 +54,23 @@ namespace ABB_BF.Controllers
             string filePath = Path.Combine(_appEnvironment.ContentRootPath, fileName);
 
             return PhysicalFile(filePath, fileType, fileName);
+        }
+
+        [HttpGet("{id}/download")]
+        public async Task<ActionResult> GetFile(int id)
+        {
+            byte[] filedata = (await _probationService.GetById(id)).Cv;
+            string extension = "docx";
+
+            string filename = Path.Combine(_appEnvironment.ContentRootPath, "file") + "." + extension;
+
+            System.IO.File.WriteAllBytes(filename, filedata);
+
+            //fix it
+            //var process = Process.Start(filename);
+            //process.Exited += (s, e) => System.IO.File.Delete(filename);
+
+            return PhysicalFile(filename, "docx", "file");
         }
     }
 }

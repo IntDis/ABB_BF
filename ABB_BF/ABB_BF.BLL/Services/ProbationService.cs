@@ -31,6 +31,11 @@ namespace ABB_BF.BLL.Services
             return _mapper.Map<List<ProbationModel>>(await _probationRepository.GetAll());
         }
 
+        public async Task<ProbationModel> GetById(int id)
+        {
+            return _mapper.Map<ProbationModel>(await _probationRepository.GetById(id));
+        }
+
         public async Task<string> CreateCsv()
         {
             return await _csvHelper.GetScv(await _probationRepository.GetAll());

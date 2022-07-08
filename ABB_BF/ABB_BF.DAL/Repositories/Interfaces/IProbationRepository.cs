@@ -6,5 +6,6 @@ namespace ABB_BF.DAL.Repositories.Interfaces
     {
         Task<int> AddProbation(Probation probation);
         Task<List<Probation>> GetAll();
+        Task<Probation> GetById(int id);
     }
 }
