@@ -25,9 +25,16 @@ namespace ABB_BF.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> AddProbation([FromBody] AddProbationRequest requestModel)
+        public async Task<ActionResult<int>> AddProbation([FromForm]AddProbationRequest requestModel)
         {
-            int id = await _probationService.AddProbation(_mapper.Map<ProbationModel>(requestModel));
+            ProbationModel model = _mapper.Map<ProbationModel>(requestModel);
+
+            using (var binaryReader = new BinaryReader(requestModel.Cv.OpenReadStream()))
+            {
+                model.Cv = binaryReader.ReadBytes((int)requestModel.Cv.Length);
+            }
+
+            int id = await _probationService.AddProbation(model);
             return Ok(id);
         }
 

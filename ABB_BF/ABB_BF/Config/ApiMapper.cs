@@ -10,7 +10,9 @@ namespace ABB_BF.Config
     {
         public ApiMapper()
         {
-            CreateMap<AddProbationRequest, ProbationModel>();
+            CreateMap<AddProbationRequest, ProbationModel>()
+                .ForMember(dest => dest.Cv, (options) => options.Ignore());
+
             CreateMap<AddGrantRequest, GrantModel>();
             CreateMap<AddUniversityFormRequest, UniversityFormModel>();
             CreateMap<AddPracticeRequest, PracticeModel>();
