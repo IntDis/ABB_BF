@@ -9,7 +9,6 @@ namespace ABB_BF.DAL.Entities
 
         public string College { get; set; }
 
-
         public string Speciality { get; set; }
 
         public DateTime StartDate { get; set; }

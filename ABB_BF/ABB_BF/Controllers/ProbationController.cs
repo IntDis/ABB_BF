@@ -4,7 +4,6 @@ using ABB_BF.BLL.Services.Interfaces;
 using ABB_BF.Models.Requests;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace ABB_BF.Controllers
 {
@@ -29,12 +28,21 @@ namespace ABB_BF.Controllers
         public async Task<ActionResult<int>> AddProbation([FromForm]AddProbationRequest requestModel)
         {
             ProbationModel model = _mapper.Map<ProbationModel>(requestModel);
+            // fix it
+            model.Files = new();
 
-            using (var binaryReader = new BinaryReader(requestModel.Cv.OpenReadStream()))
+            foreach (IFormFile file in requestModel.Files)
             {
-                model.Cv = binaryReader.ReadBytes((int)requestModel.Cv.Length);
+                ProbationFileModel fileModel = new ProbationFileModel()
+                {
+                    Name = file.FileName,
+                    Extension = file.FileName.Split('.')[file.FileName.Split('.').Length - 1],
+                    Data = GetBytes(file)
+                };
+            
+                model.Files.Add(fileModel);
             }
-
+            
             int id = await _probationService.AddProbation(model);
             return Ok(id);
         }
@@ -56,21 +64,27 @@ namespace ABB_BF.Controllers
             return PhysicalFile(filePath, fileType, fileName);
         }
 
-        [HttpGet("{id}/download")]
-        public async Task<ActionResult> GetFile(int id)
+        //[HttpGet("{id}/download")]
+        //public async Task<ActionResult> GetFile(int id)
+        //{
+        //    byte[] filedata = (await _probationService.GetById(id)).Files;
+        //    string extension = "docx";
+
+        //    string filename = Path.Combine(_appEnvironment.ContentRootPath, "file") + "." + extension;
+
+        //    System.IO.File.WriteAllBytes(filename, filedata);
+
+        //    //fix it
+        //    var process = Process.Start(filename);
+        //    //process.Exited += (s, e) => System.IO.File.Delete(filename);
+
+        //    return PhysicalFile(filename, "docx", "file");
+        //}
+
+        private byte[] GetBytes(IFormFile file)
         {
-            byte[] filedata = (await _probationService.GetById(id)).Cv;
-            string extension = "docx";
-
-            string filename = Path.Combine(_appEnvironment.ContentRootPath, "file") + "." + extension;
-
-            System.IO.File.WriteAllBytes(filename, filedata);
-
-            //fix it
-            var process = Process.Start(filename);
-            //process.Exited += (s, e) => System.IO.File.Delete(filename);
-
-            return PhysicalFile(filename, "docx", "file");
+            var binaryReader = new BinaryReader(file.OpenReadStream());
+            return binaryReader.ReadBytes((int)file.Length);
         }
     }
 }

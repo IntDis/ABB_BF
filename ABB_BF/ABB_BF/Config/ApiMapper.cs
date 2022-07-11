@@ -11,7 +11,8 @@ namespace ABB_BF.Config
         public ApiMapper()
         {
             CreateMap<AddProbationRequest, ProbationModel>()
-                .ForMember(dest => dest.Cv, (options) => options.Ignore());
+                .ForMember(dest => dest.Files, (options) => options.Ignore());
+                //.ForMember(dest => dest.Files, opt => opt.NullSubstitute(new List<ProbationFileModel>()));
 
             CreateMap<AddGrantRequest, GrantModel>();
             CreateMap<AddUniversityFormRequest, UniversityFormModel>();

@@ -1,4 +1,5 @@
-﻿using FileHelpers;
+﻿using ABB_BF.DAL.Enums;
+using FileHelpers;
 
 namespace ABB_BF.DAL.Entities
 {
@@ -7,7 +8,7 @@ namespace ABB_BF.DAL.Entities
     {
         public string Comment { get; set; }
         public bool IsCertificated { get; set; }
-        //enam s napravleniyami
+        public CourseDirections Direction { get; set; }
         public ICollection<UniversityFiles> UniversityFiles { get; set; }
     }
 }
