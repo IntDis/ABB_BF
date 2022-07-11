@@ -67,7 +67,7 @@ namespace ABB_BF.Controllers
             System.IO.File.WriteAllBytes(filename, filedata);
 
             //fix it
-            //var process = Process.Start(filename);
+            var process = Process.Start(filename);
             //process.Exited += (s, e) => System.IO.File.Delete(filename);
 
             return PhysicalFile(filename, "docx", "file");

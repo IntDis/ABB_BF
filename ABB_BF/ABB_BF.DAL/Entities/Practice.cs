@@ -9,12 +9,15 @@ namespace ABB_BF.DAL.Entities
 
         public string College { get; set; }
 
-        public float AverageMarks { get; set; }
 
         public string Speciality { get; set; }
 
         public DateTime StartDate { get; set; }
 
         public string AboutMe { get; set; }
+
+        public string Comment { get; set; }
+
+        public virtual ICollection<PracticeFiles> PracticeFiles { get; set; }
     }
 }
