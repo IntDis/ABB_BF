@@ -17,6 +17,6 @@ namespace ABB_BF.DAL.Entities
 
         public string Comment { get; set; }
 
-        public virtual ICollection<PracticeFiles> PracticeFiles { get; set; }
+        public virtual ICollection<PracticeFile> PracticeFiles { get; set; }
     }
 }

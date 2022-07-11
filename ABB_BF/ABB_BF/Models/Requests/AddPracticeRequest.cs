@@ -17,6 +17,6 @@ namespace ABB_BF.Models.Requests
         public DateTime StartDate { get; set; }
         public string AboutMe { get; set; }
 
-        public List<PracticeFiles> Files { get; set; }
+        public List<PracticeFile> Files { get; set; }
     }
 }

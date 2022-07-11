@@ -9,6 +9,6 @@ namespace ABB_BF.DAL.Entities
         public string Comment { get; set; }
         public bool IsCertificated { get; set; }
         public CourseDirections Direction { get; set; }
-        public ICollection<UniversityFiles> UniversityFiles { get; set; }
+        public ICollection<UniversityFile> UniversityFiles { get; set; }
     }
 }
