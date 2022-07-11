@@ -9,7 +9,7 @@ namespace ABB_BF.Controllers
 {
     [Controller]
     [Route("api/[controller]")]
-    public class ProbationController : AdvancedController
+    public class ProbationController : Controller
     {
         private readonly IMapper _mapper;
         private readonly IProbationService _probationService;
@@ -28,23 +28,7 @@ namespace ABB_BF.Controllers
         public async Task<ActionResult<int>> AddProbation([FromForm]AddProbationRequest requestModel)
         {
             ProbationModel model = _mapper.Map<ProbationModel>(requestModel);
-            // fix it
-            model.Files = new();
-
-            foreach (IFormFile file in requestModel.Files)
-            {
-                ProbationFileModel fileModel = new ProbationFileModel()
-                {
-                    Name = file.FileName,
-                    Extension = file.FileName.Split('.')[file.FileName.Split('.').Length - 1],
-                    Data = GetBytes(file)
-                };
-            
-                model.Files.Add(fileModel);
-            }
-            
-            int id = await _probationService.AddProbation(model);
-            return Ok(id);
+            return Ok(await _probationService.AddProbation(model));
         }
 
         [HttpGet]
@@ -76,7 +60,7 @@ namespace ABB_BF.Controllers
 
         //    //fix it
         //    var process = Process.Start(filename);
-        //    //process.Exited += (s, e) => System.IO.File.Delete(filename);
+        //    process.Exited += (s, e) => System.IO.File.Delete(filename);
 
         //    return PhysicalFile(filename, "docx", "file");
         //}

@@ -9,7 +9,7 @@ namespace ABB_BF.Controllers
 {
     [Controller]
     [Route("api/[controller]")]
-    public class GrantController : AdvancedController
+    public class GrantController : Controller
     {
         private readonly IMapper _mapper;
         private readonly IGrantService _grantService;
@@ -26,21 +26,6 @@ namespace ABB_BF.Controllers
         public async Task<ActionResult<int>> AddGrant([FromBody] AddGrantRequest grantRequest)
         {
             GrantModel model = _mapper.Map<GrantModel>(grantRequest);
-
-            model.Files = new();
-
-            foreach(IFormFile file in model.Files)
-            {
-                GrantFileModel fileModel = new GrantFileModel()
-                {
-                    Name = file.FileName,
-                    Extension = file.FileName.Split('.')[file.FileName.Split('.').Length - 1],
-                    Data = GetBytes(file)
-                };
-
-                model.Files.Add(fileModel);
-            }
-            
             return Ok(await _grantService.AddGrant(model));
         }
 

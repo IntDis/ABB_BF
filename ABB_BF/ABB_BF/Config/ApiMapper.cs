@@ -10,23 +10,32 @@ namespace ABB_BF.Config
     {
         public ApiMapper()
         {
-            CreateMap<AddProbationRequest, ProbationModel>()
-                .ForMember(dest => dest.Files, (options) => options.Ignore());
-
-            CreateMap<AddGrantRequest, GrantModel>()
-                .ForMember(dest => dest.Files, (options) => options.Ignore());
-
-            CreateMap<AddUniversityFormRequest, UniversityFormModel>()
-                .ForMember(dest => dest.Files, (options) => options.Ignore());
-
-            CreateMap<AddPracticeRequest, PracticeModel>()
-                .ForMember(dest => dest.Files, (options) => options.Ignore());
+            CreateMap<AddProbationRequest, ProbationModel>();
+            CreateMap<AddGrantRequest, GrantModel>();
+            CreateMap<AddUniversityFormRequest, UniversityFormModel>();
+            CreateMap<AddPracticeRequest, PracticeModel>();
 
 
             CreateMap<UniversityFormModel, UniversityFormResponse>();
             CreateMap<GrantModel, GrantFormResponse>();
             CreateMap<PracticeModel, PracticeResponse>();
             CreateMap<ProbationModel, ProbationResponse>();
+
+            CreateMap<IFormFile, ProbationFileModel>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FileName))
+                .ForMember(dest => dest.Extension, opt => opt.MapFrom(src => GetExtension(src.FileName)))
+                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => GetBytes(src)));
+        }
+
+        protected string GetExtension(string fileName)
+        {
+            return fileName.Split('.')[fileName.Split('.').Length - 1];
+        }
+
+        protected byte[] GetBytes(IFormFile file)
+        {
+            var binaryReader = new BinaryReader(file.OpenReadStream());
+            return binaryReader.ReadBytes((int)file.Length);
         }
     }
 }

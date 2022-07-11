@@ -9,7 +9,7 @@ namespace ABB_BF.Controllers
 {
     [Controller]
     [Route("api/[controller]")]
-    public class PracticeController : AdvancedController
+    public class PracticeController : Controller
     {
         private readonly IMapper _mapper;
         private readonly IPracticeService _practiceService;
@@ -27,21 +27,6 @@ namespace ABB_BF.Controllers
         public async Task<ActionResult<int>> AddPractice([FromBody] AddPracticeRequest practiceRequest)
         {
             PracticeModel model = _mapper.Map<PracticeModel>(practiceRequest);
-
-            model.Files = new();
-
-            foreach (IFormFile file in practiceRequest.Files)
-            {
-                PracticeFileModel fileModel = new PracticeFileModel()
-                {
-                    Name = file.FileName,
-                    Extension = file.FileName.Split('.')[file.FileName.Split('.').Length - 1],
-                    Data = GetBytes(file)
-                };
-
-                model.Files.Add(fileModel);
-            }
-
             return Ok(await _practiceService.AddPractice(model));
         }
 

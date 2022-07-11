@@ -9,7 +9,7 @@ namespace ABB_BF.Controllers
 {
     [Controller]
     [Route("api/[controller]")]
-    public class UniversityFormController : AdvancedController
+    public class UniversityFormController : Controller
     {
         private readonly IUniversityFormService _universityFormService;
         private readonly IWebHostEnvironment _appEnvironment;
@@ -29,24 +29,7 @@ namespace ABB_BF.Controllers
         public async Task<ActionResult<int>> AddUniversityForm([FromBody] AddUniversityFormRequest form)
         {
             UniversityFormModel model = _mapper.Map<UniversityFormModel>(form);
-
-            // fix it
-            model.Files = new();
-
-            foreach (IFormFile file in form.Files)
-            {
-                UniversityFileModel fileModel = new UniversityFileModel()
-                {
-                    Name = file.FileName,
-                    Extension = file.FileName.Split('.')[file.FileName.Split('.').Length - 1],
-                    Data = GetBytes(file)
-                };
-
-                model.Files.Add(fileModel);
-            }
-
-            int id = await _universityFormService.AddUniversityForm(model);
-            return Ok(id);
+            return Ok(await _universityFormService.AddUniversityForm(model));
         }
 
         [HttpGet]
