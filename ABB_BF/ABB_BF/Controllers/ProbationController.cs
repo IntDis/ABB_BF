@@ -9,7 +9,7 @@ namespace ABB_BF.Controllers
 {
     [Controller]
     [Route("api/[controller]")]
-    public class ProbationController : Controller
+    public class ProbationController : AdvancedController
     {
         private readonly IMapper _mapper;
         private readonly IProbationService _probationService;
@@ -80,11 +80,5 @@ namespace ABB_BF.Controllers
 
         //    return PhysicalFile(filename, "docx", "file");
         //}
-
-        private byte[] GetBytes(IFormFile file)
-        {
-            var binaryReader = new BinaryReader(file.OpenReadStream());
-            return binaryReader.ReadBytes((int)file.Length);
-        }
     }
 }

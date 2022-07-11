@@ -14,6 +14,6 @@
         public DateTime StartDate { get; set; }
         public string AboutMe { get; set; }
         public string Comment { get; set; }
-        public List<PracticeFileModel> PracticeFiles { get; set; }
+        public List<PracticeFileModel> Files { get; set; }
     }
 }

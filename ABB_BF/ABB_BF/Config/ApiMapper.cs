@@ -12,11 +12,16 @@ namespace ABB_BF.Config
         {
             CreateMap<AddProbationRequest, ProbationModel>()
                 .ForMember(dest => dest.Files, (options) => options.Ignore());
-                //.ForMember(dest => dest.Files, opt => opt.NullSubstitute(new List<ProbationFileModel>()));
 
-            CreateMap<AddGrantRequest, GrantModel>();
-            CreateMap<AddUniversityFormRequest, UniversityFormModel>();
-            CreateMap<AddPracticeRequest, PracticeModel>();
+            CreateMap<AddGrantRequest, GrantModel>()
+                .ForMember(dest => dest.Files, (options) => options.Ignore());
+
+            CreateMap<AddUniversityFormRequest, UniversityFormModel>()
+                .ForMember(dest => dest.Files, (options) => options.Ignore());
+
+            CreateMap<AddPracticeRequest, PracticeModel>()
+                .ForMember(dest => dest.Files, (options) => options.Ignore());
+
 
             CreateMap<UniversityFormModel, UniversityFormResponse>();
             CreateMap<GrantModel, GrantFormResponse>();

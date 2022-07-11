@@ -13,6 +13,6 @@ namespace ABB_BF.BLL.Models
         public string Comment { get; set; }
         public bool IsCertificated { get; set; }
         public CourseDirections Direction { get; set; }
-        public ICollection<UniversityFileModel> UniversityFiles { get; set; }
+        public List<UniversityFileModel> Files { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace ABB_BF.Models.Requests
+﻿using ABB_BF.DAL.Entities;
+
+namespace ABB_BF.Models.Requests
 {
     public class AddPracticeRequest
     {
@@ -14,5 +16,7 @@
         public string Speciality { get; set; }
         public DateTime StartDate { get; set; }
         public string AboutMe { get; set; }
+
+        public List<PracticeFiles> Files { get; set; }
     }
 }
