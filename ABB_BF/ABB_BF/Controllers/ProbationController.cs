@@ -78,12 +78,10 @@ namespace ABB_BF.Controllers
         [HttpGet("create-folder")]
         public async Task<ActionResult> CreateFolder()
         {
+            string path = await _fileHelper.CreateZipWithFormsInfo(
+                _mapper.Map<List<AbstractEntityModel>>(await _probationService.GetAll()));
 
-            var models = await _probationService.GetAll();
-
-            _fileHelper.CreateZipWithFormsInfo(_mapper.Map<List<AbstractEntityModel>>(models));
-
-            return Ok();
+            return Ok(path);
         }
     }
 }
