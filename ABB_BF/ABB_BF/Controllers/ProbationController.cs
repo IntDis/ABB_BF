@@ -4,6 +4,7 @@ using ABB_BF.BLL.Services.Interfaces;
 using ABB_BF.Models.Requests;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace ABB_BF.Controllers
 {
@@ -51,18 +52,24 @@ namespace ABB_BF.Controllers
         //[HttpGet("{id}/download")]
         //public async Task<ActionResult> GetFile(int id)
         //{
-        //    byte[] filedata = (await _probationService.GetById(id)).Files;
-        //    string extension = "docx";
+        //    ProbationModel probation = await _probationService.GetById(id);
+        //    ProbationFileModel file = probation.Files[0];
 
-        //    string filename = Path.Combine(_appEnvironment.ContentRootPath, "file") + "." + extension;
+        //    string filename = Path.Combine(_appEnvironment.ContentRootPath, file.Name) + "." + file.Extension;
 
-        //    System.IO.File.WriteAllBytes(filename, filedata);
+        //    System.IO.File.WriteAllBytes(filename, file.Data);
 
-        //    //fix it
-        //    var process = Process.Start(filename);
-        //    process.Exited += (s, e) => System.IO.File.Delete(filename);
+        //    //var p = new Process();
+        //    //p.StartInfo = new ProcessStartInfo(filename)
+        //    //{
+        //    //    UseShellExecute = true
+        //    //};
 
-        //    return PhysicalFile(filename, "docx", "file");
+        //    //p.Start();
+
+        //    //p.Exited += (s, e) => System.IO.File.Delete(filename);
+
+        //    return PhysicalFile(filename, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", file.Name);
         //}
     }
 }

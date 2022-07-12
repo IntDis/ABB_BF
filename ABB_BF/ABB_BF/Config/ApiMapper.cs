@@ -12,11 +12,11 @@ namespace ABB_BF.Config
         {
             CreateMap<AddProbationRequest, ProbationModel>();
             CreateMap<AddGrantRequest, GrantModel>();
-            CreateMap<AddUniversityFormRequest, UniversityFormModel>();
+            CreateMap<AddUniversityRequest, UniversityModel>();
             CreateMap<AddPracticeRequest, PracticeModel>();
 
 
-            CreateMap<UniversityFormModel, UniversityFormResponse>();
+            CreateMap<UniversityModel, UniversityResponse>();
             CreateMap<GrantModel, GrantFormResponse>();
             CreateMap<PracticeModel, PracticeResponse>();
             CreateMap<ProbationModel, ProbationResponse>();

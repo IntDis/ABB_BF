@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ABB_BF.DAL.Repositories
 {
-    public class UniversityFormRepository : IUniversityFormRepository
+    public class UniversityFormRepository : IUniversityRepository
     {
         private readonly Context _context;
 
@@ -13,14 +13,14 @@ namespace ABB_BF.DAL.Repositories
             _context = context;
         }
 
-        public async Task<int> AddUniversityForm(UniversityForm university)
+        public async Task<int> AddUniversityForm(University university)
         {
             await _context.UniversityForms.AddAsync(university);
             await _context.SaveChangesAsync();
             return university.Id;
         }
 
-        public async Task<List<UniversityForm>> GetAll()
+        public async Task<List<University>> GetAll()
         {
             return await _context.UniversityForms.ToListAsync();
         }

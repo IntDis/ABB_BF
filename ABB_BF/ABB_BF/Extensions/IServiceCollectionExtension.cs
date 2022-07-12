@@ -11,7 +11,7 @@ namespace ABB_BF.Extensions
         {
             services.AddScoped<IProbationRepository, ProbationRepository>();
             services.AddScoped<IGrantRepository, GrantRepository>();
-            services.AddScoped<IUniversityFormRepository, UniversityFormRepository>();
+            services.AddScoped<IUniversityRepository, UniversityFormRepository>();
             services.AddScoped<IPracticeRepository, PracticeRepository>();
         }
 
@@ -19,10 +19,10 @@ namespace ABB_BF.Extensions
         {
             services.AddScoped<IProbationService, ProbationService>();
             services.AddScoped<IGrantService, GrantService>();
-            services.AddScoped<IUniversityFormService, UniversityFormService>();
+            services.AddScoped<IUniversityService, UniversityService>();
             services.AddScoped<IPracticeService, PracticeService>();
 
-            services.AddScoped<ICsvHelper, BLL.Services.CsvHelper>();
+            services.AddScoped<IFileHelper, BLL.Services.FileHelper>();
             services.AddScoped<IEmailSenderService, EmailSenderService>();
         }
     }

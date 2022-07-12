@@ -15,7 +15,7 @@ namespace ABB_BF.DAL.Repositories
 
         public async Task<int> AddPractice(Practice practice)
         {
-            await _context.Practices.AddAsync(practice);
+            await _context.PracticeForms.AddAsync(practice);
             await _context.SaveChangesAsync();
 
             return practice.Id;
@@ -23,7 +23,7 @@ namespace ABB_BF.DAL.Repositories
 
         public async Task<List<Practice>> GetAll()
         {
-            return await _context.Practices.ToListAsync();
+            return await _context.PracticeForms.ToListAsync();
         }
     }
 }

@@ -3,7 +3,7 @@ using FileHelpers;
 
 namespace ABB_BF.BLL.Services
 {
-    public class CsvHelper : ICsvHelper
+    public class FileHelper : IFileHelper
     {
         public async Task<string> GetScv<T>(List<T> forms) where T : class
         {

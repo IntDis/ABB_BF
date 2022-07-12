@@ -10,9 +10,9 @@ namespace ABB_BF.BLL.Services
     {
         private readonly IMapper _mapper;
         private readonly IGrantRepository _grantRepository;
-        private readonly ICsvHelper _csvHelper;
+        private readonly IFileHelper _csvHelper;
 
-        public GrantService(IMapper mapper, IGrantRepository grantRepository, ICsvHelper csvHelper)
+        public GrantService(IMapper mapper, IGrantRepository grantRepository, IFileHelper csvHelper)
         {
             _mapper = mapper;
             _grantRepository = grantRepository;

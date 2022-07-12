@@ -2,6 +2,6 @@
 {
     public class UniversityFile : AbstractFormFile
     {
-        public virtual UniversityForm University { get; set; }
+        public virtual University University { get; set; }
     }
 }

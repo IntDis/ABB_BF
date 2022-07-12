@@ -4,11 +4,11 @@ using FileHelpers;
 namespace ABB_BF.DAL.Entities
 {
     [DelimitedRecord(",")]
-    public class UniversityForm : AbstractCommonData
+    public class University : AbstractCommonData
     {
         public string Comment { get; set; }
         public bool IsCertificated { get; set; }
         public CourseDirections Direction { get; set; }
-        public ICollection<UniversityFile> UniversityFiles { get; set; }
+        public virtual ICollection<UniversityFile> UniversityFiles { get; set; }
     }
 }

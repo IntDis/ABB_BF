@@ -10,11 +10,11 @@ namespace ABB_BF.BLL.Services
     {
         private readonly IMapper _mapper;
         private readonly IProbationRepository _probationRepository;
-        private readonly ICsvHelper _csvHelper;
+        private readonly IFileHelper _csvHelper;
 
         public ProbationService(IMapper mapper,
             IProbationRepository probationRepository,
-            ICsvHelper csvHelper)
+            IFileHelper csvHelper)
         {
             _mapper = mapper;
             _probationRepository = probationRepository;

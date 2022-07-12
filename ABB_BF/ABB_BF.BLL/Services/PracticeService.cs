@@ -9,10 +9,10 @@ namespace ABB_BF.BLL.Services
     public class PracticeService : IPracticeService
     {
         private readonly IMapper _mapper;
-        private readonly ICsvHelper _csvHelper;
+        private readonly IFileHelper _csvHelper;
         private readonly IPracticeRepository _practiceRepository;
 
-        public PracticeService(IMapper mapper, IPracticeRepository practiceRepository, ICsvHelper csvHelper)
+        public PracticeService(IMapper mapper, IPracticeRepository practiceRepository, IFileHelper csvHelper)
         {
             _mapper = mapper;
             _practiceRepository = practiceRepository;

@@ -11,13 +11,13 @@ namespace ABB_BF.Controllers
     [Route("api/[controller]")]
     public class UniversityFormController : Controller
     {
-        private readonly IUniversityFormService _universityFormService;
+        private readonly IUniversityService _universityFormService;
         private readonly IWebHostEnvironment _appEnvironment;
         private readonly IMapper _mapper;
 
         public UniversityFormController(
             IMapper mapper,
-            IUniversityFormService universityFormService,
+            IUniversityService universityFormService,
             IWebHostEnvironment appEnvironment)
         {
             _mapper = mapper;
@@ -26,17 +26,17 @@ namespace ABB_BF.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> AddUniversityForm([FromBody] AddUniversityFormRequest form)
+        public async Task<ActionResult<int>> AddUniversityForm([FromBody] AddUniversityRequest form)
         {
-            UniversityFormModel model = _mapper.Map<UniversityFormModel>(form);
+            UniversityModel model = _mapper.Map<UniversityModel>(form);
             return Ok(await _universityFormService.AddUniversityForm(model));
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<UniversityFormResponse>>> GetAll()
+        public async Task<ActionResult<List<UniversityResponse>>> GetAll()
         {
             return Ok(_mapper
-                .Map<List<UniversityFormResponse>> (await _universityFormService.GetAll()));
+                .Map<List<UniversityResponse>> (await _universityFormService.GetAll()));
         }
 
         [HttpGet("csv")]

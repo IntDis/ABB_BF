@@ -1,6 +1,6 @@
 ﻿namespace ABB_BF.Models.Responses
 {
-    public class UniversityFormResponse
+    public class UniversityResponse
     {
         public string Secondname { get; set; }
         public string Firstname { get; set; }

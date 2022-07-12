@@ -15,19 +15,19 @@ namespace ABB_BF.DAL.Repositories
 
         public async Task<int> AddProbation(Probation probation)
         {
-            await _context.Probations.AddAsync(probation);
+            await _context.ProbationForms.AddAsync(probation);
             await _context.SaveChangesAsync();
             return probation.Id;
         }
 
         public async Task<List<Probation>> GetAll()
         {
-            return await _context.Probations.ToListAsync();
+            return await _context.ProbationForms.ToListAsync();
         }
 
         public async Task<Probation> GetById(int id)
         {
-            return await _context.Probations.FirstOrDefaultAsync(p => p.Id == id);
+            return await _context.ProbationForms.FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }

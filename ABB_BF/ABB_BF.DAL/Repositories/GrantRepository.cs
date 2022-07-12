@@ -15,7 +15,7 @@ namespace ABB_BF.DAL.Repositories
 
         public async Task<int> AddGrant(Grant grant)
         {
-            await _context.Grants.AddAsync(grant);
+            await _context.GrantForms.AddAsync(grant);
             await _context.SaveChangesAsync();
 
             return grant.Id;
@@ -23,7 +23,7 @@ namespace ABB_BF.DAL.Repositories
 
         public async Task<List<Grant>> GetAll()
         {
-            return await _context.Grants.ToListAsync();
+            return await _context.GrantForms.ToListAsync();
         }
     }
 }

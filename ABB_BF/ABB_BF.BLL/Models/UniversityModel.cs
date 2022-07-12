@@ -1,9 +1,10 @@
 ﻿using ABB_BF.DAL.Enums;
 
-namespace ABB_BF.Models.Requests
+namespace ABB_BF.BLL.Models
 {
-    public class AddUniversityFormRequest
+    public class UniversityModel
     {
+        public int Id { get; set; }
         public string Secondname { get; set; }
         public string Firstname { get; set; }
         public string Patronymic { get; set; }
@@ -12,6 +13,6 @@ namespace ABB_BF.Models.Requests
         public string Comment { get; set; }
         public bool IsCertificated { get; set; }
         public CourseDirections Direction { get; set; }
-        public List<IFormFile> Files { get; set; }
+        public List<UniversityFileModel> Files { get; set; }
     }
 }
