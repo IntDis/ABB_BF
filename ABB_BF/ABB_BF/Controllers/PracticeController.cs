@@ -27,7 +27,6 @@ namespace ABB_BF.Controllers
         public async Task<ActionResult<int>> AddPractice([FromBody] AddPracticeRequest practiceRequest)
         {
             PracticeModel model = _mapper.Map<PracticeModel>(practiceRequest);
-
             return Ok(await _practiceService.AddPractice(model));
         }
 

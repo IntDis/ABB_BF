@@ -1,4 +1,6 @@
-﻿namespace ABB_BF.BLL.Models
+﻿using ABB_BF.DAL.Enums;
+
+namespace ABB_BF.BLL.Models
 {
     public class GrantModel
     {
@@ -8,14 +10,12 @@
         public string Patronymic { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public string? Comment { get; set; }
-        public DateTime BirthDate { get; set; }
         public int Course { get; set; }
         public string College { get; set; }
         public string EducationLevel { get; set; }
         public float AverageMarks { get; set; }
-        public string Speciality { get; set; }
-        public string EducationForm { get; set; }
+        public Specialities Speciality { get; set; }
         public string OtherGrants { get; set; }
+        public List<GrantFileModel> Files { get; set; }
     }
 }

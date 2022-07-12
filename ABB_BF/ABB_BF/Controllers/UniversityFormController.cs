@@ -11,11 +11,12 @@ namespace ABB_BF.Controllers
     [Route("api/[controller]")]
     public class UniversityFormController : Controller
     {
-        private readonly IMapper _mapper;
         private readonly IUniversityFormService _universityFormService;
         private readonly IWebHostEnvironment _appEnvironment;
+        private readonly IMapper _mapper;
 
-        public UniversityFormController(IMapper mapper,
+        public UniversityFormController(
+            IMapper mapper,
             IUniversityFormService universityFormService,
             IWebHostEnvironment appEnvironment)
         {
@@ -27,9 +28,8 @@ namespace ABB_BF.Controllers
         [HttpPost]
         public async Task<ActionResult<int>> AddUniversityForm([FromBody] AddUniversityFormRequest form)
         {
-            int id = await _universityFormService
-                .AddUniversityForm(_mapper.Map<UniversityFormModel>(form));
-            return Ok(id);
+            UniversityFormModel model = _mapper.Map<UniversityFormModel>(form);
+            return Ok(await _universityFormService.AddUniversityForm(model));
         }
 
         [HttpGet]

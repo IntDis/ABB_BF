@@ -7,7 +7,7 @@
         public string Patronymic { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public string? Comment { get; set; }
-        public DateTime StartDate { get; set; }
+        public string City { get; set; }
+        public List<IFormFile> Files { get; set; }
     }
 }

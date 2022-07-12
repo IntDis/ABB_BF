@@ -24,5 +24,10 @@ namespace ABB_BF.DAL.Repositories
         {
             return await _context.Probations.ToListAsync();
         }
+
+        public async Task<Probation> GetById(int id)
+        {
+            return await _context.Probations.FirstOrDefaultAsync(p => p.Id == id);
+        }
     }
 }

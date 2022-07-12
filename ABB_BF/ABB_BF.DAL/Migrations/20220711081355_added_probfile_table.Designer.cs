@@ -4,6 +4,7 @@ using ABB_BF.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ABB_BF.DAL.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20220711081355_added_probfile_table")]
+    partial class added_probfile_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,36 +79,6 @@ namespace ABB_BF.DAL.Migrations
                     b.ToTable("Grants");
                 });
 
-            modelBuilder.Entity("ABB_BF.DAL.Entities.GrantFiles", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<byte[]>("Data")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("Extension")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("GrantId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GrantId");
-
-                    b.ToTable("GrantFiles");
-                });
-
             modelBuilder.Entity("ABB_BF.DAL.Entities.Practice", b =>
                 {
                     b.Property<int>("Id")
@@ -164,36 +136,6 @@ namespace ABB_BF.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Practices");
-                });
-
-            modelBuilder.Entity("ABB_BF.DAL.Entities.PracticeFiles", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<byte[]>("Data")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("Extension")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PracticeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PracticeId");
-
-                    b.ToTable("PracticeFiles");
                 });
 
             modelBuilder.Entity("ABB_BF.DAL.Entities.Probation", b =>
@@ -263,36 +205,6 @@ namespace ABB_BF.DAL.Migrations
                     b.ToTable("ProbationFiles");
                 });
 
-            modelBuilder.Entity("ABB_BF.DAL.Entities.UniversityFiles", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<byte[]>("Data")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("Extension")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UniversityId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UniversityId");
-
-                    b.ToTable("UniversityFiles");
-                });
-
             modelBuilder.Entity("ABB_BF.DAL.Entities.UniversityForm", b =>
                 {
                     b.Property<int>("Id")
@@ -337,28 +249,6 @@ namespace ABB_BF.DAL.Migrations
                     b.ToTable("UniversityForms");
                 });
 
-            modelBuilder.Entity("ABB_BF.DAL.Entities.GrantFiles", b =>
-                {
-                    b.HasOne("ABB_BF.DAL.Entities.Grant", "Grant")
-                        .WithMany("GrantFiles")
-                        .HasForeignKey("GrantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Grant");
-                });
-
-            modelBuilder.Entity("ABB_BF.DAL.Entities.PracticeFiles", b =>
-                {
-                    b.HasOne("ABB_BF.DAL.Entities.Practice", "Practice")
-                        .WithMany("PracticeFiles")
-                        .HasForeignKey("PracticeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Practice");
-                });
-
             modelBuilder.Entity("ABB_BF.DAL.Entities.ProbationFile", b =>
                 {
                     b.HasOne("ABB_BF.DAL.Entities.Probation", "Probation")
@@ -370,35 +260,9 @@ namespace ABB_BF.DAL.Migrations
                     b.Navigation("Probation");
                 });
 
-            modelBuilder.Entity("ABB_BF.DAL.Entities.UniversityFiles", b =>
-                {
-                    b.HasOne("ABB_BF.DAL.Entities.UniversityForm", "University")
-                        .WithMany("UniversityFiles")
-                        .HasForeignKey("UniversityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("University");
-                });
-
-            modelBuilder.Entity("ABB_BF.DAL.Entities.Grant", b =>
-                {
-                    b.Navigation("GrantFiles");
-                });
-
-            modelBuilder.Entity("ABB_BF.DAL.Entities.Practice", b =>
-                {
-                    b.Navigation("PracticeFiles");
-                });
-
             modelBuilder.Entity("ABB_BF.DAL.Entities.Probation", b =>
                 {
                     b.Navigation("Files");
-                });
-
-            modelBuilder.Entity("ABB_BF.DAL.Entities.UniversityForm", b =>
-                {
-                    b.Navigation("UniversityFiles");
                 });
 #pragma warning restore 612, 618
         }

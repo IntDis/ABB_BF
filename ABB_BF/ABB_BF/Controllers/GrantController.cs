@@ -26,7 +26,6 @@ namespace ABB_BF.Controllers
         public async Task<ActionResult<int>> AddGrant([FromBody] AddGrantRequest grantRequest)
         {
             GrantModel model = _mapper.Map<GrantModel>(grantRequest);
-            
             return Ok(await _grantService.AddGrant(model));
         }
 

@@ -6,6 +6,7 @@ namespace ABB_BF.BLL.Services.Interfaces
     {
         Task<int> AddProbation(ProbationModel model);
         Task<List<ProbationModel>> GetAll();
+        Task<ProbationModel> GetById(int id);
         Task<string> CreateCsv();
     }
 }

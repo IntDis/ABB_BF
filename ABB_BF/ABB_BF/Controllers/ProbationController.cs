@@ -25,10 +25,10 @@ namespace ABB_BF.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> AddProbation([FromBody] AddProbationRequest requestModel)
+        public async Task<ActionResult<int>> AddProbation([FromForm]AddProbationRequest requestModel)
         {
-            int id = await _probationService.AddProbation(_mapper.Map<ProbationModel>(requestModel));
-            return Ok(id);
+            ProbationModel model = _mapper.Map<ProbationModel>(requestModel);
+            return Ok(await _probationService.AddProbation(model));
         }
 
         [HttpGet]
@@ -47,5 +47,22 @@ namespace ABB_BF.Controllers
 
             return PhysicalFile(filePath, fileType, fileName);
         }
+
+        //[HttpGet("{id}/download")]
+        //public async Task<ActionResult> GetFile(int id)
+        //{
+        //    byte[] filedata = (await _probationService.GetById(id)).Files;
+        //    string extension = "docx";
+
+        //    string filename = Path.Combine(_appEnvironment.ContentRootPath, "file") + "." + extension;
+
+        //    System.IO.File.WriteAllBytes(filename, filedata);
+
+        //    //fix it
+        //    var process = Process.Start(filename);
+        //    process.Exited += (s, e) => System.IO.File.Delete(filename);
+
+        //    return PhysicalFile(filename, "docx", "file");
+        //}
     }
 }
