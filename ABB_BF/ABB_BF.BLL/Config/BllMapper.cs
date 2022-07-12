@@ -14,9 +14,13 @@ namespace ABB_BF.BLL.Config
             CreateMap<Practice, PracticeModel>().ReverseMap();
 
             CreateMap<ProbationFileModel, ProbationFile>().ReverseMap();
+            CreateMap<AbstractFormFileModel, ProbationFile>().ReverseMap();
+
             CreateMap<GrantFileModel, GrantFiles>().ReverseMap();
             CreateMap<PracticeFileModel, PracticeFile>().ReverseMap();
             CreateMap<UniversityFileModel, UniversityFile>().ReverseMap();
+            CreateMap<AbstractFormFileModel, AbstractFormFile>().ReverseMap();
+            CreateMap<AbstractEntityModel, AbstractCommonData>().ReverseMap();
         }
     }
 }

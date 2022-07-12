@@ -15,14 +15,17 @@ namespace ABB_BF.Controllers
         private readonly IMapper _mapper;
         private readonly IProbationService _probationService;
         private readonly IWebHostEnvironment _appEnvironment;
+        private readonly IFileHelper _fileHelper;
 
         public ProbationController(IMapper mapper,
             IProbationService probationService,
-            IWebHostEnvironment appEnvironment)
+            IWebHostEnvironment appEnvironment,
+            IFileHelper fileHelper)
         {
             _mapper = mapper;
             _probationService = probationService;
             _appEnvironment = appEnvironment;
+            _fileHelper = fileHelper;
         }
 
         [HttpPost]
@@ -67,9 +70,20 @@ namespace ABB_BF.Controllers
 
         //    //p.Start();
 
-        //    //p.Exited += (s, e) => System.IO.File.Delete(filename);
+        //    //p.Exited += (s, e) => File.Delete(filename);
 
         //    return PhysicalFile(filename, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", file.Name);
         //}
+
+        [HttpGet("create-folder")]
+        public async Task<ActionResult> CreateFolder()
+        {
+
+            var models = await _probationService.GetAll();
+
+            _fileHelper.CreateZipWithFormsInfo(_mapper.Map<List<AbstractEntityModel>>(models));
+
+            return Ok();
+        }
     }
 }

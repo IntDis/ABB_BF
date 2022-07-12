@@ -21,6 +21,8 @@ namespace ABB_BF.Config
             CreateMap<PracticeModel, PracticeResponse>();
             CreateMap<ProbationModel, ProbationResponse>();
 
+            CreateMap<ProbationModel, AbstractEntityModel>();
+
             CreateMap<IFormFile, ProbationFileModel>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FileName))
                 .ForMember(dest => dest.Extension, opt => opt.MapFrom(src => GetExtension(src.FileName)))
