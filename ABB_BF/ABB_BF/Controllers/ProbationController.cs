@@ -74,14 +74,5 @@ namespace ABB_BF.Controllers
 
         //    return PhysicalFile(filename, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", file.Name);
         //}
-
-        [HttpGet("create-folder")]
-        public async Task<ActionResult> CreateFolder()
-        {
-            string path = await _fileHelper.CreateZipWithFormsInfo(
-                _mapper.Map<List<AbstractEntityModel>>(await _probationService.GetAll()));
-
-            return Ok(path);
-        }
     }
 }
