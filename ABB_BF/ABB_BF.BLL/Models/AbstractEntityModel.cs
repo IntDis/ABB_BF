@@ -1,6 +1,8 @@
-﻿namespace ABB_BF.Models.Responses
+﻿using OfficeOpenXml.Attributes;
+
+namespace ABB_BF.BLL.Models
 {
-    public class PracticeResponse
+    public class AbstractEntityModel
     {
         public int Id { get; set; }
         public string Firstname { get; set; }
@@ -8,6 +10,7 @@
         public string Patronymic { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public virtual List<IFormFile> Files { get; set; }
+        [EpplusIgnore]
+        public List<AbstractFormFileModel> Files { get; set; }
     }
 }
