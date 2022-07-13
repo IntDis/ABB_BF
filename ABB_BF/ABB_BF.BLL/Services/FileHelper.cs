@@ -38,7 +38,7 @@ namespace ABB_BF.BLL.Services
 
                 foreach (AbstractFormFileModel file in model.Files)
                 {
-                    string filename = $"{_rootPath}/{firstname}_{secondname}/{file.Name}.{file.Extension}";
+                    string filename = $"{_rootPath}/{firstname}_{secondname}/{file.Name}";
                     File.WriteAllBytes(filename, file.Data);
                 }
             }

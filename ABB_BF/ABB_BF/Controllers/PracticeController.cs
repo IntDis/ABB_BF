@@ -14,17 +14,21 @@ namespace ABB_BF.Controllers
         private readonly IMapper _mapper;
         private readonly IPracticeService _practiceService;
         private readonly IWebHostEnvironment _appEnvironment;
+        private readonly IFileHelper _fileHelper;
 
-
-        public PracticeController(IMapper mapper, IPracticeService practiceService, IWebHostEnvironment appEnvironment)
+        public PracticeController(IMapper mapper,
+            IPracticeService practiceService,
+            IWebHostEnvironment appEnvironment,
+            IFileHelper fileHelper)
         {
             _mapper = mapper;
             _practiceService = practiceService;
             _appEnvironment = appEnvironment;
+            _fileHelper = fileHelper;
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> AddPractice([FromBody] AddPracticeRequest practiceRequest)
+        public async Task<ActionResult<int>> AddPractice([FromForm] AddPracticeRequest practiceRequest)
         {
             PracticeModel model = _mapper.Map<PracticeModel>(practiceRequest);
             return Ok(await _practiceService.AddPractice(model));
@@ -36,15 +40,28 @@ namespace ABB_BF.Controllers
             return Ok(_mapper.Map<List<PracticeResponse>>(await _practiceService.GetAll()));
         }
 
-        [HttpGet("csv")]
-        public async Task<ActionResult> DownloadCsv()
+        [HttpGet("download")]
+        public async Task<ActionResult> DownloadZip()
         {
-            string fileName = await _practiceService.CreateCsv();
+            List<PracticeModel> models = await _practiceService.GetAll();
 
-            string fileType = "application/csv";
-            string filePath = Path.Combine(_appEnvironment.ContentRootPath, fileName);
+            string path = await _fileHelper
+                .CreateFolderWithFormsInfo(
+                _mapper.Map<List<AbstractEntityModel>>(models), models);
 
-            return PhysicalFile(filePath, fileType, fileName);
+            string zipPath = await _fileHelper.CreateZip(path, $"{path}.zip");
+
+            var fs = new FileStream(zipPath,
+                FileMode.Open,
+                FileAccess.Read,
+                FileShare.None,
+                4096,
+                FileOptions.DeleteOnClose);
+
+            return File(
+                fileStream: fs,
+                contentType: "application/zip",
+                fileDownloadName: "file.zip");
         }
     }
 }

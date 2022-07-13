@@ -23,7 +23,7 @@ namespace ABB_BF.Config
 
             CreateMap<ProbationModel, AbstractEntityModel>();
 
-            CreateMap<IFormFile, ProbationFileModel>()
+            CreateMap<IFormFile, AbstractFormFileModel>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FileName))
                 .ForMember(dest => dest.Extension, opt => opt.MapFrom(src => GetExtension(src.FileName)))
                 .ForMember(dest => dest.Data, opt => opt.MapFrom(src => GetBytes(src)));
