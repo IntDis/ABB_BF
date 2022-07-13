@@ -1,6 +1,7 @@
 ﻿using ABB_BF.BLL.Models;
 using ABB_BF.BLL.Services.Interfaces;
-using FileHelpers;
+using OfficeOpenXml;
+using System.IO.Compression;
 
 namespace ABB_BF.BLL.Services
 {
@@ -10,20 +11,24 @@ namespace ABB_BF.BLL.Services
 
         public async Task<string> GetScv<T>(List<T> forms) where T : class
         {
-            var engine = new FileHelperEngine<T>();
+            Directory.CreateDirectory(_rootPath);
+            string excelName = $"{_rootPath}/{typeof(T).Name}_{DateTime.Now.ToShortDateString()}.xlsx";
 
-            engine.Encoding = System.Text.Encoding.UTF32;
-            engine.HeaderText = engine.GetFileHeader();
-
-            var fileName = $"{typeof(T)}_{DateTime.Now.ToShortDateString()}.csv";
-
-            engine.WriteFile(fileName, forms);
-            return fileName;
+            var stream = new MemoryStream();
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var package = new ExcelPackage(stream))
+            {
+                var workSheet = package.Workbook.Worksheets.Add("bs1");
+                workSheet.Cells.LoadFromCollection(forms, true);
+                package.SaveAs(excelName);
+            }
+          
+            return excelName;
         }
 
-        public async Task<string> CreateZipWithFormsInfo(List<AbstractEntityModel> list)
+        public async Task<string> CreateFolderWithFormsInfo<T>(List<AbstractEntityModel> list, List<T> models) where T : class
         {
-            Directory.CreateDirectory(_rootPath);
+            string pathToXltx = await GetScv(models);
 
             foreach (AbstractEntityModel model in list)
             {
@@ -39,6 +44,18 @@ namespace ABB_BF.BLL.Services
             }
 
             return _rootPath;
+        }
+
+        public async Task<string> CreateZip(string startPath, string zipPath)
+        {
+            if (File.Exists(zipPath))
+            {
+                File.Delete(zipPath);
+            }
+
+            ZipFile.CreateFromDirectory(startPath, zipPath);
+            Directory.Delete(startPath, true);
+            return zipPath;
         }
     }
 }

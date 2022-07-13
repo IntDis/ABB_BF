@@ -1,9 +1,7 @@
 ﻿using ABB_BF.DAL.Enums;
-using FileHelpers;
 
 namespace ABB_BF.DAL.Entities
 {
-    [DelimitedRecord(",")]
     public class Grant : AbstractCommonData
     {
         public int Course { get; set; }

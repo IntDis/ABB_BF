@@ -3,7 +3,6 @@ using FileHelpers;
 
 namespace ABB_BF.DAL.Entities
 {
-    [DelimitedRecord(",")]
     public class University : AbstractCommonData
     {
         public string College { get; set; }

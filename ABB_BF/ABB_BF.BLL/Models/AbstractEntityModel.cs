@@ -1,4 +1,6 @@
-﻿namespace ABB_BF.BLL.Models
+﻿using OfficeOpenXml.Attributes;
+
+namespace ABB_BF.BLL.Models
 {
     public class AbstractEntityModel
     {
@@ -8,6 +10,7 @@
         public string Patronymic { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
+        [EpplusIgnore]
         public List<AbstractFormFileModel> Files { get; set; }
     }
 }

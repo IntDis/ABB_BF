@@ -4,7 +4,6 @@ using ABB_BF.BLL.Services.Interfaces;
 using ABB_BF.Models.Requests;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace ABB_BF.Controllers
 {
@@ -49,7 +48,41 @@ namespace ABB_BF.Controllers
             string fileType = "application/csv";
             string filePath = Path.Combine(_appEnvironment.ContentRootPath, fileName);
 
-            return PhysicalFile(filePath, fileType, fileName);
+            var fs = new FileStream(filePath,
+                FileMode.Open,
+                FileAccess.Read,
+                FileShare.None,
+                4096,
+                FileOptions.DeleteOnClose);
+            
+            return File(
+                fileStream: fs,
+                contentType: fileType,
+                fileDownloadName: "File.xlsx");
+        }
+
+        [HttpGet("zip")]
+        public async Task<ActionResult> CreateZip()
+        {
+            List<ProbationModel> models = await _probationService.GetAll();
+
+            string path = await _fileHelper
+                .CreateFolderWithFormsInfo(
+                _mapper.Map<List<AbstractEntityModel>>(models), models);
+
+            string zipPath = await _fileHelper.CreateZip(path, $"{path}.zip");
+            
+            var fs = new FileStream(zipPath,
+                FileMode.Open,
+                FileAccess.Read,
+                FileShare.None,
+                4096,
+                FileOptions.DeleteOnClose);
+
+            return File(
+                fileStream: fs,
+                contentType: "application/zip",
+                fileDownloadName: "file.zip");
         }
 
         //[HttpGet("{id}/download")]
