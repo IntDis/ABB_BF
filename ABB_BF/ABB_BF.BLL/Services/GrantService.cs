@@ -10,13 +10,13 @@ namespace ABB_BF.BLL.Services
     {
         private readonly IMapper _mapper;
         private readonly IGrantRepository _grantRepository;
-        private readonly IFileHelper _csvHelper;
+        private readonly IFileHelper _fileHelper;
 
-        public GrantService(IMapper mapper, IGrantRepository grantRepository, IFileHelper csvHelper)
+        public GrantService(IMapper mapper, IGrantRepository grantRepository, IFileHelper fileHelper)
         {
             _mapper = mapper;
             _grantRepository = grantRepository;
-            _csvHelper = csvHelper;
+            _fileHelper = fileHelper;
         }
 
         public async Task<int> AddGrant(GrantModel grandModel)
@@ -33,7 +33,7 @@ namespace ABB_BF.BLL.Services
 
         public async Task<string> CreateCsv()
         {
-            return await _csvHelper.GetScv(await _grantRepository.GetAll());
+            return _fileHelper.CreateXlsx(await _grantRepository.GetAll());
         }
     }
 }
