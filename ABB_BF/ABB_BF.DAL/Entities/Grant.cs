@@ -12,6 +12,5 @@ namespace ABB_BF.DAL.Entities
         public float AverageMarks { get; set; }
         public Specialities Speciality { get; set; }
         public string OtherGrants { get; set; }
-        public virtual ICollection<GrantFiles> GrantFiles { get; set; }
     }
 }

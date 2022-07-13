@@ -6,9 +6,10 @@ namespace ABB_BF.DAL.Entities
     [DelimitedRecord(",")]
     public class University : AbstractCommonData
     {
-        public string Comment { get; set; }
-        public bool IsCertificated { get; set; }
+        public string College { get; set; }
+        public DateTime StartDate { get; set; }
+        public int Duration { get; set; }
         public CourseDirections Direction { get; set; }
-        public virtual ICollection<UniversityFile> UniversityFiles { get; set; }
+        public bool IsCertificated { get; set; }
     }
 }

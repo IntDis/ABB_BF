@@ -4,8 +4,9 @@ namespace ABB_BF.Models.Requests
 {
     public class AddGrantRequest
     {
-        public string Secondname { get; set; }
+        public int Id { get; set; }
         public string Firstname { get; set; }
+        public string Secondname { get; set; }
         public string Patronymic { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
@@ -15,6 +16,5 @@ namespace ABB_BF.Models.Requests
         public float AverageMarks { get; set; }
         public Specialities Speciality { get; set; }
         public string OtherGrants { get; set; }
-        public List<IFormFile> Files { get; set; }
     }
 }

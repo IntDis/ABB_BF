@@ -30,10 +30,10 @@ namespace ABB_BF.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<GrantFormResponse>>> GetAll()
+        public async Task<ActionResult<List<GrantResponse>>> GetAll()
         {
             return Ok(_mapper
-                .Map<List<GrantFormResponse>>(await _grantService.GetAll()));
+                .Map<List<GrantResponse>>(await _grantService.GetAll()));
         }
 
         [HttpGet("csv")]

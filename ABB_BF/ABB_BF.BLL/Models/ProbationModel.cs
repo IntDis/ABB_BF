@@ -2,7 +2,7 @@
 {
     public class ProbationModel : AbstractEntityModel
     {
-        public int Id { get; set; }
-        public string City { get; set; }
+        //public List<ProbationFileModel> Files { get; set; }
+
     }
 }
