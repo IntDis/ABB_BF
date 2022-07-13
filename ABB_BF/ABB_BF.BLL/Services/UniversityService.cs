@@ -34,7 +34,7 @@ namespace ABB_BF.BLL.Services
 
         public async Task<string> CreateCsv()
         {
-            return await _csvHelper.GetScv(await _universityFormRepository.GetAll());
+            return _csvHelper.CreateXlsx(await _universityFormRepository.GetAll());
         }
     }
 }

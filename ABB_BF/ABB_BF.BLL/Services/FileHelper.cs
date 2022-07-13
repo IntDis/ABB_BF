@@ -7,18 +7,18 @@ namespace ABB_BF.BLL.Services
 {
     public class FileHelper : IFileHelper
     {
-        private string _rootPath = "./././newFolder";
+        private string _rootPath = "./././";
 
         public async Task<string> GetScv<T>(List<T> forms) where T : class
         {
-            Directory.CreateDirectory(_rootPath);
-            string excelName = $"{_rootPath}/{typeof(T).Name}_{DateTime.Now.ToShortDateString()}.xlsx";
+            Directory.CreateDirectory($"{_rootPath}newFolder");
+            string excelName = $"{_rootPath}newFolder/{typeof(T).Name}_{DateTime.Now.ToShortDateString()}.xlsx";
 
             var stream = new MemoryStream();
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (var package = new ExcelPackage(stream))
             {
-                var workSheet = package.Workbook.Worksheets.Add("bs1");
+                var workSheet = package.Workbook.Worksheets.Add("sheet");
                 workSheet.Cells.LoadFromCollection(forms, true);
                 package.SaveAs(excelName);
             }
@@ -26,7 +26,24 @@ namespace ABB_BF.BLL.Services
             return excelName;
         }
 
-        public async Task<string> CreateFolderWithFormsInfo<T>(List<AbstractEntityModel> list, List<T> models) where T : class
+        public string CreateXlsx<T>(List<T> forms) where T : class
+        {
+            string excelName = $"{_rootPath}{typeof(T).Name}_{DateTime.Now.ToShortDateString()}.xlsx";
+
+            var stream = new MemoryStream();
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var package = new ExcelPackage(stream))
+            {
+                var workSheet = package.Workbook.Worksheets.Add("sheet");
+                workSheet.Cells.LoadFromCollection(forms, true);
+                package.SaveAs(excelName);
+            }
+
+            return excelName;
+        }
+
+        public async Task<string> CreateFolderWithFormsInfo<T>(List<AbstractEntityModel> list, List<T> models)
+            where T : class
         {
             string pathToXltx = await GetScv(models);
 
@@ -34,16 +51,16 @@ namespace ABB_BF.BLL.Services
             {
                 string firstname = model.Firstname;
                 string secondname = model.Secondname;
-                Directory.CreateDirectory($"{_rootPath}/{firstname}_{secondname}");
+                Directory.CreateDirectory($"{_rootPath}newFolder/{firstname}_{secondname}");
 
                 foreach (AbstractFormFileModel file in model.Files)
                 {
-                    string filename = $"{_rootPath}/{firstname}_{secondname}/{file.Name}.{file.Extension}";
+                    string filename = $"{_rootPath}newFolder/{firstname}_{secondname}/{file.Name}";
                     File.WriteAllBytes(filename, file.Data);
                 }
             }
 
-            return _rootPath;
+            return $"{_rootPath}newFolder";
         }
 
         public async Task<string> CreateZip(string startPath, string zipPath)

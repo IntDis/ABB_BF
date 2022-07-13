@@ -44,7 +44,19 @@ namespace ABB_BF.Controllers
             string fileType = "application/csv";
             string filePath = Path.Combine(_appEnvironment.ContentRootPath, fileName);
 
-            return PhysicalFile(filePath, fileType, fileName);
+            string trimmed = Path.GetDirectoryName(filePath);
+
+            FileStream fs = new FileStream(filePath,
+                FileMode.Open,
+                FileAccess.Read,
+                FileShare.None,
+                4096,
+                FileOptions.DeleteOnClose);
+
+            return File(
+                fileStream: fs,
+                contentType: fileType,
+                fileDownloadName: "File.xlsx");
         }
     }
 }
