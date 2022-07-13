@@ -11,18 +11,30 @@ namespace ABB_BF.BLL.Services
         private readonly IMapper _mapper;
         private readonly IProbationRepository _probationRepository;
         private readonly IFileHelper _csvHelper;
+        private readonly IModelsService _modelsService;
 
         public ProbationService(IMapper mapper,
             IProbationRepository probationRepository,
-            IFileHelper csvHelper)
+            IFileHelper csvHelper,
+            IModelsService modelsService)
         {
             _mapper = mapper;
             _probationRepository = probationRepository;
             _csvHelper = csvHelper;
+            _modelsService = modelsService;
+
+
         }
 
         public async Task<int> AddProbation(ProbationModel probationModel)
         {
+            if (!_modelsService.IsNumberValid(probationModel.Phone))
+            {
+                throw new ArgumentException("Введен неверный номер");
+            }
+
+            probationModel.Phone = _modelsService.FixPhoneNumber(probationModel.Phone);
+            
             return await _probationRepository.AddProbation(_mapper.Map<Probation>(probationModel));
         }
 

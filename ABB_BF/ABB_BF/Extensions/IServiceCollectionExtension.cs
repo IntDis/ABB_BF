@@ -22,7 +22,7 @@ namespace ABB_BF.Extensions
             services.AddScoped<IUniversityService, UniversityService>();
             services.AddScoped<IPracticeService, PracticeService>();
 
-            services.AddScoped<IFileHelper, BLL.Services.FileHelper>();
+            services.AddScoped<IFileHelper, FileHelper>();
             services.AddScoped<IEmailSenderService, EmailSenderService>();
         }
     }
