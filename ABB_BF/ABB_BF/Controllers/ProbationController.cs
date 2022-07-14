@@ -1,4 +1,5 @@
-﻿using ABB_BF.API.Models.Responses;
+﻿using ABB_BF.API.Models.Requests;
+using ABB_BF.API.Models.Responses;
 using ABB_BF.BLL.Models;
 using ABB_BF.BLL.Services.Interfaces;
 using ABB_BF.Models.Requests;
@@ -35,15 +36,17 @@ namespace ABB_BF.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ProbationResponse>>> GetAll()
+        public async Task<ActionResult<List<ProbationResponse>>> GetAll(FilterRequest filter)
         {
-            return Ok(_mapper.Map<List<ProbationResponse>>(await _probationService.GetAll()));
+            return Ok(_mapper.Map<List<ProbationResponse>>(
+                await _probationService
+                .GetAll(_mapper.Map<FilterModel>(filter))));
         }
 
         [HttpGet("download")]
-        public async Task<ActionResult> DownloadZip()
+        public async Task<ActionResult> DownloadZip(FilterRequest filter)
         {
-            List<ProbationModel> models = await _probationService.GetAll();
+            List<ProbationModel> models = await _probationService.GetAll(_mapper.Map<FilterModel>(filter));
 
             string path = await _fileHelper
                 .CreateFolderWithFormsInfo(

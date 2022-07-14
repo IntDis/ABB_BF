@@ -1,6 +1,7 @@
 ﻿using ABB_BF.BLL.Models;
 using ABB_BF.BLL.Services.Interfaces;
 using ABB_BF.DAL.Entities;
+using ABB_BF.DAL.Models;
 using ABB_BF.DAL.Repositories.Interfaces;
 using AutoMapper;
 
@@ -29,14 +30,14 @@ namespace ABB_BF.BLL.Services
                 .AddUniversityForm(_mapper.Map<University>(universityFormModel));
         }
 
-        public async Task<List<UniversityModel>> GetAll()
+        public async Task<List<UniversityModel>> GetAll(FilterModel filter)
         {
-            return _mapper.Map<List<UniversityModel>>(await _universityFormRepository.GetAll());
+            return _mapper.Map<List<UniversityModel>>(await _universityFormRepository.GetAll(_mapper.Map<Filter>(filter)));
         }
 
-        public async Task<string> CreateCsv()
+        public async Task<string> CreateCsv(FilterModel filter)
         {
-            return _csvHelper.CreateXlsx(await _universityFormRepository.GetAll());
+            return _csvHelper.CreateXlsx(await _universityFormRepository.GetAll(_mapper.Map<Filter>(filter)));
         }
     }
 }

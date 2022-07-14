@@ -1,4 +1,5 @@
 ﻿using ABB_BF.DAL.Entities;
+using ABB_BF.DAL.Models;
 using ABB_BF.DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,14 +21,22 @@ namespace ABB_BF.DAL.Repositories
             return probation.Id;
         }
 
-        public async Task<List<Probation>> GetAll()
+        public async Task<List<Probation>> GetAll(Filter filter)
         {
-            return await _context.ProbationForms.ToListAsync();
-        }
+            List<Probation> probations = await _context.ProbationForms
+                .Where(c =>
+                    (filter.IsChecked == null || c.IsChecked != filter.IsChecked) &&
+                    (c.CreationDate >= DateOnly.FromDateTime(filter.StartInterval)) &&
+                    (c.CreationDate <= DateOnly.FromDateTime(filter.FinishInterval))).ToListAsync();
 
-        public async Task<Probation> GetById(int id)
-        {
-            return await _context.ProbationForms.FirstOrDefaultAsync(p => p.Id == id);
+            foreach (Probation probation in probations)
+            {
+                probation.IsChecked = true;
+            }
+
+            _context.SaveChanges();
+
+            return probations;
         }
     }
 }
