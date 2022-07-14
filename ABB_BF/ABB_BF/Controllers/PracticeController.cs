@@ -1,7 +1,7 @@
-﻿using ABB_BF.BLL.Models;
+﻿using ABB_BF.API.Models.Requests;
+using ABB_BF.BLL.Models;
 using ABB_BF.BLL.Services.Interfaces;
 using ABB_BF.Models.Requests;
-using ABB_BF.Models.Responses;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,16 +34,10 @@ namespace ABB_BF.Controllers
             return Ok(await _practiceService.AddPractice(model));
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<PracticeResponse>>> GetAll()
-        {
-            return Ok(_mapper.Map<List<PracticeResponse>>(await _practiceService.GetAll()));
-        }
-
         [HttpGet("download")]
-        public async Task<ActionResult> DownloadZip()
+        public async Task<ActionResult> DownloadZip(FilterRequest filters)
         {
-            List<PracticeModel> models = await _practiceService.GetAll();
+            List<PracticeModel> models = await _practiceService.GetAll(_mapper.Map<FilterModel>(filters));
 
             string path = await _fileHelper
                 .CreateFolderWithFormsInfo(
