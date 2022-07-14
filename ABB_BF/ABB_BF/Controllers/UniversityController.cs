@@ -33,13 +33,6 @@ namespace ABB_BF.Controllers
             return Ok(await _universityService.AddUniversityForm(model));
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<UniversityResponse>>> GetAll(FilterRequest filter)
-        {
-            return Ok(_mapper
-                .Map<List<UniversityResponse>> (await _universityService.GetAll(_mapper.Map<FilterModel>(filter))));
-        }
-
         [HttpGet("csv")]
         public async Task<ActionResult> DownloadCsv(FilterRequest filter)
         {

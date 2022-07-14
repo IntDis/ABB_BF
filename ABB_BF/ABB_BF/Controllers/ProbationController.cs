@@ -35,14 +35,6 @@ namespace ABB_BF.Controllers
             return Ok(await _probationService.AddProbation(model));
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<ProbationResponse>>> GetAll(FilterRequest filter)
-        {
-            return Ok(_mapper.Map<List<ProbationResponse>>(
-                await _probationService
-                .GetAll(_mapper.Map<FilterModel>(filter))));
-        }
-
         [HttpGet("download")]
         public async Task<ActionResult> DownloadZip(FilterRequest filter)
         {
