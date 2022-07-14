@@ -4,7 +4,6 @@ namespace ABB_BF.Models.Requests
 {
     public class AddUniversityRequest
     {
-        public int Id { get; set; }
         public string Secondname { get; set; }
         public string Firstname { get; set; }
         public string Patronymic { get; set; }

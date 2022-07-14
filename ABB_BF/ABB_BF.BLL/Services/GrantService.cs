@@ -19,9 +19,11 @@ namespace ABB_BF.BLL.Services
             _fileHelper = fileHelper;
         }
 
-        public async Task<int> AddGrant(GrantModel grandModel)
+        public async Task<int> AddGrant(GrantModel grantModel)
         {
-            Grant grant = _mapper.Map<Grant>(grandModel);
+            grantModel.CreationDate = DateOnly.FromDateTime(DateTime.Now);
+
+            Grant grant = _mapper.Map<Grant>(grantModel);
 
             return await _grantRepository.AddGrant(grant);
         }
