@@ -7,6 +7,6 @@ namespace ABB_BF.BLL.Services.Interfaces
     {
         Task<int> AddGrant(GrantModel grandModel);
         Task<List<GrantModel>> GetAll();
-        Task<string> CreateCsv();
+        Task<string> CreateCsv(FilterModel filter);
     }
 }

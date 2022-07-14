@@ -1,6 +1,7 @@
 ﻿using ABB_BF.BLL.Models;
 using ABB_BF.BLL.Services.Interfaces;
 using ABB_BF.DAL.Entities;
+using ABB_BF.DAL.Models;
 using ABB_BF.DAL.Repositories.Interfaces;
 using AutoMapper;
 
@@ -33,9 +34,14 @@ namespace ABB_BF.BLL.Services
             return _mapper.Map<List<GrantModel>>(await _grantRepository.GetAll());
         }
 
-        public async Task<string> CreateCsv()
+        public async Task<string> CreateCsv(FilterModel filter)
         {
-            return _fileHelper.CreateXlsx(await _grantRepository.GetAll());
+            if (filter.IsChecked == false)
+            {
+                filter.IsChecked = null;
+            }
+
+            return _fileHelper.CreateXlsx(await _grantRepository.GetByFilters(_mapper.Map<Filter>(filter)));
         }
     }
 }

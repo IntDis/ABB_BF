@@ -1,4 +1,5 @@
-﻿using ABB_BF.API.Models.Responses;
+﻿using ABB_BF.API.Models.Requests;
+using ABB_BF.API.Models.Responses;
 using ABB_BF.BLL.Models;
 using ABB_BF.Models.Requests;
 using ABB_BF.Models.Responses;
@@ -27,6 +28,10 @@ namespace ABB_BF.Config
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FileName))
                 .ForMember(dest => dest.Extension, opt => opt.MapFrom(src => GetExtension(src.FileName)))
                 .ForMember(dest => dest.Data, opt => opt.MapFrom(src => GetBytes(src)));
+
+            CreateMap<FilterRequest, FilterModel>()
+                .ForMember(dest => dest.StartInterval, opt => opt.NullSubstitute(DateTime.MinValue))
+                .ForMember(dest => dest.FinishInterval, opt => opt.NullSubstitute(DateTime.MaxValue));
         }
 
         protected string GetExtension(string fileName)

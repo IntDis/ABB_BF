@@ -1,5 +1,6 @@
 ﻿using ABB_BF.BLL.Models;
 using ABB_BF.DAL.Entities;
+using ABB_BF.DAL.Models;
 using AutoMapper;
 
 namespace ABB_BF.BLL.Config
@@ -21,6 +22,8 @@ namespace ABB_BF.BLL.Config
 
             CreateMap<AbstractFormFileModel, AbstractFormFile>().ReverseMap();
             CreateMap<AbstractEntityModel, AbstractCommonData>().ReverseMap();
+
+            CreateMap<FilterModel, Filter>().ReverseMap();
         }
     }
 }
