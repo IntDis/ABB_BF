@@ -1,4 +1,5 @@
-﻿using ABB_BF.BLL.Models;
+﻿using ABB_BF.API.Models.Requests;
+using ABB_BF.BLL.Models;
 using ABB_BF.BLL.Services.Interfaces;
 using ABB_BF.Models.Requests;
 using ABB_BF.Models.Responses;
@@ -33,21 +34,19 @@ namespace ABB_BF.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<UniversityResponse>>> GetAll()
+        public async Task<ActionResult<List<UniversityResponse>>> GetAll(FilterRequest filter)
         {
             return Ok(_mapper
-                .Map<List<UniversityResponse>> (await _universityService.GetAll()));
+                .Map<List<UniversityResponse>> (await _universityService.GetAll(_mapper.Map<FilterModel>(filter))));
         }
 
         [HttpGet("csv")]
-        public async Task<ActionResult> DownloadCsv()
+        public async Task<ActionResult> DownloadCsv(FilterRequest filter)
         {
-            string fileName = await _universityService.CreateCsv();
+            string fileName = await _universityService.CreateCsv(_mapper.Map<FilterModel>(filter));
 
             string fileType = "application/csv";
             string filePath = Path.Combine(_appEnvironment.ContentRootPath, fileName);
-
-            string trimmed = Path.GetDirectoryName(filePath);
 
             FileStream fs = new FileStream(filePath,
                 FileMode.Open,
