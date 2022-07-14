@@ -15,5 +15,6 @@ namespace ABB_BF.Models.Responses
         public int Duration { get; set; }
         public CourseDirections Direction { get; set; }
         public bool IsCertificated { get; set; }
+        public DateOnly CreationDate { get; set; }
     }
 }

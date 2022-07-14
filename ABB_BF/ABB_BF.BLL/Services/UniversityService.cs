@@ -23,6 +23,8 @@ namespace ABB_BF.BLL.Services
 
         public async Task<int> AddUniversityForm(UniversityModel universityFormModel)
         {
+            universityFormModel.CreationDate = DateOnly.FromDateTime(DateTime.Now);
+
             return await _universityFormRepository
                 .AddUniversityForm(_mapper.Map<University>(universityFormModel));
         }

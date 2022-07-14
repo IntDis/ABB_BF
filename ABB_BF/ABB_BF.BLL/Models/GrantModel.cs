@@ -16,5 +16,6 @@ namespace ABB_BF.BLL.Models
         public float AverageMarks { get; set; }
         public Specialities Speciality { get; set; }
         public string OtherGrants { get; set; }
+        public DateOnly CreationDate { get; set; }
     }
 }

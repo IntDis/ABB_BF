@@ -21,6 +21,9 @@ namespace ABB_BF.BLL.Services
 
         public async Task<int> AddPractice(PracticeModel practiceModel)
         {
+            practiceModel.CreationDate = DateOnly.FromDateTime(DateTime.Now);
+
+
             Practice practice = _mapper.Map<Practice>(practiceModel);
 
             return await _practiceRepository.AddPractice(practice);

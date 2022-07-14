@@ -8,5 +8,6 @@
         public string Patronymic { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
+        public DateOnly CreationDate { get; set; }
     }
 }

@@ -23,6 +23,8 @@ namespace ABB_BF.BLL.Services
 
         public async Task<int> AddProbation(ProbationModel probationModel)
         {
+            probationModel.CreationDate = DateOnly.FromDateTime(DateTime.Now);
+
             return await _probationRepository.AddProbation(_mapper.Map<Probation>(probationModel));
         }
 
