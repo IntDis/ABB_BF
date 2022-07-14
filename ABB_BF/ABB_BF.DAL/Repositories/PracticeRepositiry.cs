@@ -24,20 +24,20 @@ namespace ABB_BF.DAL.Repositories
 
         public async Task<List<Practice>> GetAll(Filter filter)
         {
-            List<Practice> grants = await _context.PracticeForms
+            List<Practice> practices = await _context.PracticeForms
                 .Where(c =>
                     (filter.IsChecked == null || c.IsChecked != filter.IsChecked) &&
                     (c.CreationDate >= DateOnly.FromDateTime(filter.StartInterval)) &&
                     (c.CreationDate <= DateOnly.FromDateTime(filter.FinishInterval))).ToListAsync();
 
-            foreach (Practice grant in grants)
+            foreach (Practice practice in practices)
             {
-                grant.IsChecked = true;
+                practice.IsChecked = true;
             }
 
             _context.SaveChanges();
 
-            return grants;
+            return practices;
         }
     }
 }

@@ -5,8 +5,7 @@ namespace ABB_BF.BLL.Services.Interfaces
     public interface IProbationService
     {
         Task<int> AddProbation(ProbationModel model);
-        Task<List<ProbationModel>> GetAll();
-        Task<ProbationModel> GetById(int id);
-        Task<string> CreateCsv();
+        Task<List<ProbationModel>> GetAll(FilterModel filter);
+        Task<string> CreateCsv(FilterModel filter);
     }
 }

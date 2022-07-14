@@ -1,6 +1,7 @@
 ﻿using ABB_BF.BLL.Models;
 using ABB_BF.BLL.Services.Interfaces;
 using ABB_BF.DAL.Entities;
+using ABB_BF.DAL.Models;
 using ABB_BF.DAL.Repositories.Interfaces;
 using AutoMapper;
 
@@ -28,19 +29,14 @@ namespace ABB_BF.BLL.Services
             return await _probationRepository.AddProbation(_mapper.Map<Probation>(probationModel));
         }
 
-        public async Task<List<ProbationModel>> GetAll()
+        public async Task<List<ProbationModel>> GetAll(FilterModel filter)
         {
-            return _mapper.Map<List<ProbationModel>>(await _probationRepository.GetAll());
+            return _mapper.Map<List<ProbationModel>>(await _probationRepository.GetAll(_mapper.Map<Filter>(filter)));
         }
 
-        public async Task<ProbationModel> GetById(int id)
+        public async Task<string> CreateCsv(FilterModel filter)
         {
-            return _mapper.Map<ProbationModel>(await _probationRepository.GetById(id));
-        }
-
-        public async Task<string> CreateCsv()
-        {
-            return await _csvHelper.GetScv(await _probationRepository.GetAll());
+            return await _csvHelper.GetScv(await _probationRepository.GetAll(_mapper.Map<Filter>(filter)));
         }
     }
 }
