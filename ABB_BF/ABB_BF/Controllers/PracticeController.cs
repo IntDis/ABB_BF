@@ -1,6 +1,7 @@
 ﻿using ABB_BF.API.Models.Requests;
 using ABB_BF.BLL.Models;
 using ABB_BF.BLL.Services.Interfaces;
+using ABB_BF.DAL.Enums;
 using ABB_BF.Models.Requests;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -35,8 +36,26 @@ namespace ABB_BF.Controllers
         }
 
         [HttpGet("download")]
-        public async Task<ActionResult> DownloadZip(FilterRequest filters)
+        public async Task<ActionResult> DownloadZip(
+            [FromHeader] string fileName,
+            [FromHeader] bool? IsChecked,
+            [FromHeader] string? StartInterval,
+            [FromHeader] string? FinishInterval,
+            [FromHeader] string? College,
+            [FromHeader] int? Course,
+            [FromHeader] CourseDirections? CourseDirections
+            )
         {
+            FilterRequest filters = new FilterRequest()
+            {
+                IsChecked = IsChecked,
+                StartInterval = StartInterval,
+                FinishInterval = FinishInterval,
+                College = College,
+                Course = Course,
+                CourseDirections = CourseDirections
+            };
+
             List<PracticeModel> models = await _practiceService.GetAll(_mapper.Map<FilterModel>(filters));
 
             string path = await _fileHelper
@@ -55,7 +74,7 @@ namespace ABB_BF.Controllers
             return File(
                 fileStream: fs,
                 contentType: "application/zip",
-                fileDownloadName: "file.zip");
+                fileDownloadName: $"{fileName}.zip");
         }
     }
 }

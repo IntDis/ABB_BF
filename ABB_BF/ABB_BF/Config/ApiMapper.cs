@@ -30,8 +30,14 @@ namespace ABB_BF.Config
                 .ForMember(dest => dest.Data, opt => opt.MapFrom(src => GetBytes(src)));
 
             CreateMap<FilterRequest, FilterModel>()
-                .ForMember(dest => dest.StartInterval, opt => opt.NullSubstitute(DateTime.MinValue))
-                .ForMember(dest => dest.FinishInterval, opt => opt.NullSubstitute(DateTime.MaxValue));
+                .AddTransform<string>(s => string.IsNullOrEmpty(s) ? null : s)
+                .ForMember(dest => dest.StartInterval, opt => opt
+                    .MapFrom(src => string.IsNullOrEmpty(src.StartInterval) ? DateTime.MinValue : DateTime.Parse(src.StartInterval)))
+                .ForMember(dest => dest.FinishInterval, opt => opt
+                    .MapFrom(src => string.IsNullOrEmpty(src.StartInterval) ? DateTime.MaxValue : DateTime.Parse(src.StartInterval)));
+
+
+                //.ForMember(dest => dest.StartInterval, opt => opt.NullSubstitute(DateTime.MinValue))
         }
 
         protected string GetExtension(string fileName)

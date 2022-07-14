@@ -7,5 +7,6 @@ namespace ABB_BF.DAL.Repositories.Interfaces
     {
         Task<int> AddUniversityForm(University university);
         Task<List<University>> GetAll(Filter filter);
+        Task<List<University>> GetAll();
     }
 }

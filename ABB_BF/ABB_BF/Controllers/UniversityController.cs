@@ -1,6 +1,7 @@
 ﻿using ABB_BF.API.Models.Requests;
 using ABB_BF.BLL.Models;
 using ABB_BF.BLL.Services.Interfaces;
+using ABB_BF.DAL.Enums;
 using ABB_BF.Models.Requests;
 using ABB_BF.Models.Responses;
 using AutoMapper;
@@ -34,12 +35,29 @@ namespace ABB_BF.Controllers
         }
 
         [HttpGet("csv")]
-        public async Task<ActionResult> DownloadCsv(FilterRequest filter)
+        public async Task<ActionResult> DownloadCsv(
+            [FromHeader] string fileName,
+            [FromHeader] bool? IsChecked,
+            [FromHeader] string? StartInterval,
+            [FromHeader] string? FinishInterval,
+            [FromHeader] string? College,
+            [FromHeader] int? Course,
+            [FromHeader] CourseDirections? CourseDirections)
         {
-            string fileName = await _universityService.CreateCsv(_mapper.Map<FilterModel>(filter));
+            FilterRequest filters = new FilterRequest()
+            {
+                IsChecked = IsChecked,
+                StartInterval = StartInterval,
+                FinishInterval = FinishInterval,
+                College = College,
+                Course = Course,
+                CourseDirections = CourseDirections
+            };
+
+            string name = await _universityService.CreateCsv(_mapper.Map<FilterModel>(filters));
 
             string fileType = "application/csv";
-            string filePath = Path.Combine(_appEnvironment.ContentRootPath, fileName);
+            string filePath = Path.Combine(_appEnvironment.ContentRootPath, name);
 
             FileStream fs = new FileStream(filePath,
                 FileMode.Open,
@@ -51,7 +69,7 @@ namespace ABB_BF.Controllers
             return File(
                 fileStream: fs,
                 contentType: fileType,
-                fileDownloadName: "File.xlsx");
+                fileDownloadName: $"{fileName}.xlsx");
         }
     }
 }

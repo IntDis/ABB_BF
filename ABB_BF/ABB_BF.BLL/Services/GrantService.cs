@@ -41,7 +41,7 @@ namespace ABB_BF.BLL.Services
                 filter.IsChecked = null;
             }
 
-            return _fileHelper.CreateXlsx(await _grantRepository.GetByFilters(_mapper.Map<Filter>(filter)));
+            return _fileHelper.CreateXlsx(await _grantRepository.GetAll(_mapper.Map<Filter>(filter)));
         }
     }
 }
