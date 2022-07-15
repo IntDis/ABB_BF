@@ -16,22 +16,24 @@ namespace ABB_BF.Controllers
         private readonly IMapper _mapper;
         private readonly IGrantService _grantService;
         private readonly IWebHostEnvironment _appEnvironment;
+        private readonly IFileHelper _fileHelper;
 
-        public GrantController(IMapper mapper, IGrantService grantService, IWebHostEnvironment appEnvironment)
+        public GrantController(IMapper mapper, IFileHelper fileHelper, IGrantService grantService, IWebHostEnvironment appEnvironment)
         {
             _mapper = mapper;
             _grantService = grantService;
             _appEnvironment = appEnvironment;
+            _fileHelper = fileHelper;
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> AddGrant([FromBody] AddGrantRequest grantRequest)
+        public async Task<ActionResult<int>> AddGrant([FromForm] AddGrantRequest grantRequest)
         {
             GrantModel model = _mapper.Map<GrantModel>(grantRequest);
             return Ok(await _grantService.AddGrant(model));
         }
 
-        [HttpGet("csv")]
+        [HttpGet("download")]
         public async Task<ActionResult> DownloadCsv(
             [FromHeader] string fileName,
             [FromHeader] bool? IsChecked,
@@ -52,12 +54,14 @@ namespace ABB_BF.Controllers
                 CourseDirections = CourseDirections
             };
 
-            string name = await _grantService.CreateCsv(_mapper.Map<FilterModel>(filters));
+            string name = await _grantService.CreateCsv(_mapper.Map<FilterModel>(filters), fileName);
 
-            string fileType = "application/csv";
+            string fileType = "application/zip";
             string filePath = Path.Combine(_appEnvironment.ContentRootPath, name);
 
-            FileStream fs = new FileStream(filePath,
+            string zipPath = await _fileHelper.CreateZip(filePath, $"{filePath}.zip");
+
+            FileStream fs = new FileStream(zipPath,
                 FileMode.Open,
                 FileAccess.Read,
                 FileShare.None,
@@ -67,7 +71,7 @@ namespace ABB_BF.Controllers
             return File(
                 fileStream: fs,
                 contentType: fileType,
-                fileDownloadName: $"{fileName}.xlsx");
+                fileDownloadName: $"{fileName}.zip");
         }
     }
 }

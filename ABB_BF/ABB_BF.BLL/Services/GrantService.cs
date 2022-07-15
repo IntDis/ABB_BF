@@ -29,19 +29,19 @@ namespace ABB_BF.BLL.Services
             return await _grantRepository.AddGrant(grant);
         }
 
-        public async Task<List<GrantModel>> GetAll()
+        public async Task<List<GrantModel>> GetAll(FilterModel filter)
         {
-            return _mapper.Map<List<GrantModel>>(await _grantRepository.GetAll());
+            return _mapper.Map<List<GrantModel>>(await _grantRepository.GetAll(_mapper.Map<Filter>(filter)));
         }
 
-        public async Task<string> CreateCsv(FilterModel filter)
+        public async Task<string> CreateCsv(FilterModel filter, string fileName)
         {
             if (filter.IsChecked == false)
             {
                 filter.IsChecked = null;
             }
 
-            return _fileHelper.CreateXlsx(await _grantRepository.GetAll(_mapper.Map<Filter>(filter)));
+            return _fileHelper.CreateXlsx(await GetAll(filter), fileName);
         }
     }
 }

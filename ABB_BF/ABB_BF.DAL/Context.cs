@@ -41,6 +41,8 @@ namespace ABB_BF.DAL
                 // Date is a DateOnly property and date on database
                 builder.Property(x => x.CreationDate)
                     .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+                builder.Property(x => x.StartDate)
+                    .HasConversion<DateOnlyConverter, DateOnlyComparer>();
             });
         }
 

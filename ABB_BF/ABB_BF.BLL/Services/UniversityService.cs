@@ -12,14 +12,17 @@ namespace ABB_BF.BLL.Services
         private readonly IMapper _mapper;
         private readonly IFileHelper _csvHelper;
         private readonly IUniversityRepository _universityFormRepository;
+        private readonly IFileHelper _fileHelper;
 
         public UniversityService(IMapper mapper,
             IUniversityRepository universityFormRepository,
-            IFileHelper csvHelper)
+            IFileHelper csvHelper,
+            IFileHelper fileHelper)
         {
             _mapper = mapper;
             _universityFormRepository = universityFormRepository;
             _csvHelper = csvHelper;
+            _fileHelper = fileHelper;
         }
 
         public async Task<int> AddUniversityForm(UniversityModel universityFormModel)
@@ -35,9 +38,14 @@ namespace ABB_BF.BLL.Services
             return _mapper.Map<List<UniversityModel>>(await _universityFormRepository.GetAll(_mapper.Map<Filter>(filter)));
         }
 
-        public async Task<string> CreateCsv(FilterModel filter)
+        public async Task<string> CreateCsv(FilterModel filter, string fileName)
         {
-            return _csvHelper.CreateXlsx(await _universityFormRepository.GetAll(_mapper.Map<Filter>(filter)));
+            if (filter.IsChecked == false)
+            {
+                filter.IsChecked = null;
+            }
+
+            return _fileHelper.CreateXlsx(await GetAll(filter), fileName);
         }
     }
 }

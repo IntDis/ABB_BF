@@ -26,9 +26,10 @@ namespace ABB_BF.BLL.Services
             return excelName;
         }
 
-        public string CreateXlsx<T>(List<T> forms) where T : class
+        public string CreateXlsx<T>(List<T> forms, string fileName) where T : class
         {
-            string excelName = $"{_rootPath}{typeof(T).Name}_{DateTime.Now.ToShortDateString()}.xlsx";
+            Directory.CreateDirectory($"{_rootPath}newFolder");
+            string excelName = $"{_rootPath}newFolder";
 
             var stream = new MemoryStream();
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -36,7 +37,7 @@ namespace ABB_BF.BLL.Services
             {
                 var workSheet = package.Workbook.Worksheets.Add("sheet");
                 workSheet.Cells.LoadFromCollection(forms, true);
-                package.SaveAs(excelName);
+                package.SaveAs($"{excelName}/{fileName}.xlsx");
             }
 
             return excelName;
@@ -51,11 +52,13 @@ namespace ABB_BF.BLL.Services
             {
                 string firstname = model.Firstname;
                 string secondname = model.Secondname;
-                Directory.CreateDirectory($"{_rootPath}newFolder/{firstname}_{secondname}");
+                int modelId = model.Id;
+
+                Directory.CreateDirectory($"{_rootPath}newFolder/{modelId}_{firstname}_{secondname}");
 
                 foreach (AbstractFormFileModel file in model.Files)
                 {
-                    string filename = $"{_rootPath}newFolder/{firstname}_{secondname}/{file.Name}";
+                    string filename = $"{_rootPath}newFolder/{modelId}_{firstname}_{secondname}/{file.Name}";
                     File.WriteAllBytes(filename, file.Data);
                 }
             }

@@ -6,6 +6,6 @@ namespace ABB_BF.BLL.Services.Interfaces
     {
         Task<int> AddUniversityForm(UniversityModel universityFormModel);
         Task<List<UniversityModel>> GetAll(FilterModel filter);
-        Task<string> CreateCsv(FilterModel filter);
+        Task<string> CreateCsv(FilterModel filter, string fileName);
     }
 }

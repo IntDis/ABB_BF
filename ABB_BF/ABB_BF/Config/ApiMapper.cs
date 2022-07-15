@@ -13,7 +13,8 @@ namespace ABB_BF.Config
         {
             CreateMap<AddProbationRequest, ProbationModel>();
             CreateMap<AddGrantRequest, GrantModel>();
-            CreateMap<AddUniversityRequest, UniversityModel>();
+            CreateMap<AddUniversityRequest, UniversityModel>()
+                .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => DateOnly.FromDateTime(src.StartDate)));
             CreateMap<AddPracticeRequest, PracticeModel>();
 
 
