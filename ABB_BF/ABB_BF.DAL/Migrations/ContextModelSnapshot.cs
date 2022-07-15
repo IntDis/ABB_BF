@@ -78,7 +78,7 @@ namespace ABB_BF.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GrantForms");
+                    b.ToTable("GrantForms", (string)null);
                 });
 
             modelBuilder.Entity("ABB_BF.DAL.Entities.Practice", b =>
@@ -117,7 +117,7 @@ namespace ABB_BF.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PracticeForms");
+                    b.ToTable("PracticeForms", (string)null);
                 });
 
             modelBuilder.Entity("ABB_BF.DAL.Entities.PracticeFile", b =>
@@ -147,7 +147,7 @@ namespace ABB_BF.DAL.Migrations
 
                     b.HasIndex("PracticeId");
 
-                    b.ToTable("PracticeFiles");
+                    b.ToTable("PracticeFiles", (string)null);
                 });
 
             modelBuilder.Entity("ABB_BF.DAL.Entities.Probation", b =>
@@ -186,7 +186,7 @@ namespace ABB_BF.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProbationForms");
+                    b.ToTable("ProbationForms", (string)null);
                 });
 
             modelBuilder.Entity("ABB_BF.DAL.Entities.ProbationFile", b =>
@@ -216,7 +216,7 @@ namespace ABB_BF.DAL.Migrations
 
                     b.HasIndex("ProbationId");
 
-                    b.ToTable("ProbationFiles");
+                    b.ToTable("ProbationFiles", (string)null);
                 });
 
             modelBuilder.Entity("ABB_BF.DAL.Entities.University", b =>
@@ -271,7 +271,7 @@ namespace ABB_BF.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UniversityForms");
+                    b.ToTable("UniversityForms", (string)null);
                 });
 
             modelBuilder.Entity("ABB_BF.DAL.Entities.PracticeFile", b =>

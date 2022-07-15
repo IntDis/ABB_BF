@@ -21,6 +21,11 @@ namespace ABB_BF.DAL.Repositories
             return university.Id;
         }
 
+        public async Task<List<University>> GetAll()
+        {
+            return await _context.UniversityForms.ToListAsync();
+        }
+
         public async Task<List<University>> GetAll(Filter filter)
         {
             List<University> universities = await _context.UniversityForms

@@ -7,6 +7,6 @@ namespace ABB_BF.DAL.Repositories.Interfaces
     {
         Task<int> AddGrant(Grant grant);
         Task<List<Grant>> GetAll();
-        Task<List<Grant>> GetByFilters(Filter filter);
+        Task<List<Grant>> GetAll(Filter filter);
     }
 }

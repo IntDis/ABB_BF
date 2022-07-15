@@ -27,7 +27,7 @@ namespace ABB_BF.DAL.Repositories
             return await _context.GrantForms.ToListAsync();
         }
 
-        public async Task<List<Grant>> GetByFilters(Filter filter)
+        public async Task<List<Grant>> GetAll(Filter filter)
         {
             List<Grant> grants = await _context.GrantForms
                 .Where(c =>
