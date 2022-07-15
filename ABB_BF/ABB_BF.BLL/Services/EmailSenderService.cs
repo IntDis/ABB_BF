@@ -37,7 +37,7 @@ namespace ABB_BF.BLL.Services
             client.EnableSsl = true;
 
             //Sender's login and password
-            client.Credentials = new NetworkCredential(_emailFrom, "#");
+            client.Credentials = new NetworkCredential(_emailFrom, "Azarov9215");
 
             client.Send(mail);
         }
