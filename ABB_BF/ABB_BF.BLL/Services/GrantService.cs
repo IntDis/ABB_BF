@@ -1,6 +1,7 @@
 ﻿using ABB_BF.BLL.Models;
 using ABB_BF.BLL.Services.Interfaces;
 using ABB_BF.DAL.Entities;
+using ABB_BF.DAL.Models;
 using ABB_BF.DAL.Repositories.Interfaces;
 using AutoMapper;
 
@@ -10,30 +11,37 @@ namespace ABB_BF.BLL.Services
     {
         private readonly IMapper _mapper;
         private readonly IGrantRepository _grantRepository;
-        private readonly IFileHelper _csvHelper;
+        private readonly IFileHelper _fileHelper;
 
-        public GrantService(IMapper mapper, IGrantRepository grantRepository, IFileHelper csvHelper)
+        public GrantService(IMapper mapper, IGrantRepository grantRepository, IFileHelper fileHelper)
         {
             _mapper = mapper;
             _grantRepository = grantRepository;
-            _csvHelper = csvHelper;
+            _fileHelper = fileHelper;
         }
 
-        public async Task<int> AddGrant(GrantModel grandModel)
+        public async Task<int> AddGrant(GrantModel grantModel)
         {
-            Grant grant = _mapper.Map<Grant>(grandModel);
+            grantModel.CreationDate = DateOnly.FromDateTime(DateTime.Now);
+
+            Grant grant = _mapper.Map<Grant>(grantModel);
 
             return await _grantRepository.AddGrant(grant);
         }
 
-        public async Task<List<GrantModel>> GetAll()
+        public async Task<List<GrantModel>> GetAll(FilterModel filter)
         {
-            return _mapper.Map<List<GrantModel>>(await _grantRepository.GetAll());
+            return _mapper.Map<List<GrantModel>>(await _grantRepository.GetAll(_mapper.Map<Filter>(filter)));
         }
 
-        public async Task<string> CreateCsv()
+        public async Task<string> CreateCsv(FilterModel filter, string fileName)
         {
-            return await _csvHelper.GetScv(await _grantRepository.GetAll());
+            if (filter.IsChecked == false)
+            {
+                filter.IsChecked = null;
+            }
+
+            return _fileHelper.CreateXlsx(await GetAll(filter), fileName);
         }
     }
 }

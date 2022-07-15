@@ -1,6 +1,8 @@
-﻿using ABB_BF.API.Models.Responses;
+﻿using ABB_BF.API.Models.Requests;
+using ABB_BF.API.Models.Responses;
 using ABB_BF.BLL.Models;
 using ABB_BF.BLL.Services.Interfaces;
+using ABB_BF.DAL.Enums;
 using ABB_BF.Models.Requests;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -34,37 +36,28 @@ namespace ABB_BF.Controllers
             return Ok(await _probationService.AddProbation(model));
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<ProbationResponse>>> GetAll()
+        [HttpGet("download")]
+        public async Task<ActionResult> DownloadZip(
+            [FromHeader] string fileName,
+            [FromHeader] bool? IsChecked,
+            [FromHeader] string? StartInterval,
+            [FromHeader] string? FinishInterval,
+            [FromHeader] string? College,
+            [FromHeader] int? Course,
+            [FromHeader] CourseDirections? CourseDirections
+            )
         {
-            return Ok(_mapper.Map<List<ProbationResponse>>(await _probationService.GetAll()));
-        }
+            FilterRequest filters = new FilterRequest()
+            {
+                IsChecked = IsChecked,
+                StartInterval = StartInterval,
+                FinishInterval = FinishInterval,
+                College = College,
+                Course = Course,
+                CourseDirections = CourseDirections
+            };
 
-        [HttpGet("csv")]
-        public async Task<ActionResult> DownloadCsv()
-        {
-            string fileName = await _probationService.CreateCsv();
-
-            string fileType = "application/csv";
-            string filePath = Path.Combine(_appEnvironment.ContentRootPath, fileName);
-
-            var fs = new FileStream(filePath,
-                FileMode.Open,
-                FileAccess.Read,
-                FileShare.None,
-                4096,
-                FileOptions.DeleteOnClose);
-            
-            return File(
-                fileStream: fs,
-                contentType: fileType,
-                fileDownloadName: "File.xlsx");
-        }
-
-        [HttpGet("zip")]
-        public async Task<ActionResult> CreateZip()
-        {
-            List<ProbationModel> models = await _probationService.GetAll();
+            List<ProbationModel> models = await _probationService.GetAll(_mapper.Map<FilterModel>(filters));
 
             string path = await _fileHelper
                 .CreateFolderWithFormsInfo(
@@ -82,30 +75,7 @@ namespace ABB_BF.Controllers
             return File(
                 fileStream: fs,
                 contentType: "application/zip",
-                fileDownloadName: "file.zip");
+                fileDownloadName: $"{fileName}.zip");
         }
-
-        //[HttpGet("{id}/download")]
-        //public async Task<ActionResult> GetFile(int id)
-        //{
-        //    ProbationModel probation = await _probationService.GetById(id);
-        //    ProbationFileModel file = probation.Files[0];
-
-        //    string filename = Path.Combine(_appEnvironment.ContentRootPath, file.Name) + "." + file.Extension;
-
-        //    System.IO.File.WriteAllBytes(filename, file.Data);
-
-        //    //var p = new Process();
-        //    //p.StartInfo = new ProcessStartInfo(filename)
-        //    //{
-        //    //    UseShellExecute = true
-        //    //};
-
-        //    //p.Start();
-
-        //    //p.Exited += (s, e) => File.Delete(filename);
-
-        //    return PhysicalFile(filename, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", file.Name);
-        //}
     }
 }

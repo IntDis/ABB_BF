@@ -4,6 +4,7 @@ using ABB_BF.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ABB_BF.DAL.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20220714091226_tmp")]
+    partial class tmp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,9 +56,6 @@ namespace ABB_BF.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsChecked")
-                        .HasColumnType("bit");
-
                     b.Property<string>("OtherGrants")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -78,7 +77,7 @@ namespace ABB_BF.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GrantForms", (string)null);
+                    b.ToTable("GrantForms");
                 });
 
             modelBuilder.Entity("ABB_BF.DAL.Entities.Practice", b =>
@@ -100,9 +99,6 @@ namespace ABB_BF.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsChecked")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Patronymic")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -117,7 +113,7 @@ namespace ABB_BF.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PracticeForms", (string)null);
+                    b.ToTable("PracticeForms");
                 });
 
             modelBuilder.Entity("ABB_BF.DAL.Entities.PracticeFile", b =>
@@ -147,7 +143,7 @@ namespace ABB_BF.DAL.Migrations
 
                     b.HasIndex("PracticeId");
 
-                    b.ToTable("PracticeFiles", (string)null);
+                    b.ToTable("PracticeFiles");
                 });
 
             modelBuilder.Entity("ABB_BF.DAL.Entities.Probation", b =>
@@ -169,9 +165,6 @@ namespace ABB_BF.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsChecked")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Patronymic")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -186,7 +179,7 @@ namespace ABB_BF.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProbationForms", (string)null);
+                    b.ToTable("ProbationForms");
                 });
 
             modelBuilder.Entity("ABB_BF.DAL.Entities.ProbationFile", b =>
@@ -216,7 +209,7 @@ namespace ABB_BF.DAL.Migrations
 
                     b.HasIndex("ProbationId");
 
-                    b.ToTable("ProbationFiles", (string)null);
+                    b.ToTable("ProbationFiles");
                 });
 
             modelBuilder.Entity("ABB_BF.DAL.Entities.University", b =>
@@ -251,9 +244,6 @@ namespace ABB_BF.DAL.Migrations
                     b.Property<bool>("IsCertificated")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsChecked")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Patronymic")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -271,7 +261,7 @@ namespace ABB_BF.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UniversityForms", (string)null);
+                    b.ToTable("UniversityForms");
                 });
 
             modelBuilder.Entity("ABB_BF.DAL.Entities.PracticeFile", b =>

@@ -1,7 +1,6 @@
 ﻿namespace ABB_BF.DAL.Enums
 {
-    public enum CourseDirections
+    public enum EducationForm
     {
-        qwe = 1
     }
 }

@@ -9,5 +9,6 @@
         public string Phone { get; set; }
         public string Email { get; set; }
         public List<IFormFile> Files { get; set; }
+        public DateOnly CreationDate { get; set; }
     }
 }

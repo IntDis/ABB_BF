@@ -1,7 +1,8 @@
-﻿using ABB_BF.BLL.Models;
+﻿using ABB_BF.API.Models.Requests;
+using ABB_BF.BLL.Models;
 using ABB_BF.BLL.Services.Interfaces;
+using ABB_BF.DAL.Enums;
 using ABB_BF.Models.Requests;
-using ABB_BF.Models.Responses;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,37 +15,66 @@ namespace ABB_BF.Controllers
         private readonly IMapper _mapper;
         private readonly IPracticeService _practiceService;
         private readonly IWebHostEnvironment _appEnvironment;
+        private readonly IFileHelper _fileHelper;
 
-
-        public PracticeController(IMapper mapper, IPracticeService practiceService, IWebHostEnvironment appEnvironment)
+        public PracticeController(IMapper mapper,
+            IPracticeService practiceService,
+            IWebHostEnvironment appEnvironment,
+            IFileHelper fileHelper)
         {
             _mapper = mapper;
             _practiceService = practiceService;
             _appEnvironment = appEnvironment;
+            _fileHelper = fileHelper;
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> AddPractice([FromBody] AddPracticeRequest practiceRequest)
+        public async Task<ActionResult<int>> AddPractice([FromForm] AddPracticeRequest practiceRequest)
         {
             PracticeModel model = _mapper.Map<PracticeModel>(practiceRequest);
             return Ok(await _practiceService.AddPractice(model));
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<PracticeResponse>>> GetAll()
+        [HttpGet("download")]
+        public async Task<ActionResult> DownloadZip(
+            [FromHeader] string fileName,
+            [FromHeader] bool? IsChecked,
+            [FromHeader] string? StartInterval,
+            [FromHeader] string? FinishInterval,
+            [FromHeader] string? College,
+            [FromHeader] int? Course,
+            [FromHeader] CourseDirections? CourseDirections
+            )
         {
-            return Ok(_mapper.Map<List<PracticeResponse>>(await _practiceService.GetAll()));
-        }
+            FilterRequest filters = new FilterRequest()
+            {
+                IsChecked = IsChecked,
+                StartInterval = StartInterval,
+                FinishInterval = FinishInterval,
+                College = College,
+                Course = Course,
+                CourseDirections = CourseDirections
+            };
 
-        [HttpGet("csv")]
-        public async Task<ActionResult> DownloadCsv()
-        {
-            string fileName = await _practiceService.CreateCsv();
+            List<PracticeModel> models = await _practiceService.GetAll(_mapper.Map<FilterModel>(filters));
 
-            string fileType = "application/csv";
-            string filePath = Path.Combine(_appEnvironment.ContentRootPath, fileName);
+            string path = await _fileHelper
+                .CreateFolderWithFormsInfo(
+                _mapper.Map<List<AbstractEntityModel>>(models), models);
 
-            return PhysicalFile(filePath, fileType, fileName);
+            string zipPath = await _fileHelper.CreateZip(path, $"{path}.zip");
+
+            var fs = new FileStream(zipPath,
+                FileMode.Open,
+                FileAccess.Read,
+                FileShare.None,
+                4096,
+                FileOptions.DeleteOnClose);
+
+            return File(
+                fileStream: fs,
+                contentType: "application/zip",
+                fileDownloadName: $"{fileName}.zip");
         }
     }
 }

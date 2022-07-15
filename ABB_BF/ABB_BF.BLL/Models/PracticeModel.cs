@@ -2,7 +2,6 @@
 {
     public class PracticeModel : AbstractEntityModel
     {
-        //public List<PracticeFileModel> Files { get; set; }
 
     }
 }

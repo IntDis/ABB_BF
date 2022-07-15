@@ -1,4 +1,5 @@
 ﻿using ABB_BF.DAL.Entities;
+using ABB_BF.DAL.Models;
 
 namespace ABB_BF.DAL.Repositories.Interfaces
 {
@@ -6,5 +7,6 @@ namespace ABB_BF.DAL.Repositories.Interfaces
     {
         Task<int> AddGrant(Grant grant);
         Task<List<Grant>> GetAll();
+        Task<List<Grant>> GetAll(Filter filter);
     }
 }

@@ -16,6 +16,36 @@ namespace ABB_BF.DAL
         public DbSet<Practice> PracticeForms { get; set; }
         public DbSet<PracticeFile> PracticeFiles { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Grant>(builder =>
+            {
+                // Date is a DateOnly property and date on database
+                builder.Property(x => x.CreationDate)
+                    .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+            });
+            modelBuilder.Entity<Probation>(builder =>
+            {
+                // Date is a DateOnly property and date on database
+                builder.Property(x => x.CreationDate)
+                    .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+            });
+            modelBuilder.Entity<Practice>(builder =>
+            {
+                // Date is a DateOnly property and date on database
+                builder.Property(x => x.CreationDate)
+                    .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+            });
+            modelBuilder.Entity<University>(builder =>
+            {
+                // Date is a DateOnly property and date on database
+                builder.Property(x => x.CreationDate)
+                    .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+                builder.Property(x => x.StartDate)
+                    .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+            });
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
