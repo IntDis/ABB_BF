@@ -22,8 +22,6 @@ namespace ABB_BF.BLL.Services
             _probationRepository = probationRepository;
             _csvHelper = csvHelper;
             _modelsService = modelsService;
-
-
         }
 
         public async Task<int> AddProbation(ProbationModel probationModel)
@@ -31,6 +29,10 @@ namespace ABB_BF.BLL.Services
             if (!_modelsService.IsNumberValid(probationModel.Phone))
             {
                 throw new ArgumentException("Введен неверный номер");
+            }
+            else if (!_modelsService.IsEmailValid(probationModel.Email))
+            {
+                throw new ArgumentException("Введен неверный e-mail");
             }
 
             probationModel.Phone = _modelsService.FixPhoneNumber(probationModel.Phone);
