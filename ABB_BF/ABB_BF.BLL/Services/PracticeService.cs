@@ -11,19 +11,33 @@ namespace ABB_BF.BLL.Services
         private readonly IMapper _mapper;
         private readonly IFileHelper _csvHelper;
         private readonly IPracticeRepository _practiceRepository;
+        private readonly IModelsService _modelsService;
 
-        public PracticeService(IMapper mapper, IPracticeRepository practiceRepository, IFileHelper csvHelper)
+        public PracticeService(IMapper mapper, 
+            IPracticeRepository practiceRepository, 
+            IFileHelper csvHelper,
+            IModelsService modelsService)
         {
             _mapper = mapper;
             _practiceRepository = practiceRepository;
             _csvHelper = csvHelper;
+            _modelsService = modelsService;
         }
 
         public async Task<int> AddPractice(PracticeModel practiceModel)
         {
-            Practice practice = _mapper.Map<Practice>(practiceModel);
+            if (!_modelsService.IsNumberValid(practiceModel.Phone))
+            {
+                throw new ArgumentException("Введен неверный номер");
+            }
+            else if (!_modelsService.IsEmailValid(practiceModel.Email))
+            {
+                throw new ArgumentException("Введен неверный e-mail");
+            }
 
-            return await _practiceRepository.AddPractice(practice);
+            practiceModel.Phone = _modelsService.FixPhoneNumber(practiceModel.Phone);
+
+            return await _practiceRepository.AddPractice(_mapper.Map<Practice>(practiceModel));
         }
 
         public async Task<string> CreateCsv()
