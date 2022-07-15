@@ -6,6 +6,7 @@ using ABB_BF.Models.Requests;
 using ABB_BF.Models.Responses;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Mail;
 
 namespace ABB_BF.Controllers
 {
@@ -17,17 +18,20 @@ namespace ABB_BF.Controllers
         private readonly IWebHostEnvironment _appEnvironment;
         private readonly IMapper _mapper;
         private readonly IFileHelper _fileHelper;
+        private readonly IEmailSenderService _emailService;
 
         public UniversityController(
             IMapper mapper,
             IUniversityService universityService,
             IWebHostEnvironment appEnvironment,
-            IFileHelper fileHelper)
+            IFileHelper fileHelper,
+            IEmailSenderService emailService)
         {
             _mapper = mapper;
             _universityService = universityService;
             _appEnvironment = appEnvironment;
             _fileHelper = fileHelper;
+            _emailService = emailService;
         }
 
         [HttpPost]
@@ -75,6 +79,47 @@ namespace ABB_BF.Controllers
                 fileStream: fs,
                 contentType: fileType,
                 fileDownloadName: $"{fileName}.zip");
+        }
+
+        [HttpGet("send")]
+        public async Task<ActionResult> SendEmail(
+            [FromHeader] string fileName,
+            [FromHeader] bool? IsChecked,
+            [FromHeader] string? StartInterval,
+            [FromHeader] string? FinishInterval,
+            [FromHeader] string? College,
+            [FromHeader] int? Course,
+            [FromHeader] CourseDirections? CourseDirections
+            )
+        {
+            FilterRequest filters = new FilterRequest()
+            {
+                IsChecked = IsChecked,
+                StartInterval = StartInterval,
+                FinishInterval = FinishInterval,
+                College = College,
+                Course = Course,
+                CourseDirections = CourseDirections
+            };
+
+            string name = await _universityService.CreateCsv(_mapper.Map<FilterModel>(filters), fileName);
+
+            string fileType = "application/zip";
+            string filePath = Path.Combine(_appEnvironment.ContentRootPath, name);
+
+            string zipPath = await _fileHelper.CreateZip(filePath, $"{filePath}.zip");
+
+            FileStream fs = new FileStream(zipPath,
+                FileMode.Open,
+                FileAccess.Read,
+                FileShare.None,
+                4096,
+                FileOptions.DeleteOnClose);
+
+            _emailService
+                .SendMessage("azarovrom9215@gmail.com", "Привет, тема пока такая", new Attachment(fs, $"{fileName}.zip"));
+
+            return Ok();
         }
     }
 }
