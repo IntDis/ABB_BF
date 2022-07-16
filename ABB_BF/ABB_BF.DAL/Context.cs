@@ -16,6 +16,12 @@ namespace ABB_BF.DAL
         public DbSet<Practice> Practice { get; set; }
         public DbSet<PracticeFile> PracticeFile { get; set; }
         public DbSet<College> College { get; set; }
+        public DbSet<EnumsToEntities> CourseDirection { get; set; }
+        public DbSet<EnumsToEntities> EducationForm { get; set; }
+        public DbSet<EnumsToEntities> EducationLevel { get; set; }
+        public DbSet<EnumsToEntities> Specialities { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
