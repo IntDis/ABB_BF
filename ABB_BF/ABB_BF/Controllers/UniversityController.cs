@@ -119,6 +119,10 @@ namespace ABB_BF.Controllers
             _emailService
                 .SendMessage("azarovrom9215@gmail.com", "Привет, тема пока такая", new Attachment(fs, $"{fileName}.zip"));
 
+            fs.Close();
+
+            System.IO.File.Delete(zipPath);
+
             return Ok();
         }
     }
