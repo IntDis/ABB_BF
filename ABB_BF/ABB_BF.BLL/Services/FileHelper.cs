@@ -7,7 +7,8 @@ namespace ABB_BF.BLL.Services
 {
     public class FileHelper : IFileHelper
     {
-        private string _rootPath = "./././";
+        private static readonly string _rootPathEnvVarName = "ROOT_PATH";
+        private readonly string _rootPath = Environment.GetEnvironmentVariable(_rootPathEnvVarName);
 
         public async Task<string> GetScv<T>(List<T> forms) where T : class
         {
