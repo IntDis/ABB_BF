@@ -2,7 +2,7 @@
 {
     public class CollegeResponse
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Text { get; set; }
     }
 }

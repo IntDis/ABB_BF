@@ -9,12 +9,13 @@ namespace ABB_BF.DAL
         {
         }
 
-        public DbSet<Probation> ProbationForms { get; set; }
-        public DbSet<ProbationFile> ProbationFiles { get; set; }
-        public DbSet<Grant> GrantForms { get; set; }
-        public DbSet<University> UniversityForms { get; set; }
-        public DbSet<Practice> PracticeForms { get; set; }
-        public DbSet<PracticeFile> PracticeFiles { get; set; }
+        public DbSet<Probation> Probation { get; set; }
+        public DbSet<ProbationFile> ProbationFile { get; set; }
+        public DbSet<Grant> Grant { get; set; }
+        public DbSet<University> University { get; set; }
+        public DbSet<Practice> Practice { get; set; }
+        public DbSet<PracticeFile> PracticeFile { get; set; }
+        public DbSet<College> College { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

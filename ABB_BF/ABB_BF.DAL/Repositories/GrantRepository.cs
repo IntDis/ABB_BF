@@ -16,7 +16,7 @@ namespace ABB_BF.DAL.Repositories
 
         public async Task<int> AddGrant(Grant grant)
         {
-            await _context.GrantForms.AddAsync(grant);
+            await _context.Grant.AddAsync(grant);
             await _context.SaveChangesAsync();
 
             return grant.Id;
@@ -24,12 +24,12 @@ namespace ABB_BF.DAL.Repositories
 
         public async Task<List<Grant>> GetAll()
         {
-            return await _context.GrantForms.ToListAsync();
+            return await _context.Grant.ToListAsync();
         }
 
         public async Task<List<Grant>> GetAll(Filter filter)
         {
-            List<Grant> grants = await _context.GrantForms
+            List<Grant> grants = await _context.Grant
                 .Where(c =>
                     (filter.IsChecked == null || c.IsChecked != filter.IsChecked) &&
                     (filter.College == null || c.College == filter.College) &&

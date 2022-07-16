@@ -1,5 +1,6 @@
 ﻿using ABB_BF.API.Models.Responses;
 using ABB_BF.BLL.Services.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ABB_BF.API.Controllers
@@ -9,30 +10,23 @@ namespace ABB_BF.API.Controllers
     public class CollegeController : Controller
     {
         private readonly ICollegeService _collegeService;
+        private readonly IMapper _mapper;
 
-        public CollegeController(ICollegeService collegeService)
+        public CollegeController(
+            ICollegeService collegeService,
+            IMapper mapper)
         {
             _collegeService = collegeService;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<CollegeResponse>>> GetAll()
         {
-            List<string> colleges = await _collegeService.GetAllColleges();
-            List<CollegeResponse> collegesResponse = new List<CollegeResponse>();
+            List<CollegeResponse> colleges = 
+                _mapper.Map<List<CollegeResponse>>(await _collegeService.GetAllColleges());
 
-            foreach(string str in colleges)
-            {
-                CollegeResponse college = new CollegeResponse()
-                {
-                    Id = str,
-                    Text = str
-                };
-
-                collegesResponse.Add(college);
-            }
-
-            return Ok(collegesResponse);
+            return Ok(colleges);
         }
     }
 }

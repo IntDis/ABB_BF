@@ -12,17 +12,25 @@ namespace ABB_BF.BLL.Services
         private readonly IMapper _mapper;
         private readonly IGrantRepository _grantRepository;
         private readonly IFileHelper _fileHelper;
+        private readonly ICollegeService _collegeService;
 
-        public GrantService(IMapper mapper, IGrantRepository grantRepository, IFileHelper fileHelper)
+        public GrantService(
+            IMapper mapper,
+            IGrantRepository grantRepository,
+            IFileHelper fileHelper,
+            ICollegeService collegeService)
         {
             _mapper = mapper;
             _grantRepository = grantRepository;
             _fileHelper = fileHelper;
+            _collegeService = collegeService;
         }
 
         public async Task<int> AddGrant(GrantModel grantModel)
         {
             grantModel.CreationDate = DateOnly.FromDateTime(DateTime.Now);
+
+            await _collegeService.AddCollege(grantModel.College);
 
             Grant grant = _mapper.Map<Grant>(grantModel);
 

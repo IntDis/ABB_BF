@@ -16,19 +16,19 @@ namespace ABB_BF.DAL.Repositories
 
         public async Task<int> AddUniversityForm(University university)
         {
-            await _context.UniversityForms.AddAsync(university);
+            await _context.University.AddAsync(university);
             await _context.SaveChangesAsync();
             return university.Id;
         }
 
         public async Task<List<University>> GetAll()
         {
-            return await _context.UniversityForms.ToListAsync();
+            return await _context.University.ToListAsync();
         }
 
         public async Task<List<University>> GetAll(Filter filter)
         {
-            List<University> universities = await _context.UniversityForms
+            List<University> universities = await _context.University
                 .Where(c =>
                     (filter.IsChecked == null || c.IsChecked != filter.IsChecked) && 
                     (filter.College == null || c.College != filter.College) &&
@@ -41,7 +41,7 @@ namespace ABB_BF.DAL.Repositories
                 university.IsChecked = true;
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return universities;
         }

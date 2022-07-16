@@ -13,6 +13,7 @@ namespace ABB_BF.Extensions
             services.AddScoped<IGrantRepository, GrantRepository>();
             services.AddScoped<IUniversityRepository, UniversityFormRepository>();
             services.AddScoped<IPracticeRepository, PracticeRepository>();
+            services.AddScoped<ICollegeRepository, CollegeRepository>();
         }
 
         public static void RegisterServices(this IServiceCollection services)

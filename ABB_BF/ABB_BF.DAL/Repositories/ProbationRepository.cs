@@ -16,14 +16,14 @@ namespace ABB_BF.DAL.Repositories
 
         public async Task<int> AddProbation(Probation probation)
         {
-            await _context.ProbationForms.AddAsync(probation);
+            await _context.Probation.AddAsync(probation);
             await _context.SaveChangesAsync();
             return probation.Id;
         }
 
         public async Task<List<Probation>> GetAll(Filter filter)
         {
-            List<Probation> probations = await _context.ProbationForms
+            List<Probation> probations = await _context.Probation
                 .Where(c =>
                     (filter.IsChecked == null || c.IsChecked != filter.IsChecked) &&
                     (c.CreationDate >= DateOnly.FromDateTime(filter.StartInterval)) &&
