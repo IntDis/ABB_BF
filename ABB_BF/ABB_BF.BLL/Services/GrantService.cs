@@ -42,7 +42,7 @@ namespace ABB_BF.BLL.Services
             return _mapper.Map<List<GrantModel>>(await _grantRepository.GetAll(_mapper.Map<Filter>(filter)));
         }
 
-        public async Task<string> CreateCsv(FilterModel filter, string fileName)
+        public async Task<string> CreateXlsx(FilterModel filter, string fileName)
         {
             if (filter.IsChecked == false)
             {

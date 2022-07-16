@@ -10,14 +10,14 @@ namespace ABB_BF.BLL.Services
     public class PracticeService : IPracticeService
     {
         private readonly IMapper _mapper;
-        private readonly IFileHelper _csvHelper;
+        private readonly IFileHelper _fileHelper;
         private readonly IPracticeRepository _practiceRepository;
 
-        public PracticeService(IMapper mapper, IPracticeRepository practiceRepository, IFileHelper csvHelper)
+        public PracticeService(IMapper mapper, IPracticeRepository practiceRepository, IFileHelper fileHelper)
         {
             _mapper = mapper;
             _practiceRepository = practiceRepository;
-            _csvHelper = csvHelper;
+            _fileHelper = fileHelper;
         }
 
         public async Task<int> AddPractice(PracticeModel practiceModel)

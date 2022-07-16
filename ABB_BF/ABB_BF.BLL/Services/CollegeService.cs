@@ -8,19 +8,13 @@ namespace ABB_BF.BLL.Services
 {
     public class CollegeService : ICollegeService
     {
-        private readonly IUniversityRepository _universityRepository; 
-        private readonly IGrantRepository _grnatRepository;
         private readonly ICollegeRepository _collegeRepository;
         private readonly IMapper _mapper;
 
         public CollegeService(
-            IUniversityRepository universityRepository,
-            IGrantRepository grantRepository,
             ICollegeRepository collegeRepository,
             IMapper mapper)
         {
-            _universityRepository = universityRepository;
-            _grnatRepository = grantRepository;
             _collegeRepository = collegeRepository;
             _mapper = mapper;
         }

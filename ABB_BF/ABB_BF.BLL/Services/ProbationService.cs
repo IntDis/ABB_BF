@@ -11,7 +11,6 @@ namespace ABB_BF.BLL.Services
     {
         private readonly IMapper _mapper;
         private readonly IProbationRepository _probationRepository;
-        private readonly IFileHelper _csvHelper;
 
         public ProbationService(IMapper mapper,
             IProbationRepository probationRepository,
@@ -19,7 +18,6 @@ namespace ABB_BF.BLL.Services
         {
             _mapper = mapper;
             _probationRepository = probationRepository;
-            _csvHelper = csvHelper;
         }
 
         public async Task<int> AddProbation(ProbationModel probationModel)
