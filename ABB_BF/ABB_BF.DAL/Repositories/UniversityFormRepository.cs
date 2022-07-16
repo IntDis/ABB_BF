@@ -41,7 +41,7 @@ namespace ABB_BF.DAL.Repositories
                 university.IsChecked = true;
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return universities;
         }

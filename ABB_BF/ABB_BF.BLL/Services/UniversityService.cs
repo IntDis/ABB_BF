@@ -13,24 +13,29 @@ namespace ABB_BF.BLL.Services
         private readonly IFileHelper _csvHelper;
         private readonly IUniversityRepository _universityFormRepository;
         private readonly IFileHelper _fileHelper;
+        private readonly ICollegeService _collegeService;
 
         public UniversityService(IMapper mapper,
             IUniversityRepository universityFormRepository,
             IFileHelper csvHelper,
-            IFileHelper fileHelper)
+            IFileHelper fileHelper,
+            ICollegeService collegeService)
         {
             _mapper = mapper;
             _universityFormRepository = universityFormRepository;
             _csvHelper = csvHelper;
             _fileHelper = fileHelper;
+            _collegeService = collegeService;
         }
 
-        public async Task<int> AddUniversityForm(UniversityModel universityFormModel)
+        public async Task<int> AddUniversityForm(UniversityModel universityModel)
         {
-            universityFormModel.CreationDate = DateOnly.FromDateTime(DateTime.Now);
+            universityModel.CreationDate = DateOnly.FromDateTime(DateTime.Now);
+
+            await _collegeService.AddCollege(universityModel.College);
 
             return await _universityFormRepository
-                .AddUniversityForm(_mapper.Map<University>(universityFormModel));
+                .AddUniversityForm(_mapper.Map<University>(universityModel));
         }
 
         public async Task<List<UniversityModel>> GetAll(FilterModel filter)

@@ -30,9 +30,14 @@ namespace ABB_BF.BLL.Services
             return _mapper.Map<List<CollegeModel>>(await _collegeRepository.GetAllColleges());
         }
 
-        public async Task AddCollege(CollegeModel college)
+        public async Task AddCollege(string name)
         {
-            if (await CollegeIsExistInDb(college))
+            CollegeModel college = new CollegeModel()
+            {
+                Name = name,
+            };
+
+            if (!(await CollegeIsExistInDb(college)))
             {
                 await _collegeRepository.AddCollege(_mapper.Map<College>(college));
             }
@@ -40,7 +45,7 @@ namespace ABB_BF.BLL.Services
 
         private async Task<bool> CollegeIsExistInDb(CollegeModel college)
         {
-            if (_collegeRepository.GetCollegeByName(college.Name) is not null)
+            if (await _collegeRepository.GetCollegeByName(college.Name) is not null)
             {
                 return true;
             }

@@ -5,6 +5,6 @@ namespace ABB_BF.BLL.Services.Interfaces
     public interface ICollegeService
     {
         Task<List<CollegeModel>> GetAllColleges();
-        Task AddCollege(CollegeModel college);
+        Task AddCollege(string name);
     }
 }

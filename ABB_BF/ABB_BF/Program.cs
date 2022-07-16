@@ -17,8 +17,7 @@ builder.Services.RegisterServices();
 const string _connectionStringVar = "CON_STRING1";
 string connString = builder.Configuration.GetValue<string>(_connectionStringVar);
 
-builder.Services.AddDbContext<Context>(op =>
-            op.UseSqlServer(connString));
+builder.Services.AddDbContext<Context>(op => op.UseSqlServer(connString), ServiceLifetime.Transient);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
