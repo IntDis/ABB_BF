@@ -33,10 +33,5 @@ namespace ABB_BF.BLL.Services
         {
             return _mapper.Map<List<ProbationModel>>(await _probationRepository.GetAll(_mapper.Map<Filter>(filter)));
         }
-
-        public async Task<string> CreateCsv(FilterModel filter)
-        {
-            return await _csvHelper.GetScv(await _probationRepository.GetAll(_mapper.Map<Filter>(filter)));
-        }
     }
 }

@@ -30,11 +30,6 @@ namespace ABB_BF.BLL.Services
             return await _practiceRepository.AddPractice(practice);
         }
 
-        public async Task<string> CreateCsv(FilterModel filter)
-        {
-            return await _csvHelper.GetScv(await _practiceRepository.GetAll(_mapper.Map<Filter>(filter)));
-        }
-
         public async Task<List<PracticeModel>> GetAll(FilterModel filter)
         {
             return _mapper.Map<List<PracticeModel>>(await _practiceRepository.GetAll(_mapper.Map<Filter>(filter)));

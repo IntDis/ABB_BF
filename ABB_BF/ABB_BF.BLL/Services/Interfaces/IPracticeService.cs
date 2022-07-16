@@ -6,6 +6,5 @@ namespace ABB_BF.BLL.Services.Interfaces
     {
         Task<int> AddPractice(PracticeModel practiceModel);
         Task<List<PracticeModel>> GetAll(FilterModel filter);
-        Task<string> CreateCsv(FilterModel filter);
     }
 }

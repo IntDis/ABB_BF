@@ -5,29 +5,14 @@ using System.IO.Compression;
 
 namespace ABB_BF.BLL.Services
 {
+    // sorry for files and folders naming :(
+    // fix it pls
     public class FileHelper : IFileHelper
     {
         private static readonly string _rootPathEnvVarName = "ROOT_PATH";
         private readonly string _rootPath = Environment.GetEnvironmentVariable(_rootPathEnvVarName);
 
-        public async Task<string> GetScv<T>(List<T> forms) where T : class
-        {
-            Directory.CreateDirectory($"{_rootPath}newFolder");
-            string excelName = $"{_rootPath}newFolder/{typeof(T).Name}_{DateTime.Now.ToShortDateString()}.xlsx";
-
-            var stream = new MemoryStream();
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            using (var package = new ExcelPackage(stream))
-            {
-                var workSheet = package.Workbook.Worksheets.Add("sheet");
-                workSheet.Cells.LoadFromCollection(forms, true);
-                package.SaveAs(excelName);
-            }
-          
-            return excelName;
-        }
-
-        public string CreateXlsx<T>(List<T> forms, string fileName) where T : class
+        public async Task<string> CreateXlsx<T>(List<T> forms, string fileName) where T : class
         {
             Directory.CreateDirectory($"{_rootPath}newFolder");
             string excelName = $"{_rootPath}newFolder";
@@ -47,7 +32,7 @@ namespace ABB_BF.BLL.Services
         public async Task<string> CreateFolderWithFormsInfo<T>(List<AbstractEntityModel> list, List<T> models)
             where T : class
         {
-            string pathToXltx = await GetScv(models);
+            await CreateXlsx(models, "tempfolder");
 
             foreach (AbstractEntityModel model in list)
             {

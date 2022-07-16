@@ -50,7 +50,7 @@ namespace ABB_BF.BLL.Services
                 filter.IsChecked = null;
             }
 
-            return _fileHelper.CreateXlsx(await GetAll(filter), fileName);
+            return await _fileHelper.CreateXlsx(await GetAll(filter), fileName);
         }
     }
 }
