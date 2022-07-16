@@ -6,5 +6,6 @@ namespace ABB_BF.DAL.Repositories.Interfaces
     {
         Task AddCollege(College college);
         Task<List<College>> GetAllColleges();
+        Task<College> GetCollegeByName(string name);
     }
 }

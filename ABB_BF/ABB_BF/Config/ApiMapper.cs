@@ -38,7 +38,7 @@ namespace ABB_BF.Config
                     .MapFrom(src => string.IsNullOrEmpty(src.StartInterval) ? DateTime.MaxValue : DateTime.Parse(src.StartInterval)));
 
 
-                //.ForMember(dest => dest.StartInterval, opt => opt.NullSubstitute(DateTime.MinValue))
+            CreateMap<CollegeModel, CollegeResponse>();
         }
 
         protected string GetExtension(string fileName)

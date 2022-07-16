@@ -18,6 +18,11 @@ namespace ABB_BF.DAL.Repositories
             return await _context.College.ToListAsync();
         }
 
+        public async Task<College> GetCollegeByName(string name)
+        {
+            return await _context.College.FirstOrDefaultAsync(c => c.Name == name);
+        }
+
         public async Task AddCollege(College college)
         {
             await _context.College.AddAsync(college);

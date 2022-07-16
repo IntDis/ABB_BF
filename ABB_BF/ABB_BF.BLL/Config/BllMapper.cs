@@ -24,6 +24,7 @@ namespace ABB_BF.BLL.Config
             CreateMap<AbstractEntityModel, AbstractCommonData>().ReverseMap();
 
             CreateMap<FilterModel, Filter>().ReverseMap();
+            CreateMap<CollegeModel, College>().ReverseMap();
         }
     }
 }
