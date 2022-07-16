@@ -57,7 +57,7 @@ namespace ABB_BF.Controllers
                 CourseDirections = CourseDirections
             };
 
-            string name = await _grantService.CreateCsv(_mapper.Map<FilterModel>(filters), fileName);
+            string name = await _grantService.CreateXlsx(_mapper.Map<FilterModel>(filters), fileName);
 
             string fileType = "application/zip";
             string filePath = Path.Combine(_appEnvironment.ContentRootPath, name);
@@ -98,7 +98,7 @@ namespace ABB_BF.Controllers
                 CourseDirections = CourseDirections
             };
 
-            string name = await _grantService.CreateCsv(_mapper.Map<FilterModel>(filters), fileName);
+            string name = await _grantService.CreateXlsx(_mapper.Map<FilterModel>(filters), fileName);
 
             string fileType = "application/zip";
             string filePath = Path.Combine(_appEnvironment.ContentRootPath, name);
