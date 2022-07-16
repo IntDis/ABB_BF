@@ -25,6 +25,7 @@ namespace ABB_BF.Extensions
             services.AddScoped<IFileHelper, FileHelper>();
             services.AddScoped<IEmailSenderService, EmailSenderService>();
             services.AddScoped<ICollegeService, CollegeService>();
+            services.AddScoped<IModelsService, ModelService>();
         }
     }
 }
