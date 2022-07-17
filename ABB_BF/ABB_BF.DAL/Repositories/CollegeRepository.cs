@@ -28,5 +28,10 @@ namespace ABB_BF.DAL.Repositories
             await _context.College.AddAsync(college);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<College> GetCollegeById(int id)
+        {
+            return await _context.College.FirstOrDefaultAsync(c => c.Id == id);
+        }
     }
 }

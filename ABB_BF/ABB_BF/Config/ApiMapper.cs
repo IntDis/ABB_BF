@@ -36,7 +36,8 @@ namespace ABB_BF.Config
                     .MapFrom(src => string.IsNullOrEmpty(src.StartInterval) ? DateTime.MinValue : DateTime.Parse(src.StartInterval)))
                 .ForMember(dest => dest.FinishInterval, opt => opt
                     .MapFrom(src => string.IsNullOrEmpty(src.StartInterval) ? DateTime.MaxValue : DateTime.Parse(src.StartInterval)))
-                .ForMember(dest => dest.CourseDirections, opt => opt.Ignore());
+                .ForMember(dest => dest.CourseDirections, opt => opt.Ignore())
+                .ForMember(dest => dest.College, opt => opt.Ignore());
 
 
             CreateMap<CollegeModel, CollegeResponse>()
