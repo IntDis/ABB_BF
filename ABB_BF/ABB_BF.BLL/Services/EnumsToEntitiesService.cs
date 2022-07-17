@@ -13,7 +13,7 @@ namespace ABB_BF.BLL.Services
             _enumsToEntitiesRepository = enumsToEntitiesRepository;
         }
 
-        public async Task<string> GetDefinitionByNumberFromCourseDirections(int number)
+        public async Task<string> GetDefinitionByNumberFromCourseDirections(int? number)
         {
             CourseDirection courseDirection = await _enumsToEntitiesRepository.GetCourseDirectionByNumber(number);
 
@@ -23,7 +23,7 @@ namespace ABB_BF.BLL.Services
             return courseDirection.Definition;
         }
 
-        public async Task<string> GetDefinitionByNumberFromEducationForms(int number)
+        public async Task<string> GetDefinitionByNumberFromEducationForms(int? number)
         {
             var result = await _enumsToEntitiesRepository.GetEducationFormByNumber(number);
 
@@ -33,7 +33,7 @@ namespace ABB_BF.BLL.Services
             return result.Definition;
         }
 
-        public async Task<string> GetDefinitionByNumberFromEducationLevels(int number)
+        public async Task<string> GetDefinitionByNumberFromEducationLevels(int? number)
         {
             var result = await _enumsToEntitiesRepository.GetEducationLevelByNumber(number);
 
@@ -43,7 +43,7 @@ namespace ABB_BF.BLL.Services
             return result.Definition;
         }
 
-        public async Task<string> GetDefinitionByNumberFromSpecialities(int number)
+        public async Task<string> GetDefinitionByNumberFromSpecialities(int? number)
         {
             var result = await _enumsToEntitiesRepository.GetSpecialityByNumber(number);
 

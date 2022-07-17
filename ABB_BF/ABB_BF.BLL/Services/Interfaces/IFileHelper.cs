@@ -7,6 +7,6 @@ namespace ABB_BF.BLL.Services.Interfaces
         Task<string> CreateXlsx<T>(List<T> forms, string fileName) where T : class;
         Task<string> CreateFolderWithFormsInfo<T>(List<AbstractEntityModel> list, List<T> models) where T : class;
         Task<string> CreateZip(string startPath, string zipPath);
-        string CreateFileNmae(FilterModel filter, string modelName);
+        string CreateFileNmae(FilterModel filter, string modelName, string courseDirection = "");
     }
 }

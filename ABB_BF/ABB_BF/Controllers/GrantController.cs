@@ -73,8 +73,11 @@ namespace ABB_BF.Controllers
                 CourseDirections = CourseDirections
             };
 
+            string courseDirection = 
+                await _enumsToEntitiesService.GetDefinitionByNumberFromCourseDirections(filters.CourseDirections);
+
             string fileName = 
-                _fileHelper.CreateFileNmae(_mapper.Map<FilterModel>(filters), "Стипендия");
+                _fileHelper.CreateFileNmae(_mapper.Map<FilterModel>(filters), "Стипендия", courseDirection);
 
             string name = await _grantService.CreateXlsx(_mapper.Map<FilterModel>(filters), fileName);
 
