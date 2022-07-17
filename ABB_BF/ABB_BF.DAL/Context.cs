@@ -130,26 +130,26 @@ namespace ABB_BF.DAL
                 new CourseDirection() {Id = 54, Number = 54, Definition = "Повышение финансовой грамотности"}
                 );
 
-            modelBuilder.Entity<EducationForm>().HasData(
-                new EducationForm()
+            modelBuilder.Entity<EducationLevel>().HasData(
+                new EducationLevel()
                 {
                     Id = 1,
                     Number = 1,
                     Definition = "Колледж/Техникум"
                 },
-                new EducationForm()
+                new EducationLevel()
                 {
                     Id = 2,
                     Number = 2,
                     Definition = "Бакалавриат"
                 },
-                new EducationForm()
+                new EducationLevel()
                 {
                     Id = 3,
                     Number = 3,
                     Definition = "Специалитет"
                 },
-                new EducationForm()
+                new EducationLevel()
                 {
                     Id = 4,
                     Number = 4,
