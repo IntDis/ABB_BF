@@ -81,15 +81,15 @@ namespace ABB_BF.BLL.Services
             }
             if (DateOnly.FromDateTime(filter.FinishInterval) != DateOnly.MaxValue)
             {
-                fileName.Append($"_По_{DateOnly.FromDateTime(filter.StartInterval)}");
+                fileName.Append($"_По_{DateOnly.FromDateTime(filter.FinishInterval)}");
             }
             if (filter.College != null)
             {
-                fileName.Append($"_{filter.College}");
+                fileName.Append($"_{filter.College}_");
             }
             if (filter.Course != null)
             {
-                fileName.Append($"_{filter.Course}");
+                fileName.Append($"_{filter.Course}_");
             }
             if (filter.CourseDirections != null)
             {

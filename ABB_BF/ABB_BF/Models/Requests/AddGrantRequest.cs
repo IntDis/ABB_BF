@@ -9,7 +9,7 @@
         public string Email { get; set; }
         public int Course { get; set; }
         public string College { get; set; }
-        public float AverageMarks { get; set; }
+        public string AverageMarks { get; set; }
         public int EducationLevel { get; set; }
         public int EducationForm { get; set; }
         public int Speciality { get; set; }

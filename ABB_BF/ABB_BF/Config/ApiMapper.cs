@@ -12,7 +12,10 @@ namespace ABB_BF.Config
         public ApiMapper()
         {
             CreateMap<AddProbationRequest, ProbationModel>();
-            CreateMap<AddGrantRequest, GrantModel>();
+            CreateMap<AddGrantRequest, GrantModel>()
+                .ForMember(dest => dest.AverageMarks, opt => opt
+                .MapFrom(src => Convert.ToDecimal(GetDecimalFromString(src.AverageMarks))));
+
             CreateMap<AddUniversityRequest, UniversityModel>()
                 .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => DateOnly.FromDateTime(src.StartDate)));
             CreateMap<AddPracticeRequest, PracticeModel>();
@@ -52,6 +55,11 @@ namespace ABB_BF.Config
         {
             var binaryReader = new BinaryReader(file.OpenReadStream());
             return binaryReader.ReadBytes((int)file.Length);
+        }
+
+        protected decimal GetDecimalFromString(string number)
+        {
+            return Convert.ToDecimal(number, System.Globalization.CultureInfo.InvariantCulture);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace ABB_BF.BLL.Models
         [DisplayName("Форма образования")]
         public string EducationForm { get; set; }
         [DisplayName("Средняя оценка")]
-        public float AverageMarks { get; set; }
+        public decimal AverageMarks { get; set; }
         [DisplayName("Специальность")]
         public string Speciality { get; set; }
         [DisplayName("Другие стипендии")]
