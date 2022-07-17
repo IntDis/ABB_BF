@@ -19,20 +19,34 @@ namespace ABB_BF.Controllers
         private readonly IWebHostEnvironment _appEnvironment;
         private readonly IFileHelper _fileHelper;
         private readonly IEmailSenderService _emailService;
+        private readonly IEnumsToEntitiesService _enumsToEntitiesService;
 
-        public GrantController(IEmailSenderService emailService, IMapper mapper, IFileHelper fileHelper, IGrantService grantService, IWebHostEnvironment appEnvironment)
+        public GrantController(
+            IEmailSenderService emailService, 
+            IMapper mapper, 
+            IFileHelper fileHelper, 
+            IGrantService grantService, 
+            IWebHostEnvironment appEnvironment, 
+            IEnumsToEntitiesService enumsToEntitiesService)
         {
             _mapper = mapper;
             _grantService = grantService;
             _appEnvironment = appEnvironment;
             _fileHelper = fileHelper;
             _emailService = emailService;
+            _enumsToEntitiesService = enumsToEntitiesService;
+
         }
 
         [HttpPost]
         public async Task<ActionResult<int>> AddGrant([FromForm] AddGrantRequest grantRequest)
         {
             GrantModel model = _mapper.Map<GrantModel>(grantRequest);
+
+            model.EducationForm = await _enumsToEntitiesService.GetDefinitionByNumberFromEducationForms(grantRequest.EducationForm);
+            model.EducationLevel = await _enumsToEntitiesService.GetDefinitionByNumberFromEducationLevels(grantRequest.EducationLevel);
+            model.Speciality = await _enumsToEntitiesService.GetDefinitionByNumberFromSpecialities(grantRequest.Speciality);
+
             return Ok(await _grantService.AddGrant(model));
         }
 
