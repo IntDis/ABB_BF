@@ -6,5 +6,6 @@ namespace ABB_BF.BLL.Services.Interfaces
     {
         Task<List<CollegeModel>> GetAllColleges();
         Task AddCollege(string name);
+        Task<CollegeModel> GetCollegeById(int id);
     }
 }

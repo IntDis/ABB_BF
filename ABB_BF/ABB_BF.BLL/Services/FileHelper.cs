@@ -2,6 +2,7 @@
 using ABB_BF.BLL.Services.Interfaces;
 using OfficeOpenXml;
 using System.IO.Compression;
+using System.Text;
 
 namespace ABB_BF.BLL.Services
 {
@@ -62,6 +63,41 @@ namespace ABB_BF.BLL.Services
             ZipFile.CreateFromDirectory(startPath, zipPath);
             Directory.Delete(startPath, true);
             return zipPath;
+        }
+
+        public string CreateFileNmae(FilterModel filter, string modelName, string courseDirection = "")
+        {
+            StringBuilder fileName = new StringBuilder(DateOnly.FromDateTime(DateTime.Now).ToString());
+            fileName.Append("_");
+            fileName.Append(modelName);
+
+            if(filter.IsChecked == true)
+            {
+                fileName.Append("_ТолькоНовые_");
+            }
+            if (DateOnly.FromDateTime(filter.StartInterval) != DateOnly.MinValue)
+            {
+                fileName.Append($"_С_{DateOnly.FromDateTime(filter.StartInterval)}");
+            }
+            if (DateOnly.FromDateTime(filter.FinishInterval) != DateOnly.MaxValue)
+            {
+                fileName.Append($"_По_{DateOnly.FromDateTime(filter.StartInterval)}");
+            }
+            if (filter.College != null)
+            {
+                fileName.Append($"_{filter.College}");
+            }
+            if (filter.Course != null)
+            {
+                fileName.Append($"_{filter.Course}");
+            }
+            if (filter.CourseDirections != null)
+            {
+                fileName.Append($"_С_Направлением_курсов_{courseDirection}");
+            }
+
+            return fileName.ToString();
+
         }
     }
 }

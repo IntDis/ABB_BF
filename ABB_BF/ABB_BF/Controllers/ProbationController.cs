@@ -45,7 +45,6 @@ namespace ABB_BF.Controllers
 
         [HttpGet("download")]
         public async Task<ActionResult> DownloadZip(
-            [FromHeader] string fileName,
             [FromHeader] bool? IsChecked,
             [FromHeader] string? StartInterval,
             [FromHeader] string? FinishInterval,
@@ -63,6 +62,9 @@ namespace ABB_BF.Controllers
                 Course = Course,
                 CourseDirections = CourseDirections
             };
+
+            string fileName =
+                _fileHelper.CreateFileNmae(_mapper.Map<FilterModel>(filters), "Стажировка");
 
             List<ProbationModel> models = await _probationService.GetAll(_mapper.Map<FilterModel>(filters));
 
@@ -87,7 +89,6 @@ namespace ABB_BF.Controllers
 
         [HttpGet("send")]
         public async Task<ActionResult> SendEmail(
-            [FromHeader] string fileName,
             [FromHeader] bool? IsChecked,
             [FromHeader] string? StartInterval,
             [FromHeader] string? FinishInterval,
@@ -106,6 +107,9 @@ namespace ABB_BF.Controllers
                 CourseDirections = CourseDirections
             };
 
+            string fileName =
+                _fileHelper.CreateFileNmae(_mapper.Map<FilterModel>(filters), "Стажировка");
+
             List<ProbationModel> models = await _probationService.GetAll(_mapper.Map<FilterModel>(filters));
 
             string path = await _fileHelper
@@ -122,7 +126,7 @@ namespace ABB_BF.Controllers
                 FileOptions.DeleteOnClose);
 
             _emailService
-                .SendMessage(_emailTo, "Привет, тема пока такая", new Attachment(fs, $"{fileName}.zip"));
+                .SendMessage(_emailTo, fileName, new Attachment(fs, $"{fileName}.zip"));
 
             fs.Close();
 

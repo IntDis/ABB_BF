@@ -3,20 +3,8 @@ using System.ComponentModel;
 
 namespace ABB_BF.BLL.Models
 {
-    public class GrantModel
+    public class GrantModel : AbstractEntityModel
     {
-        [DisplayName("Номер заявки")]
-        public int Id { get; set; }
-        [DisplayName("Имя")]
-        public string Firstname { get; set; }
-        [DisplayName("Фамилия")]
-        public string Secondname { get; set; }
-        [DisplayName("Отчество")]
-        public string? Patronymic { get; set; }
-        [DisplayName("Телефон")]
-        public string Phone { get; set; }
-        [DisplayName("Электронная почта")]
-        public string Email { get; set; }
         [DisplayName("Курс")]
         public int Course { get; set; }
         [DisplayName("Учебное заведение")]
@@ -30,8 +18,6 @@ namespace ABB_BF.BLL.Models
         [DisplayName("Специальность")]
         public string Speciality { get; set; }
         [DisplayName("Другие стипендии")]
-        public string? OtherGrants { get; set; }
-        [DisplayName("Дата подачи заявки")]
-        public DateOnly CreationDate { get; set; }
+        public string OtherGrants { get; set; }
     }
 }

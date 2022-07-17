@@ -1,9 +1,7 @@
 ﻿using ABB_BF.API.Models.Requests;
 using ABB_BF.BLL.Models;
 using ABB_BF.BLL.Services.Interfaces;
-using ABB_BF.DAL.Enums;
 using ABB_BF.Models.Requests;
-using ABB_BF.Models.Responses;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mail;
@@ -52,7 +50,6 @@ namespace ABB_BF.Controllers
 
         [HttpGet("download")]
         public async Task<ActionResult> DownloadCsv(
-            [FromHeader] string fileName,
             [FromHeader] bool? IsChecked,
             [FromHeader] string? StartInterval,
             [FromHeader] string? FinishInterval,
@@ -70,7 +67,17 @@ namespace ABB_BF.Controllers
                 CourseDirections = CourseDirections
             };
 
-            string name = await _universityService.CreateXlsx(_mapper.Map<FilterModel>(filters), fileName);
+            string courseDirection =
+                await _enumsToEntitiesService.GetDefinitionByNumberFromCourseDirections(filters.CourseDirections);
+
+            FilterModel filter = _mapper.Map<FilterModel>(filters);
+
+            filter.CourseDirections = courseDirection;
+
+            string fileName =
+                _fileHelper.CreateFileNmae(filter, "Курсы", courseDirection);
+
+            string name = await _universityService.CreateXlsx(filter, fileName);
 
             string fileType = "application/zip";
             string filePath = Path.Combine(_appEnvironment.ContentRootPath, name);
@@ -92,7 +99,6 @@ namespace ABB_BF.Controllers
 
         [HttpGet("send")]
         public async Task<ActionResult> SendEmail(
-            [FromHeader] string fileName,
             [FromHeader] bool? IsChecked,
             [FromHeader] string? StartInterval,
             [FromHeader] string? FinishInterval,
@@ -111,9 +117,18 @@ namespace ABB_BF.Controllers
                 CourseDirections = CourseDirections
             };
 
-            string name = await _universityService.CreateXlsx(_mapper.Map<FilterModel>(filters), fileName);
+            string courseDirection =
+                await _enumsToEntitiesService.GetDefinitionByNumberFromCourseDirections(filters.CourseDirections);
 
-            string fileType = "application/zip";
+            FilterModel filter = _mapper.Map<FilterModel>(filters);
+
+            filter.CourseDirections = courseDirection;
+
+            string fileName =
+                _fileHelper.CreateFileNmae(filter, "Курсы", courseDirection);
+
+            string name = await _universityService.CreateXlsx(filter, fileName);
+
             string filePath = Path.Combine(_appEnvironment.ContentRootPath, name);
 
             string zipPath = await _fileHelper.CreateZip(filePath, $"{filePath}.zip");
@@ -126,7 +141,7 @@ namespace ABB_BF.Controllers
                 FileOptions.DeleteOnClose);
 
             _emailService
-                .SendMessage(_emailTo, "Привет, тема пока такая", new Attachment(fs, $"{fileName}.zip"));
+                .SendMessage(_emailTo, fileName, new Attachment(fs, $"{fileName}.zip"));
 
             fs.Close();
 
