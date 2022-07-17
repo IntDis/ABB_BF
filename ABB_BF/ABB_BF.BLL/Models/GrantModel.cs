@@ -17,7 +17,5 @@ namespace ABB_BF.BLL.Models
         public Specialities Speciality { get; set; }
         [DisplayName("Другие стипендии")]
         public string OtherGrants { get; set; }
-        [DisplayName("Дата подачи заявки")]
-        public DateOnly CreationDate { get; set; }
     }
 }
