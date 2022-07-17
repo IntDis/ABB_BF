@@ -6,13 +6,17 @@ namespace ABB_BF.BLL.Services
 {
     public class EmailSenderService : IEmailSenderService
     {
-        private string _emailFrom;
         private readonly string _smtpHost;
         private readonly int _smtpPort;
 
+        private static readonly string _emailFromEnvVarName = "EMAIL_FROM";
+        private readonly string _emailFrom = Environment.GetEnvironmentVariable(_emailFromEnvVarName);
+
+        private static readonly string _emailFromPasswordEnvVarName = "EMAIL_FROM_PASSWORD";
+        private readonly string _emailFromPassword = Environment.GetEnvironmentVariable(_emailFromPasswordEnvVarName);
+
         public EmailSenderService()
         {
-            _emailFrom = "azarovrom9215@yandex.ru";
             _smtpHost = "smtp.yandex.ru";
             _smtpPort = 587;
         }
@@ -37,7 +41,7 @@ namespace ABB_BF.BLL.Services
             client.EnableSsl = true;
 
             //Sender's login and password
-            client.Credentials = new NetworkCredential(_emailFrom, "Azarov9215");
+            client.Credentials = new NetworkCredential(_emailFrom, _emailFromPassword);
 
             client.Send(mail);
         }
