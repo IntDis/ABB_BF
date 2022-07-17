@@ -1,6 +1,4 @@
-﻿
-
-namespace ABB_BF.Models.Requests
+﻿namespace ABB_BF.Models.Requests
 {
     public class AddGrantRequest
     {

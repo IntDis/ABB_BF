@@ -52,7 +52,7 @@ namespace ABB_BF.Controllers
             int collegeId;
             if (int.TryParse(form.College, out collegeId))
             {
-                model.College = (await _collegeService.GetCollegeById(collegeId)).Name;
+                model.College = (await _collegeService.GetCollegeById(collegeId)).Name.ToLower();
             }
 
             return Ok(await _universityService.AddUniversityForm(model));
