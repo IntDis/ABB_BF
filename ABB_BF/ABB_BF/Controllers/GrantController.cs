@@ -41,7 +41,6 @@ namespace ABB_BF.Controllers
 
         [HttpGet("download")]
         public async Task<ActionResult> DownloadCsv(
-            [FromHeader] string fileName,
             [FromHeader] bool? IsChecked,
             [FromHeader] string? StartInterval,
             [FromHeader] string? FinishInterval,
@@ -59,6 +58,9 @@ namespace ABB_BF.Controllers
                 Course = Course,
                 CourseDirections = CourseDirections
             };
+
+            string fileName = 
+                _fileHelper.CreateFileNmae(_mapper.Map<FilterModel>(filters), "Стипендия");
 
             string name = await _grantService.CreateXlsx(_mapper.Map<FilterModel>(filters), fileName);
 

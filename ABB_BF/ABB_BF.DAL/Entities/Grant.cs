@@ -8,7 +8,7 @@ namespace ABB_BF.DAL.Entities
         public string College { get; set; }
         public float AverageMarks { get; set; }
         public EducationLevel EducationLevel { get; set; }
-        public string EducationForm { get; set; }
+        //public string EducationForm { get; set; }
         public Specialities Speciality { get; set; }
         public string OtherGrants { get; set; }
     }
