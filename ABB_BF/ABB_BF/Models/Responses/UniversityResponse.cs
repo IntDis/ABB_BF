@@ -11,7 +11,7 @@
         public string College { get; set; }
         public DateTime StartDate { get; set; }
         public int Duration { get; set; }
-        public int Direction { get; set; }
+        public string Direction { get; set; }
         public bool IsCertificated { get; set; }
         public DateOnly CreationDate { get; set; }
     }

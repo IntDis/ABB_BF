@@ -11,7 +11,7 @@ namespace ABB_BF.BLL.Models
         [DisplayName("Продолжительсноть")]
         public int Duration { get; set; }
         [DisplayName("Направление")]
-        public string CourseDirection { get; set; }
+        public string Direction { get; set; }
         [DisplayName("Наличие сертификата")]
         public bool IsCertificated { get; set; }
         [DisplayName("Дата подачи заявки")]

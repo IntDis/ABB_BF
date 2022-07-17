@@ -39,7 +39,6 @@ namespace ABB_BF.Config
                 .ForMember(dest => dest.CourseDirections, opt => opt.Ignore())
                 .ForMember(dest => dest.College, opt => opt.Ignore());
 
-
             CreateMap<CollegeModel, CollegeResponse>()
                 .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Name));
         }

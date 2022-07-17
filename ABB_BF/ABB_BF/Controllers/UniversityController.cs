@@ -46,7 +46,7 @@ namespace ABB_BF.Controllers
         {
             UniversityModel model = _mapper.Map<UniversityModel>(form);
 
-            model.CourseDirection = 
+            model.Direction = 
                 await _enumsToEntitiesService.GetDefinitionByNumberFromCourseDirections(form.CourseDirection);
 
             int collegeId;
