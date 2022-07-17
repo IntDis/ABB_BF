@@ -20,6 +20,8 @@ namespace ABB_BF.Controllers
         private readonly IFileHelper _fileHelper;
         private readonly IEmailSenderService _emailService;
 
+        private static readonly string _emailToEnvVarName = "EMAIL_TO";
+        private readonly string _emailTo = Environment.GetEnvironmentVariable(_emailToEnvVarName);
 
         public ProbationController(IMapper mapper,
             IProbationService probationService,
@@ -120,7 +122,7 @@ namespace ABB_BF.Controllers
                 FileOptions.DeleteOnClose);
 
             _emailService
-                .SendMessage("azarovrom9215@gmail.com", "Привет, тема пока такая", new Attachment(fs, $"{fileName}.zip"));
+                .SendMessage(_emailTo, "Привет, тема пока такая", new Attachment(fs, $"{fileName}.zip"));
 
             fs.Close();
 
