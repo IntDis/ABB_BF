@@ -1,6 +1,4 @@
-﻿using ABB_BF.DAL.Enums;
-
-namespace ABB_BF.BLL.Models
+﻿namespace ABB_BF.BLL.Models
 {
     public class FilterModel
     {
@@ -9,6 +7,6 @@ namespace ABB_BF.BLL.Models
         public DateTime FinishInterval { get; set; }
         public string? College { get; set; }
         public int? Course { get; set; }
-        public CourseDirections? CourseDirections { get; set; }
+        public int? CourseDirections { get; set; }
     }
 }

@@ -47,7 +47,7 @@ namespace ABB_BF.Controllers
             [FromHeader] string? FinishInterval,
             [FromHeader] string? College,
             [FromHeader] int? Course,
-            [FromHeader] CourseDirections? CourseDirections
+            [FromHeader] int? CourseDirections
             )
         {
             FilterRequest filters = new FilterRequest()
@@ -89,7 +89,7 @@ namespace ABB_BF.Controllers
             [FromHeader] string? FinishInterval,
             [FromHeader] string? College,
             [FromHeader] int? Course,
-            [FromHeader] CourseDirections? CourseDirections
+            [FromHeader] int? CourseDirections
             )
         {
             FilterRequest filters = new FilterRequest()
