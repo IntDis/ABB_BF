@@ -30,7 +30,8 @@ namespace ABB_BF.BLL.Config
                 .ForMember(dest => dest.Firstname, opt => opt.MapFrom(src => FirstUpper(src.Firstname.Trim())))
                 .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => FixPhoneNumber(src.Phone.Trim().ToLower())))
                 .ForMember(dest => dest.Secondname, opt => opt.MapFrom(src => FirstUpper(src.Secondname.Trim())))
-                .ForMember(dest => dest.Patronymic, opt => opt.MapFrom(src => FirstUpper(src.Patronymic.Trim())));
+                .ForMember(dest => dest.Patronymic, opt => opt.MapFrom(src => FirstUpper(src.Patronymic.Trim())))
+                .ForMember(dest => dest.Direction, opt => opt.MapFrom(src => FirstUpper(src.CourseDirection.Trim())));
 
             CreateMap<Practice, PracticeModel>().ReverseMap()
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email.Trim().ToLower()))
