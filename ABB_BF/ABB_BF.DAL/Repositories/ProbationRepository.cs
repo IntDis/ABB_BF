@@ -34,7 +34,7 @@ namespace ABB_BF.DAL.Repositories
                 probation.IsChecked = true;
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return probations;
         }

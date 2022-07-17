@@ -53,6 +53,12 @@ namespace ABB_BF.Controllers
             model.EducationLevel = await _enumsToEntitiesService.GetDefinitionByNumberFromEducationLevels(grantRequest.EducationLevel);
             model.Speciality = await _enumsToEntitiesService.GetDefinitionByNumberFromSpecialities(grantRequest.Speciality);
 
+            int collegeId;
+            if (int.TryParse(grantRequest.College, out collegeId))
+            {
+                model.College = (await _collegeService.GetCollegeById(collegeId)).Name;
+            }
+
             return Ok(await _grantService.AddGrant(model));
         }
 
@@ -63,7 +69,7 @@ namespace ABB_BF.Controllers
             [FromHeader] string? FinishInterval,
             [FromHeader] string? College,
             [FromHeader] int? Course,
-            [FromHeader] int? CourseDirections
+            [FromHeader] int? CourseDirection
             )
         {
             FilterRequest filters = new FilterRequest()
@@ -73,18 +79,10 @@ namespace ABB_BF.Controllers
                 FinishInterval = FinishInterval,
                 College = College,
                 Course = Course,
-                CourseDirections = CourseDirections
+                CourseDirections = CourseDirection
             };
 
-            FilterModel filter = _mapper.Map<FilterModel>(filters);
-
-            CollegeModel? college = await _collegeService.GetCollegeById(Convert.ToInt32(filters.College));
-
-            if (college is not null)
-            {
-                filter.College = college.Name;
-            }
-
+            FilterModel filter = await CombineFilter(filters);
             string fileName = 
                 _fileHelper.CreateFileNmae(filter, "Стипендия");
 
@@ -115,7 +113,7 @@ namespace ABB_BF.Controllers
             [FromHeader] string? FinishInterval,
             [FromHeader] string? College,
             [FromHeader] int? Course,
-            [FromHeader] int? CourseDirections
+            [FromHeader] int? CourseDirection
             )
         {
             FilterRequest filters = new FilterRequest()
@@ -125,16 +123,10 @@ namespace ABB_BF.Controllers
                 FinishInterval = FinishInterval,
                 College = College,
                 Course = Course,
-                CourseDirections = CourseDirections
+                CourseDirections = CourseDirection
             };
-            FilterModel filter = _mapper.Map<FilterModel>(filters);
 
-            CollegeModel? college = await _collegeService.GetCollegeById(Convert.ToInt32(filters.College));
-
-            if (college is not null)
-            {
-                filter.College = college.Name;
-            }
+            FilterModel filter = await CombineFilter(filters);
 
             string fileName =
                 _fileHelper.CreateFileNmae(filter, "Стипендия");
@@ -142,7 +134,6 @@ namespace ABB_BF.Controllers
             string name = await _grantService.CreateXlsx(filter, fileName);
 
             string filePath = Path.Combine(_appEnvironment.ContentRootPath, name);
-
             string zipPath = await _fileHelper.CreateZip(filePath, $"{filePath}.zip");
 
             FileStream fs = new FileStream(zipPath,
@@ -159,6 +150,20 @@ namespace ABB_BF.Controllers
             System.IO.File.Delete(zipPath);
 
             return Ok();
+        }
+
+        private async Task<FilterModel> CombineFilter(FilterRequest filters)
+        {
+            FilterModel filter = _mapper.Map<FilterModel>(filters);
+
+            CollegeModel? college = await _collegeService.GetCollegeById(Convert.ToInt32(filters.College));
+
+            if (college is not null)
+            {
+                filter.College = college.Name;
+            }
+
+            return filter;
         }
     }
 }

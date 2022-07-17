@@ -35,7 +35,7 @@ namespace ABB_BF.Config
                 .ForMember(dest => dest.StartInterval, opt => opt
                     .MapFrom(src => string.IsNullOrEmpty(src.StartInterval) ? DateTime.MinValue : DateTime.Parse(src.StartInterval)))
                 .ForMember(dest => dest.FinishInterval, opt => opt
-                    .MapFrom(src => string.IsNullOrEmpty(src.StartInterval) ? DateTime.MaxValue : DateTime.Parse(src.StartInterval)))
+                    .MapFrom(src => string.IsNullOrEmpty(src.FinishInterval) ? DateTime.MaxValue : DateTime.Parse(src.FinishInterval)))
                 .ForMember(dest => dest.CourseDirections, opt => opt.Ignore())
                 .ForMember(dest => dest.College, opt => opt.Ignore());
 

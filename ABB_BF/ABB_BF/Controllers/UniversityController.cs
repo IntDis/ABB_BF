@@ -16,8 +16,9 @@ namespace ABB_BF.Controllers
         private readonly IWebHostEnvironment _appEnvironment;
         private readonly IMapper _mapper;
         private readonly IFileHelper _fileHelper;
-        private readonly IEmailSenderService _emailService;
+        private readonly IEmailSenderService _emailService; 
         private readonly IEnumsToEntitiesService _enumsToEntitiesService;
+        private readonly ICollegeService _collegeService;
 
         private static readonly string _emailToEnvVarName = "EMAIL_TO";
         private readonly string _emailTo = Environment.GetEnvironmentVariable(_emailToEnvVarName);
@@ -28,7 +29,8 @@ namespace ABB_BF.Controllers
             IWebHostEnvironment appEnvironment,
             IFileHelper fileHelper,
             IEmailSenderService emailService,
-            IEnumsToEntitiesService enumsToEntitiesService)
+            IEnumsToEntitiesService enumsToEntitiesService,
+            ICollegeService collegeService)
         {
             _mapper = mapper;
             _universityService = universityService;
@@ -36,6 +38,7 @@ namespace ABB_BF.Controllers
             _fileHelper = fileHelper;
             _emailService = emailService;
             _enumsToEntitiesService = enumsToEntitiesService;
+            _collegeService = collegeService;
         }
 
         [HttpPost]
@@ -43,7 +46,14 @@ namespace ABB_BF.Controllers
         {
             UniversityModel model = _mapper.Map<UniversityModel>(form);
 
-            model.Direction = await _enumsToEntitiesService.GetDefinitionByNumberFromCourseDirections(form.Direction);
+            model.CourseDirection = 
+                await _enumsToEntitiesService.GetDefinitionByNumberFromCourseDirections(form.CourseDirection);
+
+            int collegeId;
+            if (int.TryParse(form.College, out collegeId))
+            {
+                model.College = (await _collegeService.GetCollegeById(collegeId)).Name;
+            }
 
             return Ok(await _universityService.AddUniversityForm(model));
         }
@@ -55,7 +65,7 @@ namespace ABB_BF.Controllers
             [FromHeader] string? FinishInterval,
             [FromHeader] string? College,
             [FromHeader] int? Course,
-            [FromHeader] int? CourseDirections)
+            [FromHeader] int? CourseDirection)
         {
             FilterRequest filters = new FilterRequest()
             {
@@ -64,18 +74,13 @@ namespace ABB_BF.Controllers
                 FinishInterval = FinishInterval,
                 College = College,
                 Course = Course,
-                CourseDirections = CourseDirections
+                CourseDirections = CourseDirection
             };
 
-            string courseDirection =
-                await _enumsToEntitiesService.GetDefinitionByNumberFromCourseDirections(filters.CourseDirections);
-
-            FilterModel filter = _mapper.Map<FilterModel>(filters);
-
-            filter.CourseDirections = courseDirection;
+            FilterModel filter = await CombineFilter(filters);
 
             string fileName =
-                _fileHelper.CreateFileNmae(filter, "Курсы", courseDirection);
+                _fileHelper.CreateFileNmae(filter, "Курсы", filter.CourseDirections);
 
             string name = await _universityService.CreateXlsx(filter, fileName);
 
@@ -104,7 +109,7 @@ namespace ABB_BF.Controllers
             [FromHeader] string? FinishInterval,
             [FromHeader] string? College,
             [FromHeader] int? Course,
-            [FromHeader] int? CourseDirections
+            [FromHeader] int? CourseDirection
             )
         {
             FilterRequest filters = new FilterRequest()
@@ -114,23 +119,17 @@ namespace ABB_BF.Controllers
                 FinishInterval = FinishInterval,
                 College = College,
                 Course = Course,
-                CourseDirections = CourseDirections
+                CourseDirections = CourseDirection
             };
 
-            string courseDirection =
-                await _enumsToEntitiesService.GetDefinitionByNumberFromCourseDirections(filters.CourseDirections);
-
-            FilterModel filter = _mapper.Map<FilterModel>(filters);
-
-            filter.CourseDirections = courseDirection;
+            FilterModel filter = await CombineFilter(filters);
 
             string fileName =
-                _fileHelper.CreateFileNmae(filter, "Курсы", courseDirection);
+                _fileHelper.CreateFileNmae(filter, "Курсы");
 
             string name = await _universityService.CreateXlsx(filter, fileName);
 
             string filePath = Path.Combine(_appEnvironment.ContentRootPath, name);
-
             string zipPath = await _fileHelper.CreateZip(filePath, $"{filePath}.zip");
 
             FileStream fs = new FileStream(zipPath,
@@ -144,10 +143,28 @@ namespace ABB_BF.Controllers
                 .SendMessage(_emailTo, fileName, new Attachment(fs, $"{fileName}.zip"));
 
             fs.Close();
-
             System.IO.File.Delete(zipPath);
 
             return Ok();
+        }
+
+        private async Task<FilterModel> CombineFilter(FilterRequest filters)
+        {
+            FilterModel filter = _mapper.Map<FilterModel>(filters);
+            if (filters.CourseDirections != null)
+            {
+                filter.CourseDirections = 
+                    await _enumsToEntitiesService.GetDefinitionByNumberFromCourseDirections(filters.CourseDirections);
+            }
+
+            CollegeModel? college = await _collegeService.GetCollegeById(Convert.ToInt32(filters.College));
+
+            if (college is not null)
+            {
+                filter.College = college.Name;
+            }
+
+            return filter;
         }
     }
 }

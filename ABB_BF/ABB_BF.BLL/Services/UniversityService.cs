@@ -34,9 +34,10 @@ namespace ABB_BF.BLL.Services
 
             await _collegeService.AddCollege(universityModel.College);
 
+            University university = _mapper.Map<University>(universityModel);
 
             return await _universityFormRepository
-                .AddUniversityForm(_mapper.Map<University>(universityModel));
+                .AddUniversityForm(university);
         }
 
         public async Task<List<UniversityModel>> GetAll(FilterModel filter)

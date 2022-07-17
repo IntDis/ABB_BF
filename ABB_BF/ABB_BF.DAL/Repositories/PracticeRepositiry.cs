@@ -35,7 +35,7 @@ namespace ABB_BF.DAL.Repositories
                 practice.IsChecked = true;
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return practices;
         }

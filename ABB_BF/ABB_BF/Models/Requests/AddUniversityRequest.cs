@@ -11,9 +11,9 @@ namespace ABB_BF.Models.Requests
         public string Email { get; set; }
         public string College { get; set; }
         public DateTime StartDate { get; set; }
-        public int Duration { get; set; }
         public int Course { get; set; }
-        public int Direction { get; set; }
+        public int CourseDirection { get; set; }
+        public int Duration { get; set; }
         public bool IsCertificated { get; set; }
     }
 }
