@@ -7,7 +7,7 @@ namespace ABB_BF.Models.Responses
         public int Id { get; set; }
         public string Firstname { get; set; }
         public string Secondname { get; set; }
-        public string Patronymic { get; set; }
+        public string? Patronymic { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
         public int Course { get; set; }
@@ -15,7 +15,7 @@ namespace ABB_BF.Models.Responses
         public int EducationLevel { get; set; }
         public float AverageMarks { get; set; }
         public int Speciality { get; set; }
-        public string OtherGrants { get; set; }
+        public string? OtherGrants { get; set; }
         public DateOnly CreationDate { get; set; }
     }
 }
