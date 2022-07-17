@@ -52,7 +52,6 @@ namespace ABB_BF.Controllers
 
         [HttpGet("download")]
         public async Task<ActionResult> DownloadCsv(
-            [FromHeader] string fileName,
             [FromHeader] bool? IsChecked,
             [FromHeader] string? StartInterval,
             [FromHeader] string? FinishInterval,
@@ -70,7 +69,18 @@ namespace ABB_BF.Controllers
                 CourseDirections = CourseDirections
             };
 
-            string name = await _universityService.CreateXlsx(_mapper.Map<FilterModel>(filters), fileName);
+            string courseDirection =
+                await _enumsToEntitiesService.GetDefinitionByNumberFromCourseDirections(filters.CourseDirections);
+
+            FilterModel filter = _mapper.Map<FilterModel>(filters);
+
+            filter.CourseDirections = courseDirection;
+
+            string fileName =
+                _fileHelper.CreateFileNmae(filter, "Курсы", courseDirection);
+
+
+            string name = await _universityService.CreateXlsx(filter, fileName);
 
             string fileType = "application/zip";
             string filePath = Path.Combine(_appEnvironment.ContentRootPath, name);

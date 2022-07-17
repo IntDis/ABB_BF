@@ -32,7 +32,7 @@ namespace ABB_BF.DAL.Repositories
                 .Where(c =>
                     (filter.IsChecked == null || c.IsChecked != filter.IsChecked) && 
                     (filter.College == null || c.College == filter.College) &&
-                    (filter.CourseDirections == null || c.Direction != filter.CourseDirections) &&
+                    (filter.CourseDirections == null || c.Direction == filter.CourseDirections) &&
                     (c.CreationDate >= DateOnly.FromDateTime(filter.StartInterval)) &&
                     (c.CreationDate <= DateOnly.FromDateTime(filter.FinishInterval))).ToListAsync();
 
