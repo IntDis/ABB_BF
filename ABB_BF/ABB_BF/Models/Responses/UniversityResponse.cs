@@ -1,6 +1,4 @@
-﻿using ABB_BF.DAL.Enums;
-
-namespace ABB_BF.Models.Responses
+﻿namespace ABB_BF.Models.Responses
 {
     public class UniversityResponse
     {

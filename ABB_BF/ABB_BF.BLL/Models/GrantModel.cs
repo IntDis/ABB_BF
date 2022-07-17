@@ -1,5 +1,4 @@
-﻿using ABB_BF.DAL.Enums;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace ABB_BF.BLL.Models
 {

@@ -1,7 +1,7 @@
 ﻿using ABB_BF.API.Models.Requests;
 using ABB_BF.BLL.Models;
 using ABB_BF.BLL.Services.Interfaces;
-using ABB_BF.DAL.Enums;
+
 using ABB_BF.Models.Requests;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
