@@ -1,4 +1,4 @@
-﻿using ABB_BF.DAL.Entities;
+﻿using ABB_BF.DAL.Entities.EnumsToEntities;
 using ABB_BF.DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +13,7 @@ namespace ABB_BF.DAL.Repositories
             _context = context;
         }
 
-        public async Task<EnumsToEntities> GetDefinitionByNumberFromCourseDirections(int number)
+        public async Task<CourseDirection> GetDefinitionByNumberFromCourseDirections(int number)
         {
             return (await _context.CourseDirections.FirstOrDefaultAsync(o => o.Number == number));
         }

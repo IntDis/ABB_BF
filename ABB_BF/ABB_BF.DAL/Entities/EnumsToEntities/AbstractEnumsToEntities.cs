@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ABB_BF.DAL.Entities
+namespace ABB_BF.DAL.Entities.EnumsToEntities
 {
-    public class EnumsToEntities
+    public abstract class AbstractEnumsToEntities
     {
         public int Id { get; set; }
         public int Number { get; set; }
