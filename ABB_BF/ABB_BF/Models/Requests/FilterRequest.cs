@@ -9,6 +9,6 @@ namespace ABB_BF.API.Models.Requests
         public string FinishInterval { get; set; }
         public string? College { get; set; }
         public int? Course { get; set; }
-        public CourseDirections? CourseDirections { get; set; }
+        public int? CourseDirections { get; set; }
     }
 }

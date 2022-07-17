@@ -1,4 +1,5 @@
 ﻿using ABB_BF.DAL.Entities;
+using ABB_BF.DAL.Entities.EnumsToEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace ABB_BF.DAL
@@ -16,6 +17,12 @@ namespace ABB_BF.DAL
         public DbSet<Practice> Practice { get; set; }
         public DbSet<PracticeFile> PracticeFile { get; set; }
         public DbSet<College> College { get; set; }
+        public DbSet<CourseDirection> CourseDirections { get; set; }
+        public DbSet<EducationForm> EducationForms { get; set; }
+        public DbSet<EducationLevel> EducationLevels { get; set; }
+        public DbSet<Speciality> Specialities { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

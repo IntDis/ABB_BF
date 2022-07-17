@@ -13,7 +13,7 @@ namespace ABB_BF.Models.Requests
         public DateTime StartDate { get; set; }
         public int Duration { get; set; }
         public int Course { get; set; }
-        public CourseDirections Direction { get; set; }
+        public int Direction { get; set; }
         public bool IsCertificated { get; set; }
     }
 }

@@ -19,6 +19,7 @@ namespace ABB_BF.Controllers
         private readonly IMapper _mapper;
         private readonly IFileHelper _fileHelper;
         private readonly IEmailSenderService _emailService;
+        private readonly IEnumsToEntitiesService _enumsToEntitiesService;
 
         private static readonly string _emailToEnvVarName = "EMAIL_TO";
         private readonly string _emailTo = Environment.GetEnvironmentVariable(_emailToEnvVarName);
@@ -28,19 +29,24 @@ namespace ABB_BF.Controllers
             IUniversityService universityService,
             IWebHostEnvironment appEnvironment,
             IFileHelper fileHelper,
-            IEmailSenderService emailService)
+            IEmailSenderService emailService,
+            IEnumsToEntitiesService enumsToEntitiesService)
         {
             _mapper = mapper;
             _universityService = universityService;
             _appEnvironment = appEnvironment;
             _fileHelper = fileHelper;
             _emailService = emailService;
+            _enumsToEntitiesService = enumsToEntitiesService;
         }
 
         [HttpPost]
         public async Task<ActionResult<int>> AddUniversityForm([FromForm] AddUniversityRequest form)
         {
             UniversityModel model = _mapper.Map<UniversityModel>(form);
+
+            model.Direction = await _enumsToEntitiesService.GetDefinitionByNumberFromCourseDirections(form.Direction);
+
             return Ok(await _universityService.AddUniversityForm(model));
         }
 
@@ -52,7 +58,7 @@ namespace ABB_BF.Controllers
             [FromHeader] string? FinishInterval,
             [FromHeader] string? College,
             [FromHeader] int? Course,
-            [FromHeader] CourseDirections? CourseDirections)
+            [FromHeader] int? CourseDirections)
         {
             FilterRequest filters = new FilterRequest()
             {
@@ -92,7 +98,7 @@ namespace ABB_BF.Controllers
             [FromHeader] string? FinishInterval,
             [FromHeader] string? College,
             [FromHeader] int? Course,
-            [FromHeader] CourseDirections? CourseDirections
+            [FromHeader] int? CourseDirections
             )
         {
             FilterRequest filters = new FilterRequest()

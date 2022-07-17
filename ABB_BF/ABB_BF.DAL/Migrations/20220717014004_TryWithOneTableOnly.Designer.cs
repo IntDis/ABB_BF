@@ -4,6 +4,7 @@ using ABB_BF.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ABB_BF.DAL.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20220717014004_TryWithOneTableOnly")]
+    partial class TryWithOneTableOnly
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,7 +41,7 @@ namespace ABB_BF.DAL.Migrations
                     b.ToTable("College");
                 });
 
-            modelBuilder.Entity("ABB_BF.DAL.Entities.EnumsToEntities.CourseDirection", b =>
+            modelBuilder.Entity("ABB_BF.DAL.Entities.EnumsToEntities", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -57,66 +59,6 @@ namespace ABB_BF.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CourseDirections");
-                });
-
-            modelBuilder.Entity("ABB_BF.DAL.Entities.EnumsToEntities.EducationForm", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Definition")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EducationForms");
-                });
-
-            modelBuilder.Entity("ABB_BF.DAL.Entities.EnumsToEntities.EducationLevel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Definition")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EducationLevels");
-                });
-
-            modelBuilder.Entity("ABB_BF.DAL.Entities.EnumsToEntities.Speciality", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Definition")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Specialities");
                 });
 
             modelBuilder.Entity("ABB_BF.DAL.Entities.Grant", b =>
@@ -139,10 +81,6 @@ namespace ABB_BF.DAL.Migrations
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("EducationForm")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EducationLevel")
                         .IsRequired()

@@ -4,6 +4,7 @@ using ABB_BF.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ABB_BF.DAL.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20220717105910_FourSeparateTablesFromAbstractEntity")]
+    partial class FourSeparateTablesFromAbstractEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,10 +141,6 @@ namespace ABB_BF.DAL.Migrations
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("EducationForm")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EducationLevel")
                         .IsRequired()

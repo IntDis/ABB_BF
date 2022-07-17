@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ABB_BF.DAL.Enums
+namespace ABB_BF.DAL.Entities.EnumsToEntities
 {
-    public enum EducationLevel
+    public class EducationLevel : AbstractEnumsToEntities
     {
     }
 }
