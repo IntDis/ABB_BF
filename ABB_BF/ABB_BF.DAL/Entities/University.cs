@@ -1,7 +1,4 @@
-﻿using ABB_BF.DAL.Enums;
-using FileHelpers;
-
-namespace ABB_BF.DAL.Entities
+﻿namespace ABB_BF.DAL.Entities
 {
     public class University : AbstractCommonData
     {

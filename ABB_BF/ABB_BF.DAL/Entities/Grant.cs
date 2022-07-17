@@ -1,6 +1,4 @@
-﻿using ABB_BF.DAL.Enums;
-
-namespace ABB_BF.DAL.Entities
+﻿namespace ABB_BF.DAL.Entities
 {
     public class Grant : AbstractCommonData
     {
