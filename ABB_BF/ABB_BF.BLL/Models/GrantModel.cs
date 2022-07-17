@@ -22,11 +22,13 @@ namespace ABB_BF.BLL.Models
         [DisplayName("Учебное заведение")]
         public string College { get; set; }
         [DisplayName("Уровень образования")]
-        public int EducationLevel { get; set; }
+        public string EducationLevel { get; set; }
+        [DisplayName("Форма образования")]
+        public string EducationForm { get; set; }
         [DisplayName("Средняя оценка")]
         public float AverageMarks { get; set; }
         [DisplayName("Специальность")]
-        public int Speciality { get; set; }
+        public string Speciality { get; set; }
         [DisplayName("Другие стипендии")]
         public string OtherGrants { get; set; }
         [DisplayName("Дата подачи заявки")]
