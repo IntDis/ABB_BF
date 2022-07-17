@@ -52,11 +52,35 @@ namespace ABB_BF.DAL
                 builder.Property(x => x.StartDate)
                     .HasConversion<DateOnlyConverter, DateOnlyComparer>();
             });
+
+            modelBuilder.Entity<EducationForm>().HasData(
+                new EducationForm()
+                {
+                    Id = 1,
+                    Number = 1,
+                    Definition = "Очная"
+                },
+                new EducationForm()
+                {
+                    Id = 2,
+                    Number = 2,
+                    Definition = "Заочная"
+                },
+                new EducationForm()
+                {
+                    Id = 3,
+                    Number = 3,
+                    Definition = "Очно-заочная"
+                }
+            );
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
         }
+
+
     }
 }
