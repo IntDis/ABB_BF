@@ -1,10 +1,6 @@
-﻿using ABB_BF.DAL.Repositories.Interfaces;
+﻿using ABB_BF.DAL.Entities;
+using ABB_BF.DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ABB_BF.DAL.Repositories
 {
@@ -12,23 +8,33 @@ namespace ABB_BF.DAL.Repositories
     {
         private readonly Context _context;
 
-        public async Task<string> GetDefinitionByNumberFromCourseDirections(int number)
+        public EnumsToEntitiesRepository(Context context)
         {
-            return (await _context.CourseDirections.FirstOrDefaultAsync(o => o.Number == number)).Definition;
+            _context = context;
+        }
+
+        public async Task<EnumsToEntities> GetDefinitionByNumberFromCourseDirections(int number)
+        {
+            return (await _context.CourseDirections.FirstOrDefaultAsync(o => o.Number == number));
         }
 
         public async Task<string> GetDefinitionByNumberFromEducationForms(int number)
         {
-            return (await _context.EducationForms.FirstOrDefaultAsync(o => o.Number == number)).Definition;
+            //return (await _context.EducationForms.FirstOrDefaultAsync(o => o.Number == number)).Definition;
+            return "sad";
         }
 
         public async Task<string> GetDefinitionByNumberFromEducationLevels(int number)
         {
-            return (await _context.EducationLevels.FirstOrDefaultAsync(o => o.Number == number)).Definition;
+            //return (await _context.EducationLevels.FirstOrDefaultAsync(o => o.Number == number)).Definition;
+            return "sad";
+
         }
         public async Task<string> GetDefinitionByNumberFromSpecialities(int number)
         {
-            return (await _context.EducationLevels.FirstOrDefaultAsync(o => o.Number == number)).Definition;
+            //return (await _context.EducationLevels.FirstOrDefaultAsync(o => o.Number == number)).Definition;
+            return "sad";
+
         }
 
     }
