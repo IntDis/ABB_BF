@@ -12,7 +12,7 @@ namespace ABB_BF.BLL.Models
         [DisplayName("Фамилия")]
         public string Secondname { get; set; }
         [DisplayName("Отчество")]
-        public string Patronymic { get; set; }
+        public string? Patronymic { get; set; }
         [DisplayName("Телефон")]
         public string Phone { get; set; }
         [DisplayName("Электронная почта")]
@@ -30,7 +30,7 @@ namespace ABB_BF.BLL.Models
         [DisplayName("Специальность")]
         public string Speciality { get; set; }
         [DisplayName("Другие стипендии")]
-        public string OtherGrants { get; set; }
+        public string? OtherGrants { get; set; }
         [DisplayName("Дата подачи заявки")]
         public DateOnly CreationDate { get; set; }
     }
