@@ -12,9 +12,9 @@ namespace ABB_BF.Models.Requests
         public int Course { get; set; }
         public string College { get; set; }
         public float AverageMarks { get; set; }
-        public EducationLevel EducationLevel { get; set; }
-        public EducationForm EducationForm { get; set; }
-        public Specialities Speciality { get; set; }
+        public int EducationLevel { get; set; }
+        public int EducationForm { get; set; }
+        public int Speciality { get; set; }
         public string OtherGrants { get; set; }
 
     }

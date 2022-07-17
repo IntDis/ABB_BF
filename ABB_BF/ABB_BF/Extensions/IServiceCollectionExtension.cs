@@ -14,6 +14,7 @@ namespace ABB_BF.Extensions
             services.AddScoped<IUniversityRepository, UniversityFormRepository>();
             services.AddScoped<IPracticeRepository, PracticeRepository>();
             services.AddScoped<ICollegeRepository, CollegeRepository>();
+            services.AddScoped<IEnumsToEntitiesRepository, EnumsToEntitiesRepository>();
         }
 
         public static void RegisterServices(this IServiceCollection services)
@@ -23,9 +24,10 @@ namespace ABB_BF.Extensions
             services.AddScoped<IUniversityService, UniversityService>();
             services.AddScoped<IPracticeService, PracticeService>();
 
-            services.AddScoped<IFileHelper, BLL.Services.FileHelper>();
+            services.AddScoped<IFileHelper, FileHelper>();
             services.AddScoped<IEmailSenderService, EmailSenderService>();
             services.AddScoped<ICollegeService, CollegeService>();
+            services.AddScoped<IEnumsToEntitiesService, EnumsToEntitiesService>();
         }
     }
 }

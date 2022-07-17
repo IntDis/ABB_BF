@@ -10,6 +10,5 @@ namespace ABB_BF.Models.Requests
         public string Phone { get; set; }
         public string Email { get; set; }
         public virtual List<IFormFile> Files { get; set; }
-
     }
 }
