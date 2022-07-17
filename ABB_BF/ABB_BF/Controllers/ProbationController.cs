@@ -70,7 +70,7 @@ namespace ABB_BF.Controllers
 
             string path = await _fileHelper
                 .CreateFolderWithFormsInfo(
-                _mapper.Map<List<AbstractEntityModel>>(models), models);
+                _mapper.Map<List<AbstractEntityModel>>(models), models, fileName);
 
             string zipPath = await _fileHelper.CreateZip(path, $"{path}.zip");
             
@@ -114,7 +114,7 @@ namespace ABB_BF.Controllers
 
             string path = await _fileHelper
                 .CreateFolderWithFormsInfo(
-                _mapper.Map<List<AbstractEntityModel>>(models), models);
+                _mapper.Map<List<AbstractEntityModel>>(models), models, fileName);
 
             string zipPath = await _fileHelper.CreateZip(path, $"{path}.zip");
 

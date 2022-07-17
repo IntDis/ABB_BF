@@ -30,10 +30,11 @@ namespace ABB_BF.BLL.Services
             return excelName;
         }
 
-        public async Task<string> CreateFolderWithFormsInfo<T>(List<AbstractEntityModel> list, List<T> models)
+        public async Task<string> CreateFolderWithFormsInfo<T>(
+            List<AbstractEntityModel> list, List<T> models, string fileName)
             where T : class
         {
-            await CreateXlsx(models, "tempfolder");
+            await CreateXlsx(models, fileName);
 
             foreach (AbstractEntityModel model in list)
             {
