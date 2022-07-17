@@ -14,18 +14,21 @@ namespace ABB_BF.BLL.Services
         private readonly IUniversityRepository _universityFormRepository;
         private readonly IFileHelper _fileHelper;
         private readonly ICollegeService _collegeService;
+        private readonly IEnumsToEntitiesRepository _enumsToEntitiesRepository;
 
         public UniversityService(IMapper mapper,
             IUniversityRepository universityFormRepository,
             IFileHelper csvHelper,
             IFileHelper fileHelper,
-            ICollegeService collegeService)
+            ICollegeService collegeService,
+            IEnumsToEntitiesRepository enumsToEntitiesRepository)
         {
             _mapper = mapper;
             _universityFormRepository = universityFormRepository;
             _csvHelper = csvHelper;
             _fileHelper = fileHelper;
             _collegeService = collegeService;
+            _enumsToEntitiesRepository = enumsToEntitiesRepository;
         }
 
         public async Task<int> AddUniversityForm(UniversityModel universityModel)
@@ -33,6 +36,7 @@ namespace ABB_BF.BLL.Services
             universityModel.CreationDate = DateOnly.FromDateTime(DateTime.Now);
 
             await _collegeService.AddCollege(universityModel.College);
+
 
             return await _universityFormRepository
                 .AddUniversityForm(_mapper.Map<University>(universityModel));
