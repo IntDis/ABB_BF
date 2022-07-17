@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ABB_BF.DAL.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20220716230301_ConvertedEnumsToDBTables")]
-    partial class ConvertedEnumsToDBTables
+    [Migration("20220717014004_TryWithOneTableOnly")]
+    partial class TryWithOneTableOnly
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,7 +58,7 @@ namespace ABB_BF.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EnumsToEntities");
+                    b.ToTable("CourseDirections");
                 });
 
             modelBuilder.Entity("ABB_BF.DAL.Entities.Grant", b =>
@@ -82,8 +82,9 @@ namespace ABB_BF.DAL.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("EducationLevel")
-                        .HasColumnType("int");
+                    b.Property<string>("EducationLevel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -112,8 +113,9 @@ namespace ABB_BF.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Speciality")
-                        .HasColumnType("int");
+                    b.Property<string>("Speciality")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -273,8 +275,9 @@ namespace ABB_BF.DAL.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Direction")
-                        .HasColumnType("int");
+                    b.Property<string>("Direction")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Duration")
                         .HasColumnType("int");

@@ -17,9 +17,9 @@ namespace ABB_BF.DAL
         public DbSet<PracticeFile> PracticeFile { get; set; }
         public DbSet<College> College { get; set; }
         public DbSet<EnumsToEntities> CourseDirections { get; set; }
-        public DbSet<EnumsToEntities> EducationForms { get; set; }
-        public DbSet<EnumsToEntities> EducationLevels { get; set; }
-        public DbSet<EnumsToEntities> Specialities { get; set; }
+        //public DbSet<EnumsToEntities> EducationForms { get; set; }
+        //public DbSet<EnumsToEntities> EducationLevels { get; set; }
+        //public DbSet<EnumsToEntities> Specialities { get; set; }
 
 
 
