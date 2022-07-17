@@ -37,6 +37,11 @@ namespace ABB_BF.BLL.Services
             }
         }
 
+        public async Task<CollegeModel> GetCollegeById(int id)
+        {
+            return _mapper.Map<CollegeModel>(await _collegeRepository.GetCollegeById(id));
+        }
+
         private async Task<bool> CollegeIsExistInDb(CollegeModel college)
         {
             if (await _collegeRepository.GetCollegeByName(college.Name) is not null)

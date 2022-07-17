@@ -20,6 +20,7 @@ namespace ABB_BF.Controllers
         private readonly IFileHelper _fileHelper;
         private readonly IEmailSenderService _emailService;
         private readonly IEnumsToEntitiesService _enumsToEntitiesService;
+        private readonly ICollegeService _collegeService;
 
         private static readonly string _emailToEnvVarName = "EMAIL_TO";
         private readonly string _emailTo = Environment.GetEnvironmentVariable(_emailToEnvVarName);
@@ -30,7 +31,8 @@ namespace ABB_BF.Controllers
             IFileHelper fileHelper, 
             IGrantService grantService, 
             IWebHostEnvironment appEnvironment, 
-            IEnumsToEntitiesService enumsToEntitiesService)
+            IEnumsToEntitiesService enumsToEntitiesService,
+            ICollegeService collegeService)
         {
             _mapper = mapper;
             _grantService = grantService;
@@ -38,6 +40,7 @@ namespace ABB_BF.Controllers
             _fileHelper = fileHelper;
             _emailService = emailService;
             _enumsToEntitiesService = enumsToEntitiesService;
+            _collegeService = collegeService;
 
         }
 
@@ -55,7 +58,6 @@ namespace ABB_BF.Controllers
 
         [HttpGet("download")]
         public async Task<ActionResult> DownloadCsv(
-            [FromHeader] string fileName,
             [FromHeader] bool? IsChecked,
             [FromHeader] string? StartInterval,
             [FromHeader] string? FinishInterval,
@@ -74,7 +76,19 @@ namespace ABB_BF.Controllers
                 CourseDirections = CourseDirections
             };
 
-            string name = await _grantService.CreateXlsx(_mapper.Map<FilterModel>(filters), fileName);
+            FilterModel filter = _mapper.Map<FilterModel>(filters);
+
+            CollegeModel? college = await _collegeService.GetCollegeById(Convert.ToInt32(filters.College));
+
+            if (college is not null)
+            {
+                filter.College = college.Name;
+            }
+
+            string fileName = 
+                _fileHelper.CreateFileNmae(filter, "Стипендия");
+
+            string name = await _grantService.CreateXlsx(filter, fileName);
 
             string fileType = "application/zip";
             string filePath = Path.Combine(_appEnvironment.ContentRootPath, name);
@@ -96,7 +110,6 @@ namespace ABB_BF.Controllers
 
         [HttpGet("send")]
         public async Task<ActionResult> SendEmail(
-            [FromHeader] string fileName,
             [FromHeader] bool? IsChecked,
             [FromHeader] string? StartInterval,
             [FromHeader] string? FinishInterval,
@@ -114,10 +127,20 @@ namespace ABB_BF.Controllers
                 Course = Course,
                 CourseDirections = CourseDirections
             };
+            FilterModel filter = _mapper.Map<FilterModel>(filters);
 
-            string name = await _grantService.CreateXlsx(_mapper.Map<FilterModel>(filters), fileName);
+            CollegeModel? college = await _collegeService.GetCollegeById(Convert.ToInt32(filters.College));
 
-            string fileType = "application/zip";
+            if (college is not null)
+            {
+                filter.College = college.Name;
+            }
+
+            string fileName =
+                _fileHelper.CreateFileNmae(filter, "Стипендия");
+
+            string name = await _grantService.CreateXlsx(filter, fileName);
+
             string filePath = Path.Combine(_appEnvironment.ContentRootPath, name);
 
             string zipPath = await _fileHelper.CreateZip(filePath, $"{filePath}.zip");
@@ -130,7 +153,10 @@ namespace ABB_BF.Controllers
                 FileOptions.DeleteOnClose);
 
             _emailService
-                .SendMessage(_emailTo, "Привет, тема пока такая", new Attachment(fs, $"{fileName}.zip"));
+                .SendMessage(_emailTo, fileName, new Attachment(fs, $"{fileName}.zip"));
+
+            fs.Close();
+            System.IO.File.Delete(zipPath);
 
             return Ok();
         }

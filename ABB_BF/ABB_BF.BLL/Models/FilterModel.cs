@@ -7,6 +7,6 @@
         public DateTime FinishInterval { get; set; }
         public string? College { get; set; }
         public int? Course { get; set; }
-        public int? CourseDirections { get; set; }
+        public string? CourseDirections { get; set; }
     }
 }
