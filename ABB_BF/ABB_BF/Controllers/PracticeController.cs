@@ -125,7 +125,7 @@ namespace ABB_BF.Controllers
                 FileOptions.DeleteOnClose);
 
             _emailService
-                .SendMessage(_emailTo, "Привет, тема пока такая", new Attachment(fs, $"{fileName}.zip"));
+                .SendMessage(_emailTo, fileName, new Attachment(fs, $"{fileName}.zip"));
 
             fs.Close();
             System.IO.File.Delete(zipPath);
