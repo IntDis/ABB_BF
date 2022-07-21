@@ -72,7 +72,7 @@ namespace ABB_BF.BLL.Services
             fileName.Append("_");
             fileName.Append(modelName);
 
-            if(filter.IsChecked == true)
+            if (filter.IsChecked == true)
             {
                 fileName.Append("_ТолькоНовые_");
             }

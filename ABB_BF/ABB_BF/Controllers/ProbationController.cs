@@ -1,5 +1,4 @@
 ﻿using ABB_BF.API.Models.Requests;
-using ABB_BF.API.Models.Responses;
 using ABB_BF.BLL.Models;
 using ABB_BF.BLL.Services.Interfaces;
 
@@ -37,7 +36,7 @@ namespace ABB_BF.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> AddProbation([FromForm]AddProbationRequest requestModel)
+        public async Task<ActionResult<int>> AddProbation([FromForm] AddProbationRequest requestModel)
         {
             ProbationModel model = _mapper.Map<ProbationModel>(requestModel);
             return Ok(await _probationService.AddProbation(model));
@@ -73,7 +72,7 @@ namespace ABB_BF.Controllers
                 _mapper.Map<List<AbstractEntityModel>>(models), models, fileName);
 
             string zipPath = await _fileHelper.CreateZip(path, $"{path}.zip");
-            
+
             var fs = new FileStream(zipPath,
                 FileMode.Open,
                 FileAccess.Read,

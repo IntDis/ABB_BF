@@ -17,7 +17,7 @@ namespace ABB_BF.BLL.Services
         {
             CourseDirection courseDirection = await _enumsToEntitiesRepository.GetCourseDirectionByNumber(number);
 
-            if(courseDirection == null)
+            if (courseDirection == null)
                 throw new Exception("Not found");
 
             return courseDirection.Definition;
@@ -27,7 +27,7 @@ namespace ABB_BF.BLL.Services
         {
             var result = await _enumsToEntitiesRepository.GetEducationFormByNumber(number);
 
-            if(result == null)
+            if (result == null)
                 throw new Exception("Not found");
 
             return result.Definition;
@@ -37,7 +37,7 @@ namespace ABB_BF.BLL.Services
         {
             var result = await _enumsToEntitiesRepository.GetEducationLevelByNumber(number);
 
-            if(result == null)
+            if (result == null)
                 throw new Exception("Not found");
 
             return result.Definition;
@@ -47,7 +47,7 @@ namespace ABB_BF.BLL.Services
         {
             var result = await _enumsToEntitiesRepository.GetSpecialityByNumber(number);
 
-            if( result == null)
+            if (result == null)
                 throw new Exception("Not found");
 
             return result.Definition;

@@ -38,7 +38,7 @@ namespace ABB_BF.DAL.Repositories
                     (filter.Course == null || c.Course == filter.Course))
                     .ToListAsync();
 
-            foreach(Grant grant in grants)
+            foreach (Grant grant in grants)
             {
                 grant.IsChecked = true;
             }

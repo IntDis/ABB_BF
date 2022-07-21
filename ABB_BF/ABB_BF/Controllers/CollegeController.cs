@@ -23,7 +23,7 @@ namespace ABB_BF.API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<CollegeResponse>>> GetAll()
         {
-            List<CollegeResponse> colleges = 
+            List<CollegeResponse> colleges =
                 _mapper.Map<List<CollegeResponse>>(await _collegeService.GetAllColleges());
 
             return Ok(colleges);

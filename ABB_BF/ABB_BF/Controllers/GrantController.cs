@@ -3,7 +3,6 @@ using ABB_BF.BLL.Models;
 using ABB_BF.BLL.Services.Interfaces;
 
 using ABB_BF.Models.Requests;
-using ABB_BF.Models.Responses;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mail;
@@ -26,11 +25,11 @@ namespace ABB_BF.Controllers
         private readonly string _emailTo = Environment.GetEnvironmentVariable(_emailToEnvVarName);
 
         public GrantController(
-            IEmailSenderService emailService, 
-            IMapper mapper, 
-            IFileHelper fileHelper, 
-            IGrantService grantService, 
-            IWebHostEnvironment appEnvironment, 
+            IEmailSenderService emailService,
+            IMapper mapper,
+            IFileHelper fileHelper,
+            IGrantService grantService,
+            IWebHostEnvironment appEnvironment,
             IEnumsToEntitiesService enumsToEntitiesService,
             ICollegeService collegeService)
         {
@@ -83,7 +82,7 @@ namespace ABB_BF.Controllers
             };
 
             FilterModel filter = await CombineFilter(filters);
-            string fileName = 
+            string fileName =
                 _fileHelper.CreateFileNmae(filter, "Стипендия");
 
             string name = await _grantService.CreateXlsx(filter, fileName);

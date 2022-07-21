@@ -1,6 +1,4 @@
-﻿using ABB_BF.DAL.Entities.EnumsToEntities;
-
-namespace ABB_BF.BLL.Services.Interfaces
+﻿namespace ABB_BF.BLL.Services.Interfaces
 {
     public interface IEnumsToEntitiesService
     {

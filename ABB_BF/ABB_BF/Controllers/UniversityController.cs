@@ -16,7 +16,7 @@ namespace ABB_BF.Controllers
         private readonly IWebHostEnvironment _appEnvironment;
         private readonly IMapper _mapper;
         private readonly IFileHelper _fileHelper;
-        private readonly IEmailSenderService _emailService; 
+        private readonly IEmailSenderService _emailService;
         private readonly IEnumsToEntitiesService _enumsToEntitiesService;
         private readonly ICollegeService _collegeService;
 
@@ -46,7 +46,7 @@ namespace ABB_BF.Controllers
         {
             UniversityModel model = _mapper.Map<UniversityModel>(form);
 
-            model.Direction = 
+            model.Direction =
                 await _enumsToEntitiesService.GetDefinitionByNumberFromCourseDirections(form.CourseDirection);
 
             int collegeId;
@@ -153,7 +153,7 @@ namespace ABB_BF.Controllers
             FilterModel filter = _mapper.Map<FilterModel>(filters);
             if (filters.CourseDirections != null)
             {
-                filter.CourseDirections = 
+                filter.CourseDirections =
                     await _enumsToEntitiesService.GetDefinitionByNumberFromCourseDirections(filters.CourseDirections);
             }
 
